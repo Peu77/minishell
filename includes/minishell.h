@@ -8,6 +8,7 @@
 #define RESET   "\033[0m"
 #define MAX_PATH 1024
 #define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
+#define NUM_BUILTINS 7
 
 // main
 
@@ -22,11 +23,12 @@ int pwd(void);
 //env
 
 //execution
+void execution_monitor(char *user_prompt);
 
 //parser
 
 //pipe
-void pipe_monitor(char *prompt_user);
+void pipe_monitor(char *user_prompt);
 
 //redirection
 

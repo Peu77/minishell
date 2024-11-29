@@ -21,6 +21,8 @@ void pipe_monitor(char *user_prompt)
 	int number_pipe;
 
 	number_pipe = count_pipe(user_prompt);
-
-	printf("there is actually %d pipe\n", number_pipe);
+	if(number_pipe == 0)
+		execution_monitor(user_prompt);
+	else
+		printf("too much pipe for the moment (building)");
 }
