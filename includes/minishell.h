@@ -9,10 +9,10 @@
 // main
 
 //error
-void pe(const char *message);
+int pe(const char *message);
 
 //prompt
-void get_user_prompt(char **result);
+int get_user_prompt(char **result);
 
 // builtin
 
