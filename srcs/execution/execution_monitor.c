@@ -15,4 +15,5 @@ void execution_monitor(char *user_prompt)
 		i++;
 	}
 	printf("No built-in command found.\n So we will use execve command \n");
+	execution_command(user_prompt);
 }
