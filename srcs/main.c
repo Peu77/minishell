@@ -2,14 +2,16 @@
 
 int main(void)
 {
-	//1 . STEP 1 PARSING
-	ft_printf("Hello %d", ft_atoi("55"));
-	//2. STEP 2 . EXECUTION
-	
-	//3 STEP 3. SIGNAL 
-	// ctrl + d / ctrl + c / ctrl + /	
+	pe("WELCOME TO MINISHELL");
+	char *user_prompt;
 
-	//4 STEP 4 CLEAN
-	return (0);
+	while (1)
+	{
+		user_prompt = NULL;
+		get_user_prompt(&user_prompt);
+		//1 . STEP 1 PARSING
+		//2. STEP 2 . EXECUTION
+		free(user_prompt);		// ctrl + d / ctrl + c / ctrl + /	
+	}
 }
 
