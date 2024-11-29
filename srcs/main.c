@@ -9,10 +9,12 @@ int main(void)
 	{
 		user_prompt = NULL;
 		if(!get_user_prompt(&user_prompt))
-			return (0);
+			return (EXIT_FAILURE);
 		//1 . STEP 1 PARSING
 		//2. STEP 2 . EXECUTION
-		free(user_prompt);		// ctrl + d / ctrl + c / ctrl + /	
+		//PIPING
+		pipe_monitor(user_prompt);
+		free(user_prompt);		// ctrl + d / ctrl + c / ctrl + /	}
 	}
 	return (EXIT_SUCCESS);
 }

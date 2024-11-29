@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 INCLUDES = -I./includes
-SRC =  srcs/main.c srcs/prompt/user_prompt.c srcs/error/error.c
+SRC =  srcs/main.c srcs/prompt/user_prompt.c srcs/error/error.c srcs/pipe/pipe_monitor.c
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
