@@ -11,7 +11,8 @@ SRC =  srcs/main.c \
 	   srcs/pipe/pipe_utils.c \
 	   srcs/execution/execution_monitor.c \
 	   srcs/execution/execution_command.c \
-	   srcs/builtin/pwd.c 
+	   srcs/builtin/pwd.c \
+	   srcs/parser/lexer.c
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
