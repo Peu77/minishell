@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/11/29 14:51:46 by eebert           ###   ########.fr       */
+/*   Updated: 2024/11/30 16:41:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef enum e_token_type
     TOKEN_REDIRECT_INPUT,
     TOKEN_REDIRECT_OUTPUT,
     TOKEN_REDIRECT_APPEND,
+    TOKEN_PARENTHESES_OPEN,
+    TOKEN_PARENTHESES_CLOSE,
     TOKEN_END
 } t_token_type;
 
