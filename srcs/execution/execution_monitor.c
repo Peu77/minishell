@@ -1,19 +1,20 @@
 #include "../../includes/minishell.h"
 
-void execution_monitor(char *user_prompt)
+void execution_monitor(t_command *command)
 {
     char *list_builtin[NUM_BUILTINS] = {"cd", "echo", "env", "exit", "export", "pwd", "unset"};
     int i = 0;
 
 	while (i < NUM_BUILTINS)
 	{
-		if (ft_strnstr(user_prompt, list_builtin[i], ft_strlen(user_prompt)))
+		if (ft_strnstr(command->command, list_builtin[i], ft_strlen(command->command)))
 		{
-			printf("Found built-in: %s\n So we will use a builtins command \n", list_builtin[i]);
+			if (i == 5)
+				printf("%s \n", pwd());
 			return ;
 		}
 		i++;
 	}
 	printf("No built-in command found.\n So we will use execve command \n");
-	execution_command(user_prompt);
+	execution_command(command);
 }

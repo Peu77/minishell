@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:24:23 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/11/22 14:58:17 by ftapponn         ###   LAUSANNE.ch       */
+/*   Updated: 2024/11/30 19:20:27 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char				*ft_strnstr(const char *big, const char *little,
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlcat(char *dest, const char *src, size_t n);
+char				*ft_strcat(char *dest, const char *src);
+char				*ft_strcpy(char *dest, const char *src);
 char				*ft_strdup(const char *s1);
 int					ft_atoi(const char *str);
 float				ft_atof(const char *str);
@@ -76,7 +78,7 @@ int					ft_memcmp(const void *s1, const void *s2, size_t n);
 // dynamic memory manipulation
 void				*ft_calloc(size_t element_count, size_t element_size);
 
-//Print file descriptor
+// Print file descriptor
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);

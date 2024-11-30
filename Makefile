@@ -7,8 +7,11 @@ SRC =  srcs/main.c \
 	   srcs/prompt/user_prompt.c \
 	   srcs/error/error.c \
 	   srcs/pipe/pipe_monitor.c \
+	   srcs/pipe/pipe_initialising.c \
+	   srcs/pipe/pipe_utils.c \
 	   srcs/execution/execution_monitor.c \
-	   srcs/execution/execution_command.c
+	   srcs/execution/execution_command.c \
+	   srcs/builtin/pwd.c 
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell

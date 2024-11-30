@@ -1,28 +1,27 @@
 #include "../../includes/minishell.h"
 
-static int count_pipe(char *str)
-{
-	int count;
-	int i;
-
-	count = 0;
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] == '|')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 void pipe_monitor(char *user_prompt)
 {
-	int number_pipe;
+    t_pipe *pipe = malloc(sizeof(t_pipe));
+	t_command *command = NULL;
+    if (!user_prompt || *user_prompt == '\0')
+    {
+        return;
+    }
+    if (!pipe)
+    {
+        perror("Failed to allocate memory for pipe structure");
+        return;
+    }
+    initialise_pipe(&pipe, &command, user_prompt);
+    printf("Number of pipes: %d\n", pipe->number_pipe);
+    printf("Number of commands: %d\n", pipe->number_command);
 
-	number_pipe = count_pipe(user_prompt);
-	if(number_pipe == 0)
-		execution_monitor(user_prompt);
-	else
-		printf("too much pipe for the moment (building)");
+    if (pipe->number_pipe == 0)
+        execution_monitor(command);
+    else
+        printf("Too many pipes for the moment (building)\n");
+
+    free(pipe);
 }
+

@@ -3,42 +3,38 @@
 static void free_command(char **command)
 {
     int i = 0;
-    // Free each string in the command array
     while (command[i])
     {
         free(command[i]);
         i++;
     }
-    // Free the command array itself
     free(command);
 }
 
-void execution_command(char *user_prompt)
+void execution_command(t_command *command_list)
 {
-    char **command = ft_split(user_prompt, ' ');
+    char **command = ft_split(command_list->command, ' ');
 
     pid_t pid = fork();
 
     if (pid == -1)
     {
         perror("fork failed");
-        free_command(command); // Free memory in case of fork failure
+        free_command(command);
         exit(EXIT_FAILURE);
     }
     if (pid == 0)
     {
-        // In child process: execute the command
-        if (execve("/bin/ls", command, NULL) == -1)
+		if (execve(command_list->path, command, NULL) == -1)
         {
             perror("execve failed");
-            free_command(command); // Free memory if execve fails
-            exit(EXIT_FAILURE); // Exit child process on failure
+            free_command(command);
+            exit(EXIT_FAILURE);
         }
     } 
     else 
     {
-        // Parent process: wait for the child to finish
         wait(NULL);
-        free_command(command); // Free memory after the child process finishes
+        free_command(command);
     }
 }
