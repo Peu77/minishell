@@ -40,6 +40,7 @@ char *pwd(void);
 //execution
 void execution_monitor(t_command *command);
 void execution_command(t_command *command);
+void execute_two_pipes(t_command *cmd1, t_command *cmd2);
 //parser
 
 //pipe

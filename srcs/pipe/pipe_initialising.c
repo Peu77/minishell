@@ -10,50 +10,38 @@ char *find_command_in_path(const char *command)
     char *full_path;
     int i = 0;
 
-    // Get the PATH environment variable
     env_path = getenv("PATH");
     if (!env_path)
     {
         printf("No PATH environment variable found.\n");
         return NULL;
     }
-
-    // Split the PATH into directories
     paths = ft_split(env_path, ':');
     if (!paths)
     {
         printf("Error splitting PATH.\n");
         return NULL;
     }
-
-    // Iterate through each directory in the PATH
     while (paths[i])
     {
-        // Allocate memory for the full path (dir + command)
-        full_path = malloc(ft_strlen(paths[i]) + ft_strlen(command) + 2); // +2 for "/" and null terminator
+        full_path = malloc(ft_strlen(paths[i]) + ft_strlen(command) + 2);
         if (!full_path)
         {
             printf("Memory allocation error.\n");
             return NULL;
         }
 
-        // Build the full path
         ft_strcpy(full_path, paths[i]);
-        ft_strcat(full_path, "/"); // Add "/"
-        ft_strcat(full_path, command); // Add the command
-
-        // Check if the file exists at this path
-        if (access(full_path, F_OK) == 0) // If the file exists, return full path
+        ft_strcat(full_path, "/");
+        ft_strcat(full_path, command);
+        if (access(full_path, F_OK) == 0) 
         {
             free(paths);
             return full_path;
         }
-
-        free(full_path); // Free the allocated memory if not found
+        free(full_path); 
         i++;
     }
-
-    // If no valid path found, return NULL
     free(paths);
     return NULL;
 }
