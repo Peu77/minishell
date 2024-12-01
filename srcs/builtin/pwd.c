@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-
-#define MAX_PATH 1024
+#include "../../includes/minishell.h"
 
 char *pwd() 
 {
@@ -11,6 +7,7 @@ char *pwd()
         return NULL;
     if (getcwd(buffer, MAX_PATH) == NULL)
 	{
+		pe("error with getting path");
         free(buffer);
         return NULL;
     }

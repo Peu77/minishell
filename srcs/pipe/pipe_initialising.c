@@ -27,10 +27,9 @@ char *find_command_in_path(const char *command)
             printf("Memory allocation error.\n");
             return NULL;
         }
-
-        ft_strcpy(full_path, paths[i]);
-        ft_strcat(full_path, "/");
-        ft_strcat(full_path, command);
+        strcpy(full_path, paths[i]);
+        strcat(full_path, "/");
+        strcat(full_path, command);
         if (access(full_path, F_OK) == 0) 
         {
             free(paths);

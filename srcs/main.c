@@ -14,7 +14,6 @@ int main(void)
 		//2. STEP 2 . EXECUTION
 		//PIPING
 		pipe_monitor(user_prompt);
-		signal_waiting();
 		free(user_prompt);		// ctrl + d / ctrl + c / ctrl + /	}
 	}
 	return (EXIT_SUCCESS);
