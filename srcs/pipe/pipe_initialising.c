@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-
-
-
 char *find_command_in_path(const char *command)
 {
     char *env_path;
@@ -56,10 +53,11 @@ static void get_path(t_command **command)
 
     while ((*command))
     {
-        path = ft_split((*command)->command, ' ');
+        path = ft_split((*command)->argument, ' ');
         if (!path)
             return;
-        found_path = find_command_in_path(path[0]);
+		((*command)->command_name) = path[0];
+        found_path = find_command_in_path((*command)->command_name);
         if (found_path)
         {
             (*command)->path = found_path;

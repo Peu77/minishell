@@ -15,8 +15,8 @@ t_command *create_node(char *command_str)
         return (NULL);
     }
 
-    new_node->command = strdup(command_str);
-    if (!new_node->command)
+    new_node->argument = strdup(command_str);
+    if (!new_node->argument)
     {
         perror("Failed to duplicate command string");
         free(new_node);
@@ -77,8 +77,9 @@ void print_command_list(t_command *command_list)
     printf("List of command:\n");
     while (current)
     {
-        printf("- Command : %s\n", current->command);
+        printf("- Command : %s\n", current->argument);
 		printf("- PATH : %s \n", current->path);
+        printf("- Command Name : %s\n", current->command_name);
         current = current->next;
     }
 }

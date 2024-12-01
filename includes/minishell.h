@@ -13,17 +13,19 @@
 typedef struct s_command
 {
 	char *path;
-	char *command;
+	char *argument;
+	char *command_name;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;
 
 typedef struct s_pipe
 {
+	int pipe_current_process;
 	int number_pipe;
 	int number_command;
-	char *path;
-
+	int (*pipe_fd)[2];
+	int parent_pipe_fd[2];
 } t_pipe;
 // main
 

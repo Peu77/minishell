@@ -7,7 +7,7 @@ void execution_monitor(t_command *command)
 
 	while (i < NUM_BUILTINS)
 	{
-		if (ft_strnstr(command->command, list_builtin[i], ft_strlen(command->command)))
+		if (ft_strnstr(command->argument, list_builtin[i], ft_strlen(command->argument)))
 		{
 			if (i == 5)
 				printf("%s \n", pwd());
@@ -15,6 +15,5 @@ void execution_monitor(t_command *command)
 		}
 		i++;
 	}
-	printf("No built-in command found.\n So we will use execve command \n");
 	execution_command(command);
 }
