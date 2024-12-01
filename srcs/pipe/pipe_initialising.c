@@ -48,9 +48,7 @@ static void get_path(t_command **command)
     t_command *head;
     char **path;
 	char *found_path;
-
     head = (*command);
-
     while ((*command))
     {
         path = ft_split((*command)->argument, ' ');
@@ -73,6 +71,7 @@ static void get_path(t_command **command)
     }
     (*command) = head;
 }
+
 static void create_command_list(char *user_prompt, t_command **command)
 {
     char **commands;
@@ -81,7 +80,6 @@ static void create_command_list(char *user_prompt, t_command **command)
 
     if (!user_prompt || !command)
         return;
-
     commands = ft_split(user_prompt, '|');
     if (!commands)
     {
@@ -102,7 +100,6 @@ static void create_command_list(char *user_prompt, t_command **command)
         }
         i++;
     }
-
     i = 0;
     while (commands[i])
     {
@@ -112,11 +109,12 @@ static void create_command_list(char *user_prompt, t_command **command)
     free(commands);
 }
 
-
 void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt)
 {
+	(*pipe)->pid_signal = getpid();
 	(*pipe)->number_pipe = count_pipe(user_prompt);
 	(*pipe)->number_command = (*pipe)->number_pipe + 1;
+	(*pipe)->should_exit = false;
 	create_command_list(user_prompt, command);
 	get_path(command);
 	print_command_list(*command);

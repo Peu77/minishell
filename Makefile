@@ -12,6 +12,9 @@ SRC =  srcs/main.c \
 	   srcs/execution/execution_monitor.c \
 	   srcs/execution/execution_command.c \
 	   srcs/builtin/pwd.c \
+	   srcs/builtin/echo.c \
+	   srcs/builtin/exit.c \
+	   srcs/signal/signal.c
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell

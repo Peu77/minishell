@@ -14,6 +14,7 @@ static void free_command(char **command)
 void execution_command(t_command *command)
 {
 	char **arguments = ft_split(command->argument, ' ');
+
 	if (command->path == NULL)
 	{
 		printf("Command %s not found\n", command->command_name);

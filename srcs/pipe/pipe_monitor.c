@@ -82,7 +82,7 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
 
         close_unused_pipes(pipe);
         close(pipe->parent_pipe_fd[0]);
-		execution_monitor(command);
+		execution_monitor(command, pipe);
 		/*
         char **arguments = ft_split(command->argument, ' ');
         if (command->path == NULL)
