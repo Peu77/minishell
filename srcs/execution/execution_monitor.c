@@ -9,6 +9,8 @@ void execution_monitor(t_command *command, t_pipe *pipe)
 	{
 		if (ft_strnstr(command->argument, list_builtin[i], ft_strlen(command->argument)))
 		{
+			if (i == 0)
+				cd(command);
 			if (i == 1)
 				echo(command, 0);
 			else if (i == 3)

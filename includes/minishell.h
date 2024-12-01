@@ -44,6 +44,7 @@ int get_user_prompt(char **result);
 char *pwd(void);
 void echo(t_command *command, bool is_n);
 void exit_command(t_pipe *pipe);
+void cd(t_command *command);
 //env
 
 //execution

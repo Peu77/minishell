@@ -14,6 +14,7 @@ SRC =  srcs/main.c \
 	   srcs/builtin/pwd.c \
 	   srcs/builtin/echo.c \
 	   srcs/builtin/exit.c \
+	   srcs/builtin/cd.c \
 	   srcs/signal/signal.c
 
 OBJ = $(SRC:.c=.o)
