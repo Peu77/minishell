@@ -16,7 +16,9 @@ SRC =  srcs/main.c \
 	   srcs/builtin/exit.c \
 	   srcs/builtin/cd.c \
 	   srcs/builtin/env.c \
-	   srcs/signal/signal.c
+	   srcs/signal/signal.c \
+	   srcs/parser/parser.c \
+	   srcs/parser/lexer.c \
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
