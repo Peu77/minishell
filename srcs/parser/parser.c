@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/02 19:07:19 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/02 20:30:39 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,27 @@
 #include "libft.h"
 
 #include "parse.h"
+
+void print_ast_type(t_ast_type type) {
+    if(type == AST_COMMAND)
+        printf("command");
+    if(type == AST_PIPE)
+        printf("pipe");
+    if(type == AST_SEMICOLON)
+        printf("semicolon");
+    if(type == AST_REDIRECT_INPUT)
+        printf("redirect input");
+    if(type == AST_REDIRECT_OUTPUT)
+        printf("redirect output");
+    if(type == AST_PARENTHESES)
+        printf("parentheses");
+    if(type == AST_AND)
+        printf("and");
+    if(type == AST_OR)
+        printf("or");
+    if(type == AST_REDIRECT_APPEND)
+        printf("redirect append");
+}
 
 void print_ast_node(t_ast_node *node, int depth) {
     if (node == NULL) {
@@ -25,7 +46,9 @@ void print_ast_node(t_ast_node *node, int depth) {
         printf("  ");
     }
 
-    printf("Node: %s, Type: %d\n", node->value, node->type);
+    printf("Node: %s, Type: ", node->value);
+    print_ast_type(node->type);
+    printf("\n");
 
     print_ast_node(node->left, depth + 1);
     print_ast_node(node->right, depth + 1);
