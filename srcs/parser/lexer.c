@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/01 13:19:36 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:56:16 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,25 @@ static t_token_type get_token_type(const char* str)
 
 static bool add_token(t_list** tokens, t_token_type type, char* value)
 {
-    t_ast_node* node;
+    t_token* node;
 
-    node = malloc(sizeof(t_ast_node));
+    node = malloc(sizeof(t_token));
     if(!node)
         return false;
 
     node->type = type;
     node->value = value;
-    node->left = NULL;
-    node->right = NULL;
     ft_lstadd_back(tokens, ft_lstnew(node));
     return true;
 }
 
+// TODO: handle $var
 void lex_tokens(char *input, t_list** tokens)
 {
     t_token_type type;
     int i;
-    bool in_string;
-    bool in_quotes;
     int string_i;
 
-    in_string = false;
-    in_quotes = false;
     i = 0;
     string_i = 0;
     while(input[i])
@@ -111,9 +106,9 @@ void lex_tokens(char *input, t_list** tokens)
     }
 }
 
-static void print_tokens(t_list* tokens)
-{
-    t_ast_node* node;
+static void print_tokens(t_list* tokens){
+
+    t_token* node;
 
     while(tokens)
     {
@@ -129,12 +124,15 @@ static void print_tokens(t_list* tokens)
 /*
  * compile with: cc lexer.c ../../libft/libft.a -I ../../includes && ./a.out
  *
+ */
+
+
+/*
 int main() {
     t_list* tokens = NULL;
     char* input = "echo hello && echo 'test && echo () test > || test' () world";
 
     lex_tokens(input, &tokens);
-
 
     print_tokens(tokens);
 
