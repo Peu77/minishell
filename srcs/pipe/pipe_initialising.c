@@ -71,7 +71,7 @@ static void get_path(t_command **command)
     (*command) = head;
 }
 
-static void create_command_list(char *user_prompt, t_command **command)
+static void create_command_list(char *user_prompt, t_command **command, char **envp)
 {
     char **commands;
     t_command *new_node;
@@ -89,7 +89,7 @@ static void create_command_list(char *user_prompt, t_command **command)
     {
         if (commands[i][0] != '\0')
         {
-            new_node = create_node(commands[i]);
+            new_node = create_node(commands[i], envp);
             if (!new_node)
             {
                 perror("Failed to create command node");
@@ -108,13 +108,13 @@ static void create_command_list(char *user_prompt, t_command **command)
     free(commands);
 }
 
-void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt)
+void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt, char **envp)
 {
 	(*pipe)->pid_signal = getpid();
 	(*pipe)->number_pipe = count_pipe(user_prompt);
 	(*pipe)->number_command = (*pipe)->number_pipe + 1;
 	(*pipe)->should_exit = false;
-	create_command_list(user_prompt, command);
+	create_command_list(user_prompt, command, envp);
 	get_path(command);
 	print_command_list(*command);
 }

@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 
 
-t_command *create_node(char *command_str)
+t_command *create_node(char *command_str, char **envp)
 {
     t_command *new_node;
 
@@ -22,7 +22,7 @@ t_command *create_node(char *command_str)
         free(new_node);
         return (NULL);
     }
-
+	new_node->envp = envp;
     new_node->next = NULL;
     new_node->previous = NULL;
 

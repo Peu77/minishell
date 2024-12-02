@@ -98,7 +98,7 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
 		*/
     }
 }
-void pipe_monitor(char *user_prompt)
+void pipe_monitor(char *user_prompt, char **envp)
 {
     t_pipe *pipe = malloc(sizeof(t_pipe));
     t_command *command = NULL;
@@ -111,7 +111,7 @@ void pipe_monitor(char *user_prompt)
         return;
     }
 
-    initialise_pipe(&pipe, &command, user_prompt);
+    initialise_pipe(&pipe, &command, user_prompt, envp);
     create_pipes(pipe);
     create_parent_pipe(pipe);
 

@@ -11,10 +11,12 @@ void execution_monitor(t_command *command, t_pipe *pipe)
 		{
 			if (i == 0)
 				cd(command);
-			if (i == 1)
+			else if (i == 1)
 				echo(command, 0);
+			else if (i == 2)
+					env(command);
 			else if (i == 3)
-				exit_command(pipe);
+				exit_command(pipe, command);
 			else if (i == 5)
 				printf("%s\n", pwd());
 			return ;

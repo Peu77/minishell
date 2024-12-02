@@ -18,6 +18,7 @@ typedef struct s_command
 	char *path;
 	char *argument;
 	char *command_name;
+	char **envp;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;
@@ -43,8 +44,9 @@ int get_user_prompt(char **result);
 // builtin
 char *pwd(void);
 void echo(t_command *command, bool is_n);
-void exit_command(t_pipe *pipe);
+void exit_command(t_pipe *pipe, t_command *command);
 void cd(t_command *command);
+void env(t_command *command);
 //env
 
 //execution
@@ -53,14 +55,14 @@ void execution_command(t_command *command);
 //parser
 
 //pipe
-void pipe_monitor(char *user_prompt);
+void pipe_monitor(char *user_prompt, char **envp);
 
 //pipe initialising
-void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt);
+void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
 
 //pipe utils
 void add_node_back(t_command **head, t_command *new_node);
-t_command *create_node(char *command_str);
+t_command *create_node(char *command_str, char **envp);
 void print_command_list(t_command *command_list);
 int count_pipe(char *str);
 
