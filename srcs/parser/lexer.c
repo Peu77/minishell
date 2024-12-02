@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/02 19:41:50 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/02 20:28:26 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 
 static t_token_type get_token_type(const char* str)
 {
-    if(*str == '|')
-        return TOKEN_PIPE;
-    if(*str == ';')
-        return TOKEN_SEMICOLON;
     if(ft_strncmp(str, "&&", 2) == 0)
         return TOKEN_AND;
     if(ft_strncmp(str, "||", 2) == 0)
         return TOKEN_OR;
+    if(*str == '|')
+        return TOKEN_PIPE;
+    if(*str == ';')
+        return TOKEN_SEMICOLON;
     if(*str == '<')
         return TOKEN_REDIRECT_INPUT;
-    if(*str == '>')
-        return TOKEN_REDIRECT_OUTPUT;
     if(ft_strncmp(str, ">>", 2) == 0)
         return TOKEN_REDIRECT_APPEND;
+    if(*str == '>')
+        return TOKEN_REDIRECT_OUTPUT;
     if(*str == '(')
         return TOKEN_PARENTHESES_OPEN;
     if(*str == ')')
