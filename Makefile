@@ -11,12 +11,16 @@ SRC =  srcs/main.c \
 	   srcs/pipe/pipe_utils.c \
 	   srcs/execution/execution_monitor.c \
 	   srcs/execution/execution_command.c \
+	   srcs/redirection/redirection_monitor.c \
 	   srcs/builtin/pwd.c \
 	   srcs/builtin/echo.c \
 	   srcs/builtin/exit.c \
 	   srcs/builtin/cd.c \
 	   srcs/builtin/env.c \
-	   srcs/signal/signal.c
+	   srcs/builtin/export.c \
+	   srcs/builtin/unset.c \
+	   srcs/signal/signal.c \
+	   srcs/utils/utils.c
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell

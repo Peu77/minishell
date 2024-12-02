@@ -58,14 +58,17 @@ void create_parent_pipe(t_pipe *pip)
 void prepare_execution(t_pipe *pipe, t_command *command, int i)
 {
     pid_t pid = fork();
-
+	command->redirection = "test.txt";
     if (pid == -1)
     {
         perror("fork");
         exit(EXIT_FAILURE);
     }
+	
     if (pid == 0)
     {
+		if (command->redirection)
+			redirection_monitor(command);
         if (i == 0)
         {
             dup2(pipe->pipe_fd[i][1], STDOUT_FILENO);
