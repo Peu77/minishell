@@ -18,6 +18,7 @@ typedef struct s_command
 	char *path;
 	char *argument;
 	char *command_name;
+	char *redirection;
 	char **envp;
 	struct s_command *next;
 	struct s_command *previous;
@@ -47,6 +48,8 @@ void echo(t_command *command, bool is_n);
 void exit_command(t_pipe *pipe, t_command *command);
 void cd(t_command *command);
 void env(t_command *command);
+void export_command(t_command *command);
+void unset(t_command *command);
 //env
 
 //execution
@@ -67,8 +70,12 @@ void print_command_list(t_command *command_list);
 int count_pipe(char *str);
 
 //redirection
-//
+void redirection_monitor(t_command *command);
+
 //signal 
 void signal_waiting(void);
+
+//utils
+void exit_shell(t_pipe *pipe, int erxno);
 
 #endif

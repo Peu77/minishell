@@ -7,7 +7,5 @@ void exit_command(t_pipe *pipe, t_command *command)
 	{
 		pe("Error, too many arguments");
 	}
-	else if (pipe->pid_signal > 0)
-        kill(pipe->pid_signal, SIGTERM);
-    return exit(EXIT_SUCCESS);
+	exit_shell(pipe, EXIT_SUCCESS);
 }
