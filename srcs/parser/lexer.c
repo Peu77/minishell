@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/02 14:56:16 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/02 19:41:50 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void lex_tokens(char *input, t_list** tokens)
     }
 }
 
+/*
 static void print_tokens(t_list* tokens){
 
     t_token* node;
@@ -120,6 +121,7 @@ static void print_tokens(t_list* tokens){
         tokens = tokens->next;
     }
 }
+*/
 
 /*
  * compile with: cc lexer.c ../../libft/libft.a -I ../../includes && ./a.out

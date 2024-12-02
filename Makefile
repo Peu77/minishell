@@ -17,10 +17,9 @@ SRC =  srcs/main.c \
 	   srcs/builtin/exit.c \
 	   srcs/builtin/cd.c \
 	   srcs/builtin/env.c \
-	   srcs/builtin/export.c \
-	   srcs/builtin/unset.c \
 	   srcs/signal/signal.c \
-	   srcs/utils/utils.c
+	   srcs/parser/parser.c \
+	   srcs/parser/lexer.c
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
@@ -44,7 +43,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	make fclean -C $(LIBFT_DIR);
-
 
 re: fclean all
 
