@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/03 15:00:52 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/03 15:02:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,8 @@ void lex_tokens(char *input, t_list** tokens)
             i += string_i;
         }
     }
+
+    print_tokens(*tokens);
 }
 
 
