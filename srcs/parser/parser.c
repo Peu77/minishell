@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/03 14:23:52 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:22:30 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_ast_node *parse_command(t_list **tokens) {
 }
 
 t_ast_node *parse_pipe(t_list **tokens) {
+
     t_ast_node *left = parse_primary(tokens);
 
     while (*tokens && ((t_token *) (*tokens)->content)->type == TOKEN_PIPE) {
@@ -168,6 +169,7 @@ t_ast_node *parse(char *input) {
 
     lex_tokens(input, &tokens);
 
+
     if (!tokens) {
         return NULL;
     }
@@ -182,9 +184,13 @@ t_ast_node *parse(char *input) {
 
 /*
 int main() {
-    t_ast_node *node = parse("ls la | (grep test && echo hello) || echo world");
+    t_ast_node *node = parse("ls la  | (grep test && echo hello) || echo world");
     printf("result: %d\n", node->type);
     print_ast_node(node, 0);
+    // echo Hello, World! > output.txt && cat > input.txt | grep pattern || echo No match found >> log.txt
+    t_ast_node *node2 = parse("test.txt echo testt");
+    printf("result: %d\n", node2->type);
+    print_ast_node(node2, 0);
     return 0;
 }
 */

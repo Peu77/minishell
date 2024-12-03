@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/02 14:54:31 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:03:04 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,17 @@ typedef enum e_token_type
     TOKEN_REDIRECT_APPEND = 10,
 } t_token_type;
 
+typedef struct s_redirect
+{
+    int fd_left;
+    int fd_right;
+    char *file;
+} t_redirect;
+
 typedef struct e_token
 {
     char *value;
+    void *data;
     t_token_type type;
 } t_token;
 
@@ -46,12 +54,14 @@ typedef enum e_ast_type {
     AST_AND,
     AST_OR,
     AST_REDIRECT_APPEND,
+    AST_STRING
 } t_ast_type;
 
 typedef struct s_ast_node
 {
     char *value;
     t_ast_type type;
+    void *data;
     struct s_ast_node *left;
     struct s_ast_node *right;
 } t_ast_node;
