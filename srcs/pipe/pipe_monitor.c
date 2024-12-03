@@ -68,7 +68,7 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
     {
 	command->redirection = "test.txt";
 		if (command->redirection)
-			redirection_monitor(command);
+			redirection_monitor(command, pipe);
         if (i == 0)
         {
             dup2(pipe->pipe_fd[i][1], STDOUT_FILENO);
@@ -86,6 +86,15 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
         close_unused_pipes(pipe);
         close(pipe->parent_pipe_fd[0]);
 		execution_monitor(command, pipe);
+		if(pipe->saved_stdout)
+		{
+			if (dup2(pipe->saved_stdout, STDOUT_FILENO) == -1)
+        	{
+            	perror("dup2 restore STDOUT failed");
+            	exit(EXIT_FAILURE);
+        	}
+		}
+		
 		/*
         char **arguments = ft_split(command->argument, ' ');
         if (command->path == NULL)

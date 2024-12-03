@@ -25,15 +25,19 @@ typedef struct s_command
 	struct s_command *previous;
 } t_command;
 
+
 typedef struct s_pipe
 {
-	bool should_exit;
-	int pid_signal;
-	int pipe_current_process;
-	int number_pipe;
-	int number_command;
-	int (*pipe_fd)[2];
-	int parent_pipe_fd[2];
+    bool should_exit;
+    int pid_signal;
+    int pipe_current_process;
+    int number_pipe;
+    int number_command;
+    int (*pipe_fd)[2];
+    int parent_pipe_fd[2];
+    int pipe_redirection[2];  // Pipe redirection (used for file redirection)
+    int saved_stdout;         // Saved stdout file descriptor
+    int saved_stdin;          // Saved stdin file descriptor
 } t_pipe;
 // main
 
@@ -71,7 +75,7 @@ void print_command_list(t_command *command_list);
 int count_pipe(char *str);
 
 //redirection
-void redirection_monitor(t_command *command);
+void redirection_monitor(t_command *command, t_pipe *pipe);
 
 //signal 
 void signal_waiting(void);
