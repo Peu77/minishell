@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/03 15:10:24 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/03 15:31:18 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 t_ast_node *parse_primary(t_list **tokens);
 
 void print_ast_type(t_ast_type type) {
-    if(type == AST_COMMAND)
+    if (type == AST_COMMAND)
         printf("command");
-    if(type == AST_PIPE)
+    if (type == AST_PIPE)
         printf("pipe");
-    if(type == AST_SEMICOLON)
+    if (type == AST_SEMICOLON)
         printf("semicolon");
-    if(type == AST_PARENTHESES)
+    if (type == AST_PARENTHESES)
         printf("parentheses");
-    if(type == AST_AND)
+    if (type == AST_AND)
         printf("and");
-    if(type == AST_OR)
+    if (type == AST_OR)
         printf("or");
 }
 
@@ -42,16 +42,65 @@ void print_ast_node(t_ast_node *node, int depth) {
         printf("  ");
     }
 
-    printf("Node: %s, Type: ", node->value);
-    print_ast_type(node->type);
-    printf("\n");
+
+
+    if(node->type == AST_COMMAND)
+    {
+        printf("command: %s\n", node->value);
+
+        t_list *redirects = node->redirects;
+        while(redirects)
+        {
+            for (int i = 0; i < depth; i++) {
+                printf("  ");
+            }
+            t_redirect *redirect = redirects->content;
+            printf("Redirect: %d, %d, %s\n", redirect->fd_left, redirect->fd_right, redirect->file);
+            redirects = redirects->next;
+        }
+    }
+    else {
+        printf("Node: %s, Type: ", node->value);
+        print_ast_type(node->type);
+        printf("\n");
+    }
+
+
 
     print_ast_node(node->left, depth + 1);
     print_ast_node(node->right, depth + 1);
 }
 
+static t_list *parse_redirects(t_list **redirects, t_list *tokens) {
+    while (tokens && (((t_token *) tokens->content)->type == TOKEN_REDIRECT_INPUT ||
+                      ((t_token *) tokens->content)->type == TOKEN_REDIRECT_OUTPUT ||
+                      ((t_token *) tokens->content)->type == TOKEN_REDIRECT_APPEND ||
+                      ((t_token *) tokens->content)->type == TOKEN_STRING)) {
+        t_token *token = tokens->content;
+
+        if (token->type == TOKEN_REDIRECT_INPUT || token->type == TOKEN_REDIRECT_OUTPUT || token->type ==
+            TOKEN_REDIRECT_APPEND) {
+            printf("creating redirect\n");
+            t_redirect *old_redirect = token->data;
+            t_redirect *redirect = malloc(sizeof(t_redirect));
+            printf("fd_left: %d, fd_right: %d, file: %s\n", old_redirect->fd_left, old_redirect->fd_right,
+                   old_redirect->file);
+            redirect->fd_left = old_redirect->fd_left;
+            redirect->fd_right = old_redirect->fd_right;
+            redirect->file = ft_strdup(old_redirect->file);
+            ft_lstadd_back(redirects, ft_lstnew(redirect));
+        }
+        tokens = tokens->next;
+    }
+
+    return tokens;
+}
+
 t_ast_node *parse_command(t_list **tokens) {
     t_ast_node *cmd_node = NULL;
+    t_list *redirects = NULL;
+
+    t_list *last_valid_token_node = parse_redirects(&redirects, *tokens);
 
     while (*tokens && ((t_token *) (*tokens)->content)->type == TOKEN_STRING) {
         if (!cmd_node) {
@@ -75,11 +124,17 @@ t_ast_node *parse_command(t_list **tokens) {
         *tokens = (*tokens)->next;
     }
 
+    if (cmd_node) {
+        cmd_node->redirects = redirects;
+        *tokens = last_valid_token_node;
+    } else {
+        // TODO: handle memory leaks by freeing the redirects
+    }
+
     return cmd_node;
 }
 
 t_ast_node *parse_pipe(t_list **tokens) {
-
     t_ast_node *left = parse_primary(tokens);
 
     while (*tokens && ((t_token *) (*tokens)->content)->type == TOKEN_PIPE) {
@@ -123,7 +178,6 @@ t_ast_node *parse_logical(t_list **tokens) {
 
     return left;
 }
-
 
 
 t_ast_node *parse_parentheses(t_list **tokens) {
@@ -176,9 +230,10 @@ t_ast_node *parse(char *input) {
  *
  */
 
+
 /*
 int main() {
-    t_ast_node *node = parse("ls la  | (grep test && echo hello) || echo world");
+    t_ast_node *node = parse("ls la > test  | (grep test && echo hello) || echo world 4< test_file");
     printf("result: %d\n", node->type);
     print_ast_node(node, 0);
     // echo Hello, World! > output.txt && cat > input.txt | grep pattern || echo No match found >> log.txt
@@ -188,4 +243,3 @@ int main() {
     return 0;
 }
 */
-
