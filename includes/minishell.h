@@ -20,6 +20,7 @@ typedef struct s_command
 	char *command_name;
 	char *redirection;
 	char **envp;
+	char *redirection_token;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;

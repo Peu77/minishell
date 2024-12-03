@@ -8,6 +8,7 @@ static void exit_signal(int signal)
         exit(EXIT_SUCCESS);
     }
 }
+
 void signal_waiting()
 {
 	if (signal(SIGUSR1, exit_signal) == SIG_ERR) 
