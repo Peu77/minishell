@@ -12,6 +12,7 @@ SRC =  srcs/main.c \
 	   srcs/execution/execution_monitor.c \
 	   srcs/execution/execution_command.c \
 	   srcs/redirection/redirection_monitor.c \
+	   srcs/redirection/redirection.c \
 	   srcs/builtin/pwd.c \
 	   srcs/builtin/echo.c \
 	   srcs/builtin/exit.c \

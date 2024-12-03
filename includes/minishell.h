@@ -76,7 +76,9 @@ int count_pipe(char *str);
 
 //redirection
 void redirection_monitor(t_command *command, t_pipe *pipe);
-
+void redirection_output(t_command *command, t_pipe *pipe);
+void redirection_input(t_command *command, t_pipe *pipe);
+void redirection_append(t_command *command, t_pipe *pipe);
 //signal 
 void signal_waiting(void);
 
