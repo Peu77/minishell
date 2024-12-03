@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/02 20:53:28 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/03 14:23:52 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,12 @@ t_ast_node *parse(char *input) {
  *
  */
 
-
+/*
 int main() {
     t_ast_node *node = parse("ls la | (grep test && echo hello) || echo world");
     printf("result: %d\n", node->type);
     print_ast_node(node, 0);
     return 0;
 }
+*/
 

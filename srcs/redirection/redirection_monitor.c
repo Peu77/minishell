@@ -2,7 +2,7 @@
 
 void redirection_monitor(t_command *command)
 {
-	char redirection_token = '<';
+	char redirection_token = '>';
 
 	if (redirection_token == '>')
 	{
@@ -54,6 +54,7 @@ void redirection_monitor(t_command *command)
         }
         close(fd);
     }
+	//tobuil
 	else if (redirection_token == 'h')
     {
        int fd = open(command->redirection, O_RDONLY);
