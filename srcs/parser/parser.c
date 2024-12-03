@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/02 22:22:30 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/03 15:10:24 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,12 @@ void print_ast_type(t_ast_type type) {
         printf("pipe");
     if(type == AST_SEMICOLON)
         printf("semicolon");
-    if(type == AST_REDIRECT_INPUT)
-        printf("redirect input");
-    if(type == AST_REDIRECT_OUTPUT)
-        printf("redirect output");
     if(type == AST_PARENTHESES)
         printf("parentheses");
     if(type == AST_AND)
         printf("and");
     if(type == AST_OR)
         printf("or");
-    if(type == AST_REDIRECT_APPEND)
-        printf("redirect append");
 }
 
 void print_ast_node(t_ast_node *node, int depth) {
@@ -178,7 +172,7 @@ t_ast_node *parse(char *input) {
 }
 
 /*
- * compile with: cc lexer.c parser.c ../../libft/libft.a -I ../../includes && ./a.out
+ * compile with: cc lexer.c parser.c ../../libft/libft.a ../error/error.c -I ../../includes && ./a.out
  *
  */
 
