@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 11:51:00 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 16:22:39 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,18 @@ t_ast_node *parse(char *input);
 
 void lex_tokens(char *input, t_list** tokens);
 
-#define ERROR_PARSE_REDIRECT ((void *)-1)
+#define PARSE_ERROR ((void *)-1)
 
 t_list *parse_redirects(t_list **redirects, t_list *tokens);
 
 bool is_redirect_token(t_token_type type);
 
 void free_redirect(void *redirect);
+
+t_ast_node* create_ast_node(t_ast_type type, char *value, t_list* redirects);
+
+void free_ast_node(void *content);
+
+void free_token(void *content);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 11:33:38 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 16:29:41 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static bool add_token(t_list** tokens, t_token_type type, char* value)
 }
 
 // TODO: handle memory leaks
-static int parse_redirect(t_list** tokens, const char* str, t_token_type redirect_type)
+static int parse_redirect_to_token(t_list** tokens, const char* str, t_token_type redirect_type)
 {
     t_redirect* redirect;
     t_token* node;
@@ -84,6 +84,7 @@ static int parse_redirect(t_list** tokens, const char* str, t_token_type redirec
     i = 0;
     redirect = malloc(sizeof(t_redirect));
     node = malloc(sizeof(t_token));
+    node->value = NULL;
     if(!redirect || !node)
         return (free(redirect), free(node), -1);
     redirect->fd_left = 0;
@@ -202,7 +203,7 @@ void lex_tokens(char *input, t_list** tokens)
         type = get_token_type(input + i);
         if(is_redirect_token(type))
         {
-            i += parse_redirect(tokens, input + i, type);
+            i += parse_redirect_to_token(tokens, input + i, type);
             continue;
         }
 

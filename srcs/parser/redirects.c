@@ -6,9 +6,11 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 13:51:44 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 15:45:16 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <minishell.h>
 
 #include "parse.h"
 #include <stdio.h>
@@ -45,7 +47,7 @@ t_list *parse_redirects(t_list **redirects, t_list *tokens) {
             t_redirect *old_redirect = token->data;
             t_redirect *redirect = malloc(sizeof(t_redirect));
             if (!redirect)
-                return ERROR_PARSE_REDIRECT;
+                return PARSE_ERROR;
             printf("fd_left: %d, fd_right: %d, file: %s\n", old_redirect->fd_left, old_redirect->fd_right,
                    old_redirect->file);
             redirect->fd_left = old_redirect->fd_left;
@@ -57,14 +59,15 @@ t_list *parse_redirects(t_list **redirects, t_list *tokens) {
                 redirect->file = NULL;
 
             if (!redirect->file && old_redirect->file)
-                return (free(redirect), ERROR_PARSE_REDIRECT);
+                return (free(redirect), PARSE_ERROR);
             new_node = ft_lstnew(redirect);
             if (!new_node)
-                return (free_redirect(redirect), ERROR_PARSE_REDIRECT);
+                return (free_redirect(redirect), PARSE_ERROR);
             ft_lstadd_back(redirects, new_node);
         }
         tokens = tokens->next;
     }
+
 
     return tokens;
 }
