@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 11:11:54 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 14:02:20 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ t_ast_node *parse_command(t_list **tokens) {
     t_list *redirects = NULL;
 
     t_list *last_valid_token_node = parse_redirects(&redirects, *tokens);
+
+
+    if(last_valid_token_node == ERROR_PARSE_REDIRECT) {
+        printf("failed to parse redirects\n");
+        return (ft_lstclear(&redirects, free_redirect), NULL);
+    }
 
     while (*tokens && ((t_token *) (*tokens)->content)->type == TOKEN_STRING) {
         if (!cmd_node) {
@@ -201,13 +207,17 @@ t_ast_node *parse(char *input) {
 }
 
 /*
- * compile with: cc lexer.c parser.c ../../libft/libft.a ../error/error.c -I ../../includes && ./a.out
+ * compile with: cc lexer.c parser.c ../../libft/libft.a ../error/error.c redirects.c -g -fsanitize=address -I ../../includes && ./a.out
  *
  */
 
 /*
 int main() {
-    t_ast_node *node = parse("ls la > test  | (grep test && echo hello) || echo world 4< test_file");
+    t_ast_node *node = parse("ls la <&3 | (grep test && echo hello) || echo world 4< test_file");
+    if(node == NULL) {
+        printf("failed to parse\n");
+        return 1;
+    }
     printf("result: %d\n", node->type);
     print_ast_node(node, 0);
     // echo Hello, World! > output.txt && cat > input.txt | grep pattern || echo No match found >> log.txt
@@ -217,4 +227,5 @@ int main() {
     return 0;
 }
 */
+
 

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 11:14:00 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 13:51:44 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void free_redirect(t_redirect *redirect) {
+void free_redirect(void *content) {
+    t_redirect *redirect;
+
+    redirect = content;
     free(redirect->file);
     free(redirect);
 }
 
-bool is_redirect_token(t_token *token) {
-    return token->type == TOKEN_REDIRECT_INPUT || token->type == TOKEN_REDIRECT_OUTPUT ||
-           token->type == TOKEN_REDIRECT_APPEND;
+bool is_redirect_token(t_token_type type) {
+    return type == TOKEN_REDIRECT_INPUT || type == TOKEN_REDIRECT_OUTPUT ||
+           type == TOKEN_REDIRECT_APPEND;
 }
 
 /**
@@ -31,9 +34,9 @@ bool is_redirect_token(t_token *token) {
  * @return the last token of the redirect/commands section
  */
 t_list *parse_redirects(t_list **redirects, t_list *tokens) {
-    t_list* new_node;
+    t_list *new_node;
 
-    while (tokens && (is_redirect_token(tokens->content) ||
+    while (tokens && (is_redirect_token(((t_token *) tokens->content)->type) ||
                       ((t_token *) tokens->content)->type == TOKEN_STRING)) {
         t_token *token = tokens->content;
 
@@ -41,18 +44,23 @@ t_list *parse_redirects(t_list **redirects, t_list *tokens) {
             printf("creating redirect\n");
             t_redirect *old_redirect = token->data;
             t_redirect *redirect = malloc(sizeof(t_redirect));
-            if(!redirect)
-                return NULL;
+            if (!redirect)
+                return ERROR_PARSE_REDIRECT;
             printf("fd_left: %d, fd_right: %d, file: %s\n", old_redirect->fd_left, old_redirect->fd_right,
                    old_redirect->file);
             redirect->fd_left = old_redirect->fd_left;
             redirect->fd_right = old_redirect->fd_right;
-            redirect->file = ft_strdup(old_redirect->file);
-            if(!redirect->file && old_redirect->file)
-                return (free(redirect), NULL);
+
+            if (old_redirect->file)
+                redirect->file = ft_strdup(old_redirect->file);
+            else
+                redirect->file = NULL;
+
+            if (!redirect->file && old_redirect->file)
+                return (free(redirect), ERROR_PARSE_REDIRECT);
             new_node = ft_lstnew(redirect);
-            if(!new_node)
-                return (free_redirect(redirect), NULL);
+            if (!new_node)
+                return (free_redirect(redirect), ERROR_PARSE_REDIRECT);
             ft_lstadd_back(redirects, new_node);
         }
         tokens = tokens->next;

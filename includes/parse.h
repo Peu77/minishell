@@ -6,13 +6,14 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 11:11:49 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 11:51:00 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 #include "libft.h"
+#include <stdbool.h>
 
 typedef enum e_token_type
 {
@@ -67,6 +68,12 @@ t_ast_node *parse(char *input);
 
 void lex_tokens(char *input, t_list** tokens);
 
+#define ERROR_PARSE_REDIRECT ((void *)-1)
+
 t_list *parse_redirects(t_list **redirects, t_list *tokens);
+
+bool is_redirect_token(t_token_type type);
+
+void free_redirect(void *redirect);
 
 #endif

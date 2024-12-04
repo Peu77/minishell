@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 10:56:21 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 11:33:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void lex_tokens(char *input, t_list** tokens)
         }
 
         type = get_token_type(input + i);
-        if(type == TOKEN_REDIRECT_APPEND || type == TOKEN_REDIRECT_INPUT || type == TOKEN_REDIRECT_OUTPUT)
+        if(is_redirect_token(type))
         {
             i += parse_redirect(tokens, input + i, type);
             continue;
@@ -237,7 +237,7 @@ void lex_tokens(char *input, t_list** tokens)
 
 
 /*
- * compile with: cc lexer.c ../../libft/libft.a ../error/error.c -I ../../includes && ./a.out
+ * compile with: cc lexer.c ../../libft/libft.a ../error/error.c redirects.c -I ../../includes && ./a.out
  *
  */
 
@@ -251,4 +251,5 @@ int main() {
     return 0;
 }
 */
+
 

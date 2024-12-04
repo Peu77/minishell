@@ -25,6 +25,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/parser.c \
 	   srcs/parser/redirects.c \
 	   srcs/parser/lexer.c \
+	   srcs/parser/ast_utils.c
 
 
 OBJ = $(SRC:.c=.o)
