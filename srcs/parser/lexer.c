@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/03 15:02:46 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 10:53:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,19 @@ static t_token_type get_token_type(const char* str)
 
 static bool add_token(t_list** tokens, t_token_type type, char* value)
 {
-    t_token* node;
+    t_token* new_token;
+    t_list* new_node;
 
-    node = malloc(sizeof(t_token));
-    if(!node)
+    new_token = malloc(sizeof(t_token));
+    if(!new_token)
         return false;
 
-    node->type = type;
-    node->value = value;
-    ft_lstadd_back(tokens, ft_lstnew(node));
+    new_token->type = type;
+    new_token->value = value;
+    new_node = ft_lstnew(new_token);
+    if(!new_node)
+        return (free(new_token), false);
+    ft_lstadd_back(tokens, new_node);
     return true;
 }
 
@@ -146,17 +150,42 @@ static void print_tokens(t_list* tokens){
     }
 }
 
+bool parse_single_quote(char *input, int *i, t_list** tokens)
+{
+    int j;
+    char* sub_str;
+    bool add_token_result;
+
+    j = 0;
+    while(input[*i + j] && input[*i + j] != '\'')
+        j++;
+
+    if(input[*i + j] != '\'')
+    {
+        pe("Error: missing closing quote");
+        return false;
+    }
+    sub_str = ft_substr(input, *i, j);
+    if(!sub_str)
+        return false;
+    add_token_result = add_token(tokens, TOKEN_STRING, sub_str);
+    if(!add_token_result)
+        return (free(sub_str),false);
+    *i += j + 1;
+    return true;
+}
 
 // TODO: handle $var
 void lex_tokens(char *input, t_list** tokens)
 {
     t_token_type type;
+    const size_t len = ft_strlen(input);
     int i;
     int string_i;
 
     i = 0;
     string_i = 0;
-    while(input[i])
+    while(i < len)
     {
         if(ft_isspace(input[i]))
         {
@@ -165,12 +194,9 @@ void lex_tokens(char *input, t_list** tokens)
         }
         string_i = 0;
         if(input[i] == '\'') {
-            // TODO: handle escaped quotes
-            while(input[i + string_i + 1] && input[i + string_i + 1] != '\'')
-                string_i++;
-
-            add_token(tokens, TOKEN_STRING, ft_substr(input, i + 1, string_i));
-            i += string_i + 2;
+            i++;
+            if(!parse_single_quote(input, &i, tokens))
+                break;
         }
 
         type = get_token_type(input + i);
@@ -222,18 +248,7 @@ int main() {
     char* input = "1< test echo hello 1>&1 filename test && echo 'test && echo () test > || test' () world";
 
     lex_tokens(input, &tokens);
-
-    print_tokens(tokens);
-
-    t_list* tokens2 = NULL;
-    char* input_redirect = " >&4234fwef dffew";
-    int offset = parse_redirect(&tokens2, input_redirect, TOKEN_REDIRECT_OUTPUT);
-    printf("offset: %d\n", offset);
-    printf("token type: %d\n", ((t_token*)tokens2->content)->type);
-    printf("fd_left: %d\n", ((t_redirect*)((t_token*)tokens2->content)->data)->fd_left);
-    printf("fd_right: %d\n", ((t_redirect*)((t_token*)tokens2->content)->data)->fd_right);
-    printf("file: %s\n", ((t_redirect*)((t_token*)tokens2->content)->data)->file);
-
     return 0;
 }
 */
+
