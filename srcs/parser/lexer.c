@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 10:53:01 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 10:56:21 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ static void print_tokens(t_list* tokens){
     }
 }
 
-bool parse_single_quote(char *input, int *i, t_list** tokens)
+bool parse_single_quote(char *input, size_t *i, t_list** tokens)
 {
     int j;
     char* sub_str;
@@ -180,7 +180,7 @@ void lex_tokens(char *input, t_list** tokens)
 {
     t_token_type type;
     const size_t len = ft_strlen(input);
-    int i;
+    size_t i;
     int string_i;
 
     i = 0;
