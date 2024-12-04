@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/03 15:31:18 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 11:11:54 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,6 @@ void print_ast_node(t_ast_node *node, int depth) {
 
     print_ast_node(node->left, depth + 1);
     print_ast_node(node->right, depth + 1);
-}
-
-static t_list *parse_redirects(t_list **redirects, t_list *tokens) {
-    while (tokens && (((t_token *) tokens->content)->type == TOKEN_REDIRECT_INPUT ||
-                      ((t_token *) tokens->content)->type == TOKEN_REDIRECT_OUTPUT ||
-                      ((t_token *) tokens->content)->type == TOKEN_REDIRECT_APPEND ||
-                      ((t_token *) tokens->content)->type == TOKEN_STRING)) {
-        t_token *token = tokens->content;
-
-        if (token->type == TOKEN_REDIRECT_INPUT || token->type == TOKEN_REDIRECT_OUTPUT || token->type ==
-            TOKEN_REDIRECT_APPEND) {
-            printf("creating redirect\n");
-            t_redirect *old_redirect = token->data;
-            t_redirect *redirect = malloc(sizeof(t_redirect));
-            printf("fd_left: %d, fd_right: %d, file: %s\n", old_redirect->fd_left, old_redirect->fd_right,
-                   old_redirect->file);
-            redirect->fd_left = old_redirect->fd_left;
-            redirect->fd_right = old_redirect->fd_right;
-            redirect->file = ft_strdup(old_redirect->file);
-            ft_lstadd_back(redirects, ft_lstnew(redirect));
-        }
-        tokens = tokens->next;
-    }
-
-    return tokens;
 }
 
 t_ast_node *parse_command(t_list **tokens) {
@@ -230,7 +205,6 @@ t_ast_node *parse(char *input) {
  *
  */
 
-
 /*
 int main() {
     t_ast_node *node = parse("ls la > test  | (grep test && echo hello) || echo world 4< test_file");
@@ -243,3 +217,4 @@ int main() {
     return 0;
 }
 */
+

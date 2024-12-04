@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/03 15:09:12 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/04 11:11:49 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ typedef struct s_ast_node
 t_ast_node *parse(char *input);
 
 void lex_tokens(char *input, t_list** tokens);
+
+t_list *parse_redirects(t_list **redirects, t_list *tokens);
 
 #endif
