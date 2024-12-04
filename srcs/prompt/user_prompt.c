@@ -10,7 +10,6 @@ int get_user_prompt(char **user_prompt)
 		nread = getline(user_prompt, &len, stdin);
 		if (nread == -1)
 			return pe(ERROR_GET_LINE);
-		if ((*user_prompt)[nread - 1] == '\n')
-			(*user_prompt)[nread - 1] = '\0';
+		remove_newline(*user_prompt);
 	return (1);
 }

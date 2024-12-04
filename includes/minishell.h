@@ -21,6 +21,7 @@ typedef struct s_command
 	char *redirection;
 	char **envp;
 	char *redirection_token;
+	char *delimiter;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;
@@ -35,9 +36,8 @@ typedef struct s_pipe
     int number_command;
     int (*pipe_fd)[2];
     int parent_pipe_fd[2];
-    int pipe_redirection[2];  // Pipe redirection (used for file redirection)
-    int saved_stdout;         // Saved stdout file descriptor
-    int saved_stdin;          // Saved stdin file descriptor
+    int pipe_redirection[2];
+    int saved_stdout;
 } t_pipe;
 // main
 
@@ -79,10 +79,13 @@ void redirection_monitor(t_command *command, t_pipe *pipe);
 void redirection_output(t_command *command, t_pipe *pipe);
 void redirection_input(t_command *command, t_pipe *pipe);
 void redirection_append(t_command *command, t_pipe *pipe);
+void redirection_heredoc(const char *str);
+
 //signal 
 void signal_waiting(void);
 
 //utils
 void exit_shell(t_pipe *pipe, int erxno);
+void remove_newline(char *buffer);
 
 #endif
