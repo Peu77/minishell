@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 16:22:39 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/05 10:03:49 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_ast_node
 
 t_ast_node *parse(char *input);
 
-void lex_tokens(char *input, t_list** tokens);
+bool lex_tokens(char *input, t_list** tokens);
 
 #define PARSE_ERROR ((void *)-1)
 

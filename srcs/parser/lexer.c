@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 16:29:41 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/05 10:49:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,61 +75,65 @@ static bool add_token(t_list** tokens, t_token_type type, char* value)
 }
 
 // TODO: handle memory leaks
-static int parse_redirect_to_token(t_list** tokens, const char* str, t_token_type redirect_type)
+static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_type redirect_type, size_t* i)
 {
     t_redirect* redirect;
-    t_token* node;
-    int i;
+    t_token* token;
+    t_list* new_node;
 
-    i = 0;
     redirect = malloc(sizeof(t_redirect));
-    node = malloc(sizeof(t_token));
-    node->value = NULL;
-    if(!redirect || !node)
-        return (free(redirect), free(node), -1);
+    token = malloc(sizeof(t_token));
+    if(!redirect || !token)
+        return (free(redirect), free(token), false);
     redirect->fd_left = 0;
     redirect->fd_right = 0;
     redirect->file = NULL;
     if(ft_isdigit(*str))
     {
         redirect->fd_left = ft_atoi(str);
-        while(ft_isdigit(str[i]))
-            i++;
+        while(ft_isdigit(str[*i]))
+            (*i)++;
     }
 
-    i++;
+    // skip redirect char like <, >, >>
+    (*i)++;
 
-    if(str[i] == 0) {
-        pe("parse error near `newline'");
-        return (free(redirect),free(node), -1);
-    }
+    if(str[*i] == 0 || (str[*i] == '&' && str[*i + 1] == 0))
+        return (pe("parse error near `\\n'"), free(redirect),free(token), false);
 
-    if(str[i] == '&') {
-        // TODO: possbile sigsegv if no number is provided
-        i++;
-        redirect->fd_right = ft_atoi(str + i);
-        while(ft_isdigit(str[i]))
-            i++;
+    if(str[*i] == '&') {
+        (*i)++;
+        redirect->fd_right = ft_atoi(str + *i);
+        while(str[*i] && ft_isdigit(str[*i]))
+            (*i)++;
+
     }else {
         // in case if filename is provided
-        while (str[i] && ft_isspace(str[i]))
-            i++;
+        while (str[*i] && ft_isspace(str[*i]))
+            (*i)++;
 
-        //TODO: handle special case if ' &1' is provided
+        int filename_len = 0;
+        while(str[*i + filename_len] && !ft_isspace(str[*i + filename_len]))
+            filename_len++;
 
-        int len_until_space = 0;
-        while(str[i + len_until_space] && !ft_isspace(str[i + len_until_space]))
-            len_until_space++;
+        if(filename_len == 0)
+            return (pe("parse error near `\\n'"), free(redirect),free(token), false);
 
-        redirect->file = ft_substr(str, i, len_until_space);
-        i += len_until_space;
+        redirect->file = ft_substr(str, *i, filename_len);
+        if(redirect->file == NULL)
+            return (free(redirect),free(token), false);
+        *i += filename_len;
     }
 
-    node->type = redirect_type;
-    node->data = redirect;
-    ft_lstadd_back(tokens, ft_lstnew(node));
+    token->value = NULL;
+    token->type = redirect_type;
+    token->data = redirect;
+    new_node = ft_lstnew(token);
+    if(!new_node)
+        return (free_redirect(redirect),free(token), false);
+    ft_lstadd_back(tokens, new_node);
 
-    return i;
+    return true;
 }
 
 
@@ -177,7 +181,7 @@ bool parse_single_quote(char *input, size_t *i, t_list** tokens)
 }
 
 // TODO: handle $var
-void lex_tokens(char *input, t_list** tokens)
+bool lex_tokens(char *input, t_list** tokens)
 {
     t_token_type type;
     const size_t len = ft_strlen(input);
@@ -193,7 +197,6 @@ void lex_tokens(char *input, t_list** tokens)
             i++;
             continue;
         }
-        string_i = 0;
         if(input[i] == '\'') {
             i++;
             if(!parse_single_quote(input, &i, tokens))
@@ -203,12 +206,14 @@ void lex_tokens(char *input, t_list** tokens)
         type = get_token_type(input + i);
         if(is_redirect_token(type))
         {
-            i += parse_redirect_to_token(tokens, input + i, type);
+            if(!parse_redirect_to_token(tokens, input, type, &i))
+                break;
             continue;
         }
 
         if(type != TOKEN_STRING) {
-            add_token(tokens, type, NULL);
+            if(!add_token(tokens, type, NULL))
+                break;
             if(type == TOKEN_END)
                 break;
             i++;
@@ -227,12 +232,20 @@ void lex_tokens(char *input, t_list** tokens)
         }
         if(string_i > 0)
         {
-            add_token(tokens, TOKEN_STRING, ft_substr(input, i, string_i));
+            if(!add_token(tokens, TOKEN_STRING, ft_substr(input, i, string_i)))
+                break;
             i += string_i;
         }
     }
 
+    if(i != len) {
+        pe("failed to parse input");
+        ft_lstclear(tokens, free_token);
+        return false;
+    }
+
     print_tokens(*tokens);
+    return true;
 }
 
 
