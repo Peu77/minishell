@@ -47,7 +47,6 @@ void add_node_back(t_command **head, t_command *new_node)
     new_node->previous = current;
 }
 
-
 void print_command_list(t_command *command_list)
 {
     t_command *current;

@@ -10,8 +10,11 @@
 #define RED     "\033[1;31m"
 #define RESET   "\033[0m"
 #define MAX_PATH 1024
-#define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
 #define NUM_BUILTINS 7
+
+#define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
+#define ERROR_SPLIT "ERROR WITH SPLIT FUNCTION"
+#define ERROR_INITIALISE "ERROR WITH INITIALISING COMMAND"
 
 typedef struct s_command
 {
@@ -22,6 +25,7 @@ typedef struct s_command
 	char **envp;
 	char *redirection_token;
 	char *delimiter;
+	char **command_split;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;
@@ -69,12 +73,11 @@ void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt);
 void add_node_back(t_command **head, t_command *new_node);
 t_command *create_node(char *command_str, char **envp);
 void print_command_list(t_command *command_list);
-int count_pipe(char *str);
 
 //initialiser
-void initialise_pipe(t_pipe **pipe, char *user_prompt);
+int initialise_pipe(t_pipe **pipe, char *user_prompt);
 int initialise_monitor(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
-void  initialise_command(t_command **command, char *user_prompt, char **envp);
+int initialise_command(t_command **command, char *user_prompt, char **envp);
 
 //redirection
 void redirection_monitor(t_command *command, t_pipe *pipe);
@@ -90,5 +93,7 @@ void signal_waiting(void);
 void exit_shell(t_pipe *pipe, int erxno);
 void remove_newline(char *buffer);
 void free_command(t_command **command);
-
+void free_pipe(t_pipe **pipe);
+void free_command_split(char **command_split);
+int free_all(t_pipe **pipe, t_command **command);
 #endif

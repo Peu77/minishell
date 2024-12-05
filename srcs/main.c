@@ -18,7 +18,7 @@ int main(int argc, char **argv, char **envp)
 		//PIPING
 
 	    if(!initialise_monitor(&pipe, &command, user_prompt, envp))
-			return 0;
+			return free_all(&pipe, &command);
 		pipe_monitor(pipe, command, user_prompt);
 		free(user_prompt);		// ctrl + d / ctrl + c / ctrl + /	}
 		free_command(&command);
