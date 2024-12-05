@@ -1,5 +1,20 @@
 #include "../../includes/minishell.h"
 
+void free_command(t_command **command)
+{
+    t_command *temp;
+
+    if (!command || !*command)
+        return;
+
+    while (*command)
+    {
+        temp = (*command)->next;
+        free(*command);
+        *command = temp;
+    }
+}
+
 static void close_fd(t_pipe *pipe_struct)
 {
 	int i = 0;

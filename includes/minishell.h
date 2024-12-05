@@ -63,16 +63,16 @@ void execution_command(t_command *command);
 //parser
 
 //pipe
-void pipe_monitor(char *user_prompt, char **envp);
-
-//pipe initialising
-void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
+void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt);
 
 //pipe utils
 void add_node_back(t_command **head, t_command *new_node);
 t_command *create_node(char *command_str, char **envp);
 void print_command_list(t_command *command_list);
 int count_pipe(char *str);
+
+//initialiser
+void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
 
 //redirection
 void redirection_monitor(t_command *command, t_pipe *pipe);
@@ -87,5 +87,6 @@ void signal_waiting(void);
 //utils
 void exit_shell(t_pipe *pipe, int erxno);
 void remove_newline(char *buffer);
+void free_command(t_command **command);
 
 #endif

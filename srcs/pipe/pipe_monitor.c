@@ -106,11 +106,9 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
         	}
 		}
 }
-void pipe_monitor(char *user_prompt, char **envp)
-{
-    t_pipe *pipe = malloc(sizeof(t_pipe));
-    t_command *command = NULL;
 
+void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt)
+{
     if (!user_prompt || *user_prompt == '\0')
         return;
     if (!pipe)
@@ -118,8 +116,6 @@ void pipe_monitor(char *user_prompt, char **envp)
         pe("Failed to allocate memory for pipe structure");
         return;
     }
-
-    initialise_pipe(&pipe, &command, user_prompt, envp);
     create_pipes(pipe);
     create_parent_pipe(pipe);
 
@@ -147,8 +143,6 @@ void pipe_monitor(char *user_prompt, char **envp)
     // Close parent pipe's reading end
     close(pipe->parent_pipe_fd[0]);
     close_unused_pipes(pipe);
-
+	free_command(&command);
     // Free allocated memory
-    free(pipe->pipe_fd);
-    free(pipe);
 }
