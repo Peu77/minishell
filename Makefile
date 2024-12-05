@@ -22,6 +22,7 @@ SRC =  srcs/main.c \
 	   srcs/builtin/export.c \
 	   srcs/builtin/unset.c \
 	   srcs/utils/utils.c \
+	   srcs/utils/clean.c \
 	   srcs/builtin/env.c \
 	   srcs/signal/signal.c \
 	   srcs/parser/parser.c \
