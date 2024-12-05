@@ -66,26 +66,37 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
 	
     if (pid == 0)
     {
-	command->redirection = "test.txt";
 		if (command->redirection)
 			redirection_monitor(command, pipe);
-        if (i == 0)
-        {
-            dup2(pipe->pipe_fd[i][1], STDOUT_FILENO);
-        }
-        else if (i == pipe->number_command - 1)
-        {
-            dup2(pipe->pipe_fd[i - 1][0], STDIN_FILENO);
-        }
-        else
-        {
-            dup2(pipe->pipe_fd[i - 1][0], STDIN_FILENO);
-            dup2(pipe->pipe_fd[i][1], STDOUT_FILENO);
-        }
+		if (i == 0) 
+		{
+			dup2(pipe->pipe_fd[i][1], STDOUT_FILENO);
+		}
+		else if (i == pipe->number_command - 1)
+		{
+			dup2(pipe->pipe_fd[i - 1][0], STDIN_FILENO);
+		}
+		else 
+		{
+			dup2(pipe->pipe_fd[i - 1][0], STDIN_FILENO);
+			dup2(pipe->pipe_fd[i][1], STDOUT_FILENO);
+		}
 
-        close_unused_pipes(pipe);
-        close(pipe->parent_pipe_fd[0]);
-		execution_monitor(command, pipe);
+		close_unused_pipes(pipe);
+		close(pipe->parent_pipe_fd[0]);
+		close(pipe->parent_pipe_fd[1]);
+        execution_monitor(command, pipe);
+
+        exit(EXIT_SUCCESS);
+    }
+    else
+    {
+        if (i > 0)
+            close(pipe->pipe_fd[i - 1][0]);
+
+        if (i < pipe->number_command - 1) 
+            close(pipe->pipe_fd[i][1]);
+    }
 		if(pipe->saved_stdout)
 		{
 			if (dup2(pipe->saved_stdout, STDOUT_FILENO) == -1)
@@ -94,21 +105,6 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
             	exit(EXIT_FAILURE);
         	}
 		}
-		
-		/*
-        char **arguments = ft_split(command->argument, ' ');
-        if (command->path == NULL)
-        {
-            printf("Command %s not found\n", command->command_name);
-            exit(EXIT_FAILURE);
-        }
-        else if (execve(command->path, arguments, NULL) == -1)
-        {
-            perror("execve failed");
-            exit(EXIT_FAILURE);
-        }
-		*/
-    }
 }
 void pipe_monitor(char *user_prompt, char **envp)
 {
@@ -119,7 +115,7 @@ void pipe_monitor(char *user_prompt, char **envp)
         return;
     if (!pipe)
     {
-        perror("Failed to allocate memory for pipe structure");
+        pe("Failed to allocate memory for pipe structure");
         return;
     }
 
@@ -131,7 +127,6 @@ void pipe_monitor(char *user_prompt, char **envp)
     while (i < pipe->number_command)
     {
         pipe->pipe_current_process = i + 1;
-
         prepare_execution(pipe, command, i);
         i++;
         command = command->next;

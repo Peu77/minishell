@@ -3,7 +3,7 @@
 
 void redirection_monitor(t_command *command, t_pipe *pipe)
 {
-	char redirection_token = 'h';
+	char redirection_token = '>';
 	if (redirection_token == '>')
 		redirection_output(command, pipe);
 	// a for append( >>)
