@@ -17,9 +17,11 @@ int main(int argc, char **argv, char **envp)
 		//2. STEP 2 . EXECUTION
 		//PIPING
 
-	    initialise_pipe(&pipe, &command, user_prompt, envp);
+	    if(!initialise_monitor(&pipe, &command, user_prompt, envp))
+			return 0;
 		pipe_monitor(pipe, command, user_prompt);
 		free(user_prompt);		// ctrl + d / ctrl + c / ctrl + /	}
+		free_command(&command);
 	}
 	return (EXIT_SUCCESS);
 }

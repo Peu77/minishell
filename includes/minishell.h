@@ -72,7 +72,9 @@ void print_command_list(t_command *command_list);
 int count_pipe(char *str);
 
 //initialiser
-void initialise_pipe(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
+void initialise_pipe(t_pipe **pipe, char *user_prompt);
+int initialise_monitor(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
+void  initialise_command(t_command **command, char *user_prompt, char **envp);
 
 //redirection
 void redirection_monitor(t_command *command, t_pipe *pipe);

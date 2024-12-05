@@ -47,21 +47,6 @@ void add_node_back(t_command **head, t_command *new_node)
     new_node->previous = current;
 }
 
-int count_pipe(char *str)
-{
-	int count;
-	int i;
-
-	count = 0;
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] == '|')
-			count++;
-		i++;
-	}
-	return (count);
-}
 
 void print_command_list(t_command *command_list)
 {

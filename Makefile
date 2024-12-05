@@ -9,6 +9,8 @@ SRC =  srcs/main.c \
 	   srcs/pipe/pipe_monitor.c \
 	   srcs/pipe/pipe_utils.c \
 	   srcs/initialiser/initialiser_monitor.c \
+	   srcs/initialiser/initialiser_pipe.c \
+	   srcs/initialiser/initialiser_command.c \
 	   srcs/execution/execution_monitor.c \
 	   srcs/execution/execution_command.c \
 	   srcs/redirection/redirection_monitor.c \
