@@ -76,6 +76,7 @@ void create_pipes(t_pipe *pip);
 void close_unused_pipes(t_pipe *pip);
 void create_parent_pipe(t_pipe *pip);
 void prepare_execution(t_pipe *pipe, t_command *command, int i);
+void close_all_fds(t_pipe *pipe);
 
 
 //pipe monitor

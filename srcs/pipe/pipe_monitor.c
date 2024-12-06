@@ -24,23 +24,18 @@ void execute_with_pipes(t_pipe *pipe, t_command *command)
 {
     create_pipes(pipe);
     create_parent_pipe(pipe);
-    int i = 0;
-    while (i < pipe->number_command)
+    int i = -1;
+    while (++i < pipe->number_command)
     {
         pipe->pipe_current_process = i + 1;
         prepare_execution(pipe, command, i);
-        i++;
         command = command->next;
     }
     close(pipe->parent_pipe_fd[1]);
-    i = 0;
-    while (i < pipe->number_command)
-    {
+    i = -1;
+    while (++i < pipe->number_command)
         wait(NULL);
-        i++;
-    }
-    close(pipe->parent_pipe_fd[0]);
-    close_unused_pipes(pipe);
+    close_all_fds(pipe);
 }
 
 
