@@ -56,13 +56,13 @@ void pev(const char *message);
 int get_user_prompt(char **result);
 
 // builtin
-char *pwd(void);
-void echo(t_command *command, bool is_n);
-void exit_command(t_pipe *pipe, t_command *command);
-void cd(t_command *command);
-void env(t_command *command);
-void export_command(t_command *command);
-void unset(t_command *command);
+int pwd(void);
+int echo(t_command *command, bool is_n);
+int exit_command(t_pipe *pipe, t_command *command);
+int cd(t_command *command);
+int env(t_command *command);
+int export_command(t_command *command);
+int unset(t_command *command);
 //env
 
 //execution

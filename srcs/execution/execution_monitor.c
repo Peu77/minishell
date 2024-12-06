@@ -3,9 +3,9 @@
 void execution_monitor(t_command *command, t_pipe *pipe)
 {
     char *list_builtin[NUM_BUILTINS] = {"cd", "echo", "env", "exit", "export", "pwd", "unset"};
-    int i = 0;
+    int i = -1;
 
-	while (i < NUM_BUILTINS)
+	while (++i < NUM_BUILTINS)
 	{
 		if (ft_strnstr(command->argument, list_builtin[i], ft_strlen(command->argument)))
 		{
@@ -20,12 +20,11 @@ void execution_monitor(t_command *command, t_pipe *pipe)
 			else if (i == 4)
 				export_command(command);
 			else if (i == 5)
-				printf("%s\n", pwd());
+				pwd();
 			else if (i == 6)
 				unset(command);
 			return ;
 		}
-		i++;
 	}
 	execution_command(command);
 }

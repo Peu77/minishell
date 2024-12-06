@@ -1,15 +1,16 @@
 #include "../../includes/minishell.h"
 
-char *pwd() 
+int pwd(void) 
 {
     char *buffer = malloc(MAX_PATH);
     if (buffer == NULL)
-        return NULL;
+        return (0);
     if (getcwd(buffer, MAX_PATH) == NULL)
 	{
 		pe("error with getting path");
         free(buffer);
-        return NULL;
+        return (0);
     }
-    return (buffer);
+	printf("%s \n", buffer);
+	return (1);
 }
