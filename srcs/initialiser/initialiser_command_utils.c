@@ -9,11 +9,7 @@ static void initialize_command_node(t_command *node, char *command_str, char **e
 
     node->argument = ft_strdup(command_str);
     if (!node->argument)
-    {
-        perror("Failed to duplicate command string");
-        return;
-    }
-
+        return pev("Failed to duplicate command string");
     node->envp = envp;
     node->next = NULL;
     node->previous = NULL;
@@ -30,10 +26,7 @@ t_command *create_node(char *command_str, char **envp)
 
     new_node = malloc(sizeof(t_command));
     if (!new_node)
-    {
-        perror("Failed to allocate memory for command node");
-        return (NULL);
-    }
+		return (pe(ERROR_MALLOC), NULL);
     initialize_command_node(new_node, command_str, envp);
     return (new_node);
 }

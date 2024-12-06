@@ -1,47 +1,43 @@
 #include "../../includes/minishell.h"
 
+static char *construct_full_path(char *path, const char *command)
+{
+    char *full_path;
+    
+    full_path = malloc(ft_strlen(path) + ft_strlen(command) + 2);
+    if (!full_path)
+        return (pev(ERROR_MALLOC), NULL);
+    ft_strlcpy(full_path, path, ft_strlen(path) + 1);
+    ft_strlcat(full_path, "/", ft_strlen(path) + ft_strlen(command) + 2);
+    ft_strlcat(full_path, command, ft_strlen(path) + ft_strlen(command) + 2);  // Append command
+    return (full_path);
+}
+
 char *find_command_in_path(const char *command)
 {
     char *env_path;
     char **paths;
     char *full_path;
-    int i = 0;
+    int i = -1;
 
     env_path = getenv("PATH");
     if (!env_path)
-    {
-        printf("No PATH environment variable found.\n");
-        return NULL;
-    }
+        return (pev(ERROR_FIND_ENV), NULL);
     paths = ft_split(env_path, ':');
     if (!paths)
+        return (pev(ERROR_SPLIT), NULL);
+    while (paths[++i])
     {
-        printf("Error splitting PATH.\n");
-        return NULL;
-    }
-    while (paths[i])
-    {
-        full_path = malloc(ft_strlen(paths[i]) + ft_strlen(command) + 2);
+        full_path = construct_full_path(paths[i], command);
         if (!full_path)
-        {
-            printf("Memory allocation error.\n");
-            free_command_split(paths);
-            return NULL;
-        }
-		ft_strlcpy(full_path, paths[i], ft_strlen(paths[i]) + 1);
-		ft_strlcat(full_path, "/", ft_strlen(paths[i]) + ft_strlen(command) + 2);
-		ft_strlcat(full_path, command, ft_strlen(paths[i]) + ft_strlen(command) + 2); // full_path_size
+            return (free_command_split(paths), NULL);
         if (access(full_path, F_OK) == 0) 
-        {
-            free_command_split(paths);
-            return full_path;
-        }
+            return (free_command_split(paths), full_path);
         free(full_path);
         full_path = NULL;
-        i++;
     }
     free_command_split(paths);
-    return (NULL);
+    return NULL;
 }
 
 static int get_path(t_command **command)
@@ -104,8 +100,7 @@ int initialise_command(t_command **command, char *user_prompt, char **envp)
 {
 	if(!create_command_list(user_prompt, command, envp))
 		return (0);
-	if(!get_path(command))
-		return (0);
+	get_path(command);
 	
 	return (1);
 }

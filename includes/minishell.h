@@ -17,6 +17,8 @@
 #define ERROR_SPLIT "ERROR WITH SPLIT FUNCTION"
 #define ERROR_INITIALISE "ERROR WITH INITIALISING COMMAND"
 #define ERROR_NODE "ERROR CREATING THE NODE"
+#define ERROR_MALLOC "ERROR ALLOCATION MEMORY"
+#define ERROR_FIND_ENV "ERROR FINDING PATH ENV"
 
 typedef struct s_command
 {
@@ -49,6 +51,7 @@ typedef struct s_pipe
 
 //error
 int pe(const char *message);
+void pev(const char *message);
 
 //prompt
 int get_user_prompt(char **result);
