@@ -1,6 +1,26 @@
 #include "../../includes/minishell.h"
 
 
+
+static void initialize_command_node(t_command *node, char *command_str, char **envp)
+{
+    if (!node)
+        return;
+
+    node->argument = ft_strdup(command_str);
+    if (!node->argument)
+    {
+        perror("Failed to duplicate command string");
+        return;
+    }
+
+    node->envp = envp;
+    node->next = NULL;
+    node->previous = NULL;
+    node->redirection_token = NULL;
+    node->redirection = NULL;
+}
+
 t_command *create_node(char *command_str, char **envp)
 {
     t_command *new_node;
@@ -14,18 +34,7 @@ t_command *create_node(char *command_str, char **envp)
         perror("Failed to allocate memory for command node");
         return (NULL);
     }
-
-    new_node->argument = strdup(command_str);
-    if (!new_node->argument)
-    {
-        perror("Failed to duplicate command string");
-        free(new_node);
-        return (NULL);
-    }
-	new_node->envp = envp;
-    new_node->next = NULL;
-    new_node->previous = NULL;
-
+    initialize_command_node(new_node, command_str, envp);
     return (new_node);
 }
 
@@ -64,6 +73,8 @@ void print_command_list(t_command *command_list)
         printf("- Command : %s\n", current->argument);
 		printf("- PATH : %s \n", current->path);
         printf("- Command Name : %s\n", current->command_name);
+        printf("- Argument : %s\n", current->argument);
+        printf("- redirection_token  : %s\n", current->redirection_token);
         current = current->next;
     }
 }

@@ -1,14 +1,13 @@
 #include "../../includes/minishell.h"
-#include <sys/syslimits.h>
 #include <unistd.h>
 
 
 void cd(t_command *command)
 {
     char **path = ft_split(command->argument, ' ');
-    char buffer[PATH_MAX];
+    char buffer[MAX_PATH];
 
-    printf("Old repository: %s\n", getcwd(buffer, PATH_MAX));
+    printf("Old repository: %s\n", getcwd(buffer, MAX_PATH));
     if (!path[1])
     {
         if (chdir("/") != 0) 
@@ -21,7 +20,8 @@ void cd(t_command *command)
             perror("Problem with the path");
         }
     }
-    printf("New repository: %s\n", getcwd(buffer, PATH_MAX));
+    printf("New repository: %s\n", getcwd(buffer, MAX_PATH));
+
     int i = 0;
     while (path[i]) 
     {

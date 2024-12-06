@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define RED     "\033[1;31m"
 #define RESET   "\033[0m"
@@ -15,6 +16,7 @@
 #define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
 #define ERROR_SPLIT "ERROR WITH SPLIT FUNCTION"
 #define ERROR_INITIALISE "ERROR WITH INITIALISING COMMAND"
+#define ERROR_NODE "ERROR CREATING THE NODE"
 
 typedef struct s_command
 {

@@ -25,35 +25,37 @@ char *find_command_in_path(const char *command)
         if (!full_path)
         {
             printf("Memory allocation error.\n");
+            free_command_split(paths);
             return NULL;
         }
-        strcpy(full_path, paths[i]);
-        strcat(full_path, "/");
-        strcat(full_path, command);
+		ft_strlcpy(full_path, paths[i], ft_strlen(paths[i]) + 1);
+		ft_strlcat(full_path, "/", ft_strlen(paths[i]) + ft_strlen(command) + 2);
+		ft_strlcat(full_path, command, ft_strlen(paths[i]) + ft_strlen(command) + 2); // full_path_size
         if (access(full_path, F_OK) == 0) 
         {
-            free(paths);
+            free_command_split(paths);
             return full_path;
         }
-        free(full_path); 
+        free(full_path);
+        full_path = NULL;
         i++;
     }
-    free(paths);
-    return NULL;
+    free_command_split(paths);
+    return (NULL);
 }
 
 static int get_path(t_command **command)
 {
-    t_command *head;
+    t_command *head = (*command);
     char **path;
-	char *found_path;
-    head = (*command);
+    char *found_path;
+
     while ((*command))
     {
         path = ft_split((*command)->argument, ' ');
         if (!path)
-            return 0;
-		((*command)->command_name) = path[0];
+            return pe(ERROR_SPLIT);
+        (*command)->command_name = ft_strdup(path[0]);
         found_path = find_command_in_path((*command)->command_name);
         if (found_path)
         {
@@ -65,13 +67,11 @@ static int get_path(t_command **command)
             (*command)->path = NULL;
             printf("Command '%s' not found in PATH.\n", path[0]);
         }
-		(*command)->redirection_token = NULL;
-		(*command)->redirection = NULL;
+        free_command_split(path);
         (*command) = (*command)->next;
-        free(path);
     }
-    (*command) = head;
-	return (1);
+    *command = head;
+    return (1);
 }
 
 static int create_command_list(char *user_prompt, t_command **command, char **envp)
@@ -84,21 +84,14 @@ static int create_command_list(char *user_prompt, t_command **command, char **en
         return 0;
     command_split = ft_split(user_prompt, '|');
     if (!command_split)
-    {
-        perror("Failed to split user prompt");
-        return 0;
-    }
+        perror(ERROR_SPLIT);
     while (command_split[i])
     {
         if (command_split[i][0] != '\0')
         {
             new_node = create_node(command_split[i], envp);
             if (!new_node)
-            {
-                perror("Failed to create command node");
-                free_command_split(command_split);
-                return 0;
-            }
+                pe(ERROR_NODE);
             add_node_back(command, new_node);
         }
         i++;
