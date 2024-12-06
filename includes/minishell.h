@@ -70,7 +70,16 @@ void execution_monitor(t_command *command, t_pipe *pipe);
 void execution_command(t_command *command);
 //parser
 
-//pipe
+
+//pipe 
+void create_pipes(t_pipe *pip);
+void close_unused_pipes(t_pipe *pip);
+void create_parent_pipe(t_pipe *pip);
+void prepare_execution(t_pipe *pipe, t_command *command, int i);
+
+
+//pipe monitor
+//
 void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt);
 
 //pipe utils

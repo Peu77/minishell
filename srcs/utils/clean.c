@@ -15,7 +15,6 @@ void free_command_split(char **command_split)
         i++;
     }
     free(command_split);
-	command_split[i] = NULL;
 }
 
 
