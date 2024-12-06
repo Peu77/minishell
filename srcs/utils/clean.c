@@ -54,7 +54,7 @@ void free_pipe(t_pipe **pipe)
         return;
 
     free(*pipe);
-    *pipe = NULL; // Avoid dangling pointer
+    *pipe = NULL;
 }
 
 int free_all(t_pipe **pipe, t_command **command)
