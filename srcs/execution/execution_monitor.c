@@ -14,11 +14,11 @@ void execution_monitor(t_command *command, t_pipe *pipe)
 			else if (i == 1)
 				echo(command, 0);
 			else if (i == 2)
-					env(command);
+				env(command);
 			else if (i == 3)
 				exit_command(pipe, command);
 			else if (i == 4)
-					export_command(command);
+				export_command(command);
 			else if (i == 5)
 				printf("%s\n", pwd());
 			else if (i == 6)

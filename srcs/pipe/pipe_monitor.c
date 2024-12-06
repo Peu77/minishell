@@ -1,22 +1,29 @@
 #include "../../includes/minishell.h"
 
-void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt)
+
+void execute_no_pipe(t_command *command, t_pipe *pipe)
 {
-    if (!user_prompt || *user_prompt == '\0')
-        return;
-    if (!pipe)
+    pid_t pid = fork();
+    if (pid == -1)
     {
-        pe("Failed to allocate memory for pipe structure");
-        return;
+        perror("fork");
+        exit(EXIT_FAILURE);
     }
-	if(pipe->number_command == 1)
-	{
+    if (pid == 0)
+    {
+        if (command->redirection)
+            redirection_monitor(command, pipe);
         execution_monitor(command, pipe);
-		return ;
-	}
+    }
+    else
+        (wait(NULL));
+}
+
+
+void execute_with_pipes(t_pipe *pipe, t_command *command)
+{
     create_pipes(pipe);
     create_parent_pipe(pipe);
-
     int i = 0;
     while (i < pipe->number_command)
     {
@@ -25,7 +32,6 @@ void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt)
         i++;
         command = command->next;
     }
-
     close(pipe->parent_pipe_fd[1]);
     i = 0;
     while (i < pipe->number_command)
@@ -33,7 +39,21 @@ void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt)
         wait(NULL);
         i++;
     }
-
     close(pipe->parent_pipe_fd[0]);
     close_unused_pipes(pipe);
 }
+
+
+int pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt)
+{
+    if (!user_prompt || *user_prompt == '\0')
+        pe("empty user prompt");
+    if (!pipe)
+        pe("Failed to allocate memory for pipe structure");
+	if(pipe->number_command == 1)
+        execute_no_pipe(command, pipe);
+	else
+		execute_with_pipes(pipe, command);
+	return 1;
+}
+

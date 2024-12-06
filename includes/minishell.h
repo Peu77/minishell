@@ -79,8 +79,7 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i);
 
 
 //pipe monitor
-//
-void pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt);
+int pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt);
 
 //pipe utils
 void add_node_back(t_command **head, t_command *new_node);
