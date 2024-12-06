@@ -29,9 +29,6 @@ void free_command(t_command **command)
     while (*command)
     {
         temp = (*command)->next;
-
-        if ((*command)->command_split)
-            free_command_split((*command)->command_split);
         if ((*command)->path)
         {
             free((*command)->path);

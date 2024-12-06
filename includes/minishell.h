@@ -29,7 +29,6 @@ typedef struct s_command
 	char **envp;
 	char *redirection_token;
 	char *delimiter;
-	char **command_split;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;

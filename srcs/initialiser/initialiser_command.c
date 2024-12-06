@@ -43,27 +43,21 @@ char *find_command_in_path(const char *command)
 static int get_path(t_command **command)
 {
     t_command *head = (*command);
-    char **path;
     char *found_path;
 
     while ((*command))
     {
-        path = ft_split((*command)->argument, ' ');
-        if (!path)
-            return pe(ERROR_SPLIT);
-        (*command)->command_name = ft_strdup(path[0]);
         found_path = find_command_in_path((*command)->command_name);
         if (found_path)
         {
             (*command)->path = found_path;
-            printf("Command '%s' found at: %s\n", path[0], found_path);
+            printf("Command '%s' found at: %s\n", (*command)->command_name, found_path);
         }
         else
         {
             (*command)->path = NULL;
-            printf("Command '%s' not found in PATH.\n", path[0]);
+            printf("Command '%s' not found in PATH.\n", (*command)->command_name );
         }
-        free_command_split(path);
         (*command) = (*command)->next;
     }
     *command = head;

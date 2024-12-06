@@ -2,19 +2,29 @@
 
 
 
-static void initialize_command_node(t_command *node, char *command_str, char **envp)
+static int initialize_command_node(t_command *node, char *command_str, char **envp)
 {
-    if (!node)
-        return;
+    char **path;
 
+    if (!node)
+        return 0;
     node->argument = ft_strdup(command_str);
     if (!node->argument)
-        return pev("Failed to duplicate command string");
+        return pe("Failed to duplicate command string");
+    path = ft_split(node->argument, ' ');
+	if (!path)
+            return (pe(ERROR_SPLIT));
+    node->command_name = ft_strdup(path[0]);
+	if(!node->command_name)
+        return pe("Failed to duplicate command string");
     node->envp = envp;
     node->next = NULL;
     node->previous = NULL;
     node->redirection_token = NULL;
     node->redirection = NULL;
+
+    free_command_split(path);
+	return (1);
 }
 
 t_command *create_node(char *command_str, char **envp)
@@ -26,8 +36,9 @@ t_command *create_node(char *command_str, char **envp)
 
     new_node = malloc(sizeof(t_command));
     if (!new_node)
-		return (pe(ERROR_MALLOC), NULL);
-    initialize_command_node(new_node, command_str, envp);
+		return (pev(ERROR_MALLOC), NULL);
+    if(!initialize_command_node(new_node, command_str, envp))
+		return(NULL);
     return (new_node);
 }
 
