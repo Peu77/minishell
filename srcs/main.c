@@ -6,7 +6,6 @@ int main(int argc, char **argv, char **envp)
 	char *user_prompt;
 	(void)argc;
     (void)argv;
-	(void)envp;
 	while (1)
 	{
 		//t_pipe *pipe = malloc(sizeof(t_pipe));
@@ -27,7 +26,8 @@ int main(int argc, char **argv, char **envp)
 		free_all(&pipe, &command);
 		*/
     t_ast_node  *node = parse(user_prompt);
-	if(node == NULL) {
+	if(node == NULL)
+	{
         printf("failed to parse\n");
         return 1;
     }
@@ -38,7 +38,7 @@ int main(int argc, char **argv, char **envp)
 
     printf("result: %d\n", node->type);
     print_ast_node(node, 0);
-	tree_monitor(node, command);
+	tree_monitor(node, command, envp);
     free_ast_node(node);	
 	}
 	return (EXIT_SUCCESS);

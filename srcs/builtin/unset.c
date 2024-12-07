@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int unset(t_command *command)
+int unset(t_command_test *command)
 {
 	char **arg = ft_split(command->argument, ' ');
 	int i = 0;

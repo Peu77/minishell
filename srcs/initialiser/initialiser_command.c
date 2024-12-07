@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-
+/*
 static char *construct_full_path(char *path, const char *command)
 {
     char *full_path;
@@ -99,4 +99,4 @@ int initialise_command(t_command **command, char *user_prompt, char **envp)
 	return (1);
 }
 
-
+*/

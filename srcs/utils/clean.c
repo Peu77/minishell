@@ -18,34 +18,26 @@ void free_command_split(char **command_split)
 }
 
 
-void free_command(t_command **command)
+void free_command(t_command_test **command)
 {
-    t_command *temp;
-
     if (!command || !*command)
-        return;
-
-    while (*command)
-    {
-        temp = (*command)->next;
-        if ((*command)->path)
-        {
-            free((*command)->path);
-            (*command)->path = NULL;
-        }
-        if ((*command)->command_name)
-        {
-            free((*command)->command_name);
-            (*command)->command_name = NULL;
-        }
-        if ((*command)->argument)
-        {
-            free((*command)->argument);
-            (*command)->argument = NULL;
-        }
-        free(*command);
-        *command = temp;
-    }
+		return;
+	if ((*command)->path)
+	{
+		free((*command)->path);
+		(*command)->path = NULL;
+	}
+	if ((*command)->command_name)
+	{
+		free((*command)->command_name);
+		(*command)->command_name = NULL;
+	}
+	if ((*command)->argument)
+	{
+		free((*command)->argument);
+		(*command)->argument = NULL;
+	}
+	free(*command);
 }
 
 void free_pipe(t_pipe **pipe)
@@ -57,9 +49,11 @@ void free_pipe(t_pipe **pipe)
     *pipe = NULL;
 }
 
+/*
 int free_all(t_pipe **pipe, t_command **command)
 {
 	free_pipe(pipe);
 	free_command(command);
 	return (1);
 }
+*/

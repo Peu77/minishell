@@ -34,7 +34,8 @@ int concatenate_arguments(char **arg, char **result)
     return (1);
 }
 
-int transform_node_to_command(char *value, t_command_test **command)
+
+int transform_node_to_command(char *value, t_command_test **command, char **envp)
 {
     char **arg;
 
@@ -56,6 +57,7 @@ int transform_node_to_command(char *value, t_command_test **command)
         }
     }
 	get_path(command);
+	(*command)->envp = envp;
     free_command_split(arg);
     return (1);
 }

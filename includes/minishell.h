@@ -23,6 +23,7 @@
 
 typedef struct s_command_test
 {
+	char **envp;
 	char *path;
 	char *argument;
 	char *command_name;
@@ -57,13 +58,12 @@ typedef struct s_pipe
 
 // main
 //monitor 
-int tree_monitor(t_ast_node *node, t_command_test *command);
+int tree_monitor(t_ast_node *node, t_command_test *command, char **envp);
 void get_command_from_node(t_command_test **command);
 void print_command(t_command_test *command);
 int concatenate_arguments(char **arg, char **result);
-int transform_node_to_command(char *value, t_command_test **command);
+int transform_node_to_command(char *value, t_command_test **command, char **envp);
 int get_path(t_command_test **command);
-
 
 //error
 int pe(const char *message);
@@ -74,17 +74,18 @@ int get_user_prompt(char **result);
 
 // builtin
 int pwd(void);
-int echo(t_command *command, bool is_n);
-int exit_command(t_pipe *pipe, t_command *command);
-int cd(t_command *command);
-int env(t_command *command);
-int export_command(t_command *command);
-int unset(t_command *command);
+int echo(t_command_test *command, bool is_n);
+int exit_command(t_command_test *command);
+int cd(t_command_test *command);
+int env(t_command_test *command);
+int export_command(t_command_test *command);
+int unset(t_command_test *command);
 //env
 
 //execution
-void execution_monitor(t_command *command, t_pipe *pipe);
-void execution_command(t_command *command);
+int execution_monitor(t_command_test *command);
+int prepare_execution_command(t_command_test *command);
+int execution_command(char **arguments, char *path);
 //parser
 
 
@@ -122,7 +123,7 @@ void signal_waiting(void);
 //utils
 void exit_shell(t_pipe *pipe, int erxno);
 void remove_newline(char *buffer);
-void free_command(t_command **command);
+void free_command(t_command_test **command);
 void free_pipe(t_pipe **pipe);
 void free_command_split(char **command_split);
 int free_all(t_pipe **pipe, t_command **command);

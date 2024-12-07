@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-
+/*
 void create_pipes(t_pipe *pip)
 {
 	pip->pipe_fd = malloc(pip->number_pipe * sizeof(int[2]));
@@ -104,3 +104,5 @@ void prepare_execution(t_pipe *pipe, t_command *command, int i)
     }
     pipe->saved_stdout = 0;
 }
+*/
+

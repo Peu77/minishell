@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-
+/*
 void execute_no_pipe(t_command *command, t_pipe *pipe)
 {
     pid_t pid = fork();
@@ -51,4 +51,4 @@ int pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt)
 		execute_with_pipes(pipe, command);
 	return 1;
 }
-
+*/

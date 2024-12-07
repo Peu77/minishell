@@ -2,7 +2,7 @@
 #include <unistd.h>
 
 
-int echo(t_command *command, bool is_n)
+int echo(t_command_test *command, bool is_n)
 {
 	if(!command->argument && !is_n)	
 		ft_putchar_fd('\n', STDOUT_FILENO);

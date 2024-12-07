@@ -6,12 +6,6 @@ INCLUDES = -I./includes
 SRC =  srcs/main.c \
 	   srcs/prompt/user_prompt.c \
 	   srcs/error/error.c \
-	   srcs/pipe/pipe_monitor.c \
-	   srcs/pipe/pipe.c \
-	   srcs/initialiser/initialiser_monitor.c \
-	   srcs/initialiser/initialiser_pipe.c \
-	   srcs/initialiser/initialiser_command.c \
-	   srcs/initialiser/initialiser_command_utils.c \
 	   srcs/execution/execution_monitor.c \
 	   srcs/execution/execution_command.c \
 	   srcs/redirection/redirection_monitor.c \
