@@ -5,18 +5,18 @@ void redirection_output(t_command *command, t_pipe *pipe)
     pipe->saved_stdout = dup(STDOUT_FILENO);
     if (pipe->saved_stdout == -1)
     {
-        perror("dup failed for saving STDOUT");
+        pev("dup failed for saving STDOUT");
         exit(EXIT_FAILURE);
     }
     int fd = open(command->redirection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd == -1)
     {
-        perror("open failed for redirection");
+        pev("open failed for redirection");
         exit(EXIT_FAILURE);
     }
     if (dup2(fd, STDOUT_FILENO) == -1)
     {
-        perror("dup2 failed for redirection");
+        pev("dup2 failed for redirection");
         close(fd);
         exit(EXIT_FAILURE);
     }
@@ -29,18 +29,18 @@ void redirection_append(t_command *command, t_pipe *pipe)
 	pipe->saved_stdout = dup(STDOUT_FILENO);
 	if (pipe->saved_stdout == -1)
 	{
-		perror("dup failed for saving STDOUT");
+		pev("dup failed for saving STDOUT");
 		exit(EXIT_FAILURE);
 	}
 	int fd = open(command->redirection, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		perror("open failed for redirection");
+		pev("open failed for redirection");
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
-		perror("dup2 failed for redirection");
+		pev("dup2 failed for redirection");
 		close(fd);
 		exit(EXIT_FAILURE);
 	}
@@ -52,18 +52,18 @@ void redirection_input(t_command *command, t_pipe *pipe)
 	pipe->saved_stdout = dup(STDOUT_FILENO);
 	if (pipe->saved_stdout == -1)
 	{
-		perror("dup failed for saving STDOUT");
+		pev("dup failed for saving STDOUT");
 		exit(EXIT_FAILURE);
 	}
 	int fd = open(command->redirection, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("open failed for input redirection");
+		pev("open failed for input redirection");
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
-		perror("dup2 failed for input redirection");
+		pev("dup2 failed for input redirection");
 		close(fd);
 		exit(EXIT_FAILURE);
 	}
@@ -78,24 +78,23 @@ void redirection_heredoc(const char *delimiter)
     int temp_fd;
 
     temp_fd = open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
-    if (temp_fd == -1) {
-        perror("Erreur lors de la création du fichier temporaire");
+    if (temp_fd == -1)
+	{
+        pev("Erreur lors de la création du fichier temporaire");
         exit(EXIT_FAILURE);
     }
     printf("heredoc> ");
-    while ((nread = getline(&buffer, &bufsize, stdin)) != -1) {
+    while ((nread = getline(&buffer, &bufsize, stdin)) != -1)
+	{
         remove_newline(buffer);
-        if (strcmp(buffer, delimiter) == 0)
+		if (ft_strncmp(buffer, delimiter, ft_strlen(delimiter)) == 0)
             break;
         write(temp_fd, buffer, nread);
         write(temp_fd, "\n", 1);
-
         printf("heredoc> ");
     }
-
-    free(buffer);  // Free the allocated buffer
+    free(buffer);
     close(temp_fd);
-
     temp_fd = open("heredoc_temp.txt", O_RDONLY);
     if (temp_fd == -1) {
         perror("Erreur lors de l'ouverture du fichier temporaire");

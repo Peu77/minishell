@@ -31,6 +31,9 @@ SRC =  srcs/main.c \
 	   srcs/parser/lexer.c \
 	   srcs/parser/ast_utils.c \
 	   srcs/parser/token_utils.c \
+	   srcs/monitor/tree_monitor.c \
+	   srcs/monitor/initialise_command.c \
+	   srcs/monitor/get_path.c \
 
 
 OBJ = $(SRC:.c=.o)

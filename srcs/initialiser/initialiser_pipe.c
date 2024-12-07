@@ -6,12 +6,11 @@ static int count_pipe(char *str)
 	int i;
 
 	count = 0;
-	i = 0;
-	while(str[i])
+	i = -1;
+	while(str[++i])
 	{
 		if (str[i] == '|')
 			count++;
-		i++;
 	}
 	return (count);
 }

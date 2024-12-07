@@ -40,13 +40,10 @@ static char *find_command_in_path(const char *command)
     return NULL;
 }
 
-static int get_path(t_command **command)
+int get_path(t_command_test **command)
 {
-    t_command *head = (*command);
     char *found_path;
 
-    while ((*command))
-    {
         found_path = find_command_in_path((*command)->command_name);
         if (found_path)
         {
@@ -58,45 +55,5 @@ static int get_path(t_command **command)
             (*command)->path = NULL;
             printf("Command '%s' not found in PATH.\n", (*command)->command_name );
         }
-        (*command) = (*command)->next;
-    }
-    *command = head;
     return (1);
 }
-
-static int create_command_list(char *user_prompt, t_command **command, char **envp)
-{
-    char **command_split;
-    t_command *new_node;
-    int i = 0;
-
-    if (!user_prompt || !command)
-        return 0;
-    command_split = ft_split(user_prompt, '|');
-    if (!command_split)
-        perror(ERROR_SPLIT);
-    while (command_split[i])
-    {
-        if (command_split[i][0] != '\0')
-        {
-            new_node = create_node(command_split[i], envp);
-            if (!new_node)
-                pe(ERROR_NODE);
-            add_node_back(command, new_node);
-        }
-        i++;
-    }
-    free_command_split(command_split);
-	return (1);
-}
-
-int initialise_command(t_command **command, char *user_prompt, char **envp)
-{
-	if(!create_command_list(user_prompt, command, envp))
-		return (0);
-	get_path(command);
-	
-	return (1);
-}
-
-

@@ -2,6 +2,7 @@
 #define MINISHELL_H
 
 #include "libft.h"
+#include "parse.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <signal.h>
@@ -19,6 +20,13 @@
 #define ERROR_NODE "ERROR CREATING THE NODE"
 #define ERROR_MALLOC "ERROR ALLOCATION MEMORY"
 #define ERROR_FIND_ENV "ERROR FINDING PATH ENV"
+
+typedef struct s_command_test
+{
+	char *path;
+	char *argument;
+	char *command_name;
+} t_command_test;
 
 typedef struct s_command
 {
@@ -46,7 +54,16 @@ typedef struct s_pipe
     int pipe_redirection[2];
     int saved_stdout;
 } t_pipe;
+
 // main
+//monitor 
+int tree_monitor(t_ast_node *node, t_command_test *command);
+void get_command_from_node(t_command_test **command);
+void print_command(t_command_test *command);
+int concatenate_arguments(char **arg, char **result);
+int transform_node_to_command(char *value, t_command_test **command);
+int get_path(t_command_test **command);
+
 
 //error
 int pe(const char *message);
@@ -109,4 +126,8 @@ void free_command(t_command **command);
 void free_pipe(t_pipe **pipe);
 void free_command_split(char **command_split);
 int free_all(t_pipe **pipe, t_command **command);
+
+
+//parser
+void print_ast_node(t_ast_node *node, int depth);
 #endif
