@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-
+/*
 static void close_fd(t_pipe *pipe_struct)
 {
 	int i = 0;
@@ -41,7 +41,7 @@ void	exit_shell(t_pipe *pipe, int exno)
 	free(pipe);
 	exit(exno);
 }
-
+*/
 void remove_newline(char *buffer) 
 {
     size_t len = ft_strlen(buffer);

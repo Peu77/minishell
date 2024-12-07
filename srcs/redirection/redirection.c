@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-
+/*
 void redirection_output(t_command *command, t_pipe *pipe)
 {
     pipe->saved_stdout = dup(STDOUT_FILENO);
@@ -104,3 +104,4 @@ void redirection_heredoc(const char *delimiter)
     close(temp_fd);
     unlink("heredoc_temp.txt");
 }
+*/

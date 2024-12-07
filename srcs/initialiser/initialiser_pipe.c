@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-
+/*
 static int count_pipe(char *str)
 {
 	int count;
@@ -24,3 +24,4 @@ int initialise_pipe(t_pipe **pipe, char *user_prompt)
 	(*pipe)->should_exit = false;
 	return (1);
 }
+*/

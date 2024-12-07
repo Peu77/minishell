@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-
+/*
 void redirection_monitor(t_command *command, t_pipe *pipe)
 {
 	char redirection_token = '>';
@@ -16,3 +16,4 @@ void redirection_monitor(t_command *command, t_pipe *pipe)
 	else
 		return ;
 }
+*/
