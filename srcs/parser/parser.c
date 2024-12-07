@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 16:38:12 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/07 17:19:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void print_ast_node(t_ast_node *node, int depth) {
     for (int i = 0; i < depth; i++) {
         printf("  ");
     }
-
 
     if (node->type == AST_COMMAND) {
         printf("command: %s\n", node->value);
@@ -212,9 +211,9 @@ t_ast_node *parse(char *input) {
 
 /*
 int main() {
-    t_ast_node *node = parse("ls la <&3 | (grep test && echo hello) || echo world 4< test_file");
+    t_ast_node *node = parse("echo hello world >&4 | cat -e | wc -l 4> test");
     if(node == NULL) {
-        printf("failed to parse\n");
+        printf("failed to parse lol\n");
         return 1;
     }
     if(node == PARSE_ERROR) {

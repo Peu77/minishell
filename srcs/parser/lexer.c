@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/05 10:49:13 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/07 17:20:06 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
     redirect->fd_left = 0;
     redirect->fd_right = 0;
     redirect->file = NULL;
-    if(ft_isdigit(*str))
+    if(ft_isdigit(str[*i]))
     {
         redirect->fd_left = ft_atoi(str);
         while(ft_isdigit(str[*i]))
@@ -118,6 +118,7 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
 
         if(filename_len == 0)
             return (pe("parse error near `\\n'"), free(redirect),free(token), false);
+
 
         redirect->file = ft_substr(str, *i, filename_len);
         if(redirect->file == NULL)
@@ -239,7 +240,6 @@ bool lex_tokens(char *input, t_list** tokens)
     }
 
     if(i != len) {
-        pe("failed to parse input");
         ft_lstclear(tokens, free_token);
         return false;
     }
