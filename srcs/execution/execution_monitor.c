@@ -51,13 +51,12 @@ int execution_monitor(t_command_test *command)
                 result = unset(command);
             if (command->saved_stdout)
                 restore_standard_fds(command);
-
-            return result;
+            return (result);
         }
     }
     result = prepare_execution_command(command);
     if (command->saved_stdout)
         restore_standard_fds(command);
 
-    return result;
+    return (result);
 }

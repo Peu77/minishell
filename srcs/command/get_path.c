@@ -48,7 +48,6 @@ int get_path(t_command_test **command)
         if (found_path)
         {
             (*command)->path = found_path;
-            printf("Command '%s' found at: %s\n", (*command)->command_name, found_path);
         }
         else
         {
