@@ -42,7 +42,7 @@ int handle_pipe(t_ast_node *node, char **envp)
 
 int tree_monitor(t_ast_node *node, t_command_test *command, char **envp)
 {
-	t_redirect* redirect = NULL;
+	t_list* redirect = NULL;
     if (!node)
         return (0);
     if (node->type == AST_PIPE)
@@ -54,7 +54,7 @@ int tree_monitor(t_ast_node *node, t_command_test *command, char **envp)
     {
 
 		if (node->redirects)
-			redirect = (t_redirect *)(node->redirects->content);
+			redirect = (node->redirects);
 		else
     		redirect = NULL;
         transform_node_to_command(node->value, &command, redirect, envp);

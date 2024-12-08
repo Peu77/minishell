@@ -13,7 +13,6 @@ int execution_command(char **arguments, char *path)
     }
     else
         waitpid(pid, NULL, 0);
-
     return (1);
 }
 

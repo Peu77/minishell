@@ -1,14 +1,26 @@
 #include "../../includes/minishell.h"
 
-void restore_stdout(t_command_test *command)
+
+void restore_standard_fds(t_command_test *command)
 {
-    if (dup2(command->saved_stdout, STDOUT_FILENO) == -1)
+    if (command->saved_stdout != -1)
     {
-        perror("dup2 restore STDOUT failed");
-        exit(EXIT_FAILURE);
+        if (dup2(command->saved_stdout, STDOUT_FILENO) == -1)
+        {
+            pev("dup2 failed for restoring STDOUT");
+            exit(EXIT_FAILURE);
+        }
+        close(command->saved_stdout);
     }
-    close(command->saved_stdout);
-    command->saved_stdout = 0; // Réinitialiser après restauration.
+    if (command->saved_stdin != -1)
+    {
+        if (dup2(command->saved_stdin, STDIN_FILENO) == -1)
+        {
+            pev("dup2 failed for restoring STDIN");
+            exit(EXIT_FAILURE);
+        }
+        close(command->saved_stdin);
+    }
 }
 
 int execution_monitor(t_command_test *command)
@@ -17,8 +29,8 @@ int execution_monitor(t_command_test *command)
     int i = -1;
     int result = 0;
 
-    if (command->fd_redirection)
-        redirection_output(command);
+    if (command->redirect)
+        redirection_monitor(command);
     while (++i < NUM_BUILTINS)
     {
         if (ft_strncmp(command->command_name, list_builtin[i], ft_strlen(list_builtin[i]) + 1) == 0)
@@ -38,14 +50,14 @@ int execution_monitor(t_command_test *command)
             else if (i == 6)
                 result = unset(command);
             if (command->saved_stdout)
-                restore_stdout(command);
+                restore_standard_fds(command);
 
             return result;
         }
     }
     result = prepare_execution_command(command);
     if (command->saved_stdout)
-        restore_stdout(command);
+        restore_standard_fds(command);
 
     return result;
 }

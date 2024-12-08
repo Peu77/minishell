@@ -11,7 +11,6 @@ void print_command(t_command_test *command)
     printf("Command Name: %s\n", command->command_name ? command->command_name : "(NULL)");
     printf("Arguments: %s\n", command->argument ? command->argument : "(NULL)");
     printf("Paths: %s\n", command->path ? command->path : "(NULL)");
-    printf("Redirection: %s\n", command->fd_redirection ? command->fd_redirection : "(NULL)");
 }
 
 int concatenate_arguments(char **arg, char **result)
@@ -35,14 +34,14 @@ int concatenate_arguments(char **arg, char **result)
     return (1);
 }
 
-int get_redirection(t_command_test **command, t_redirect *redirection)
+int get_redirection(t_command_test **command, t_list *redirection)
 {
-	(*command)->fd_redirection = redirection->file;
+	(*command)->redirect = redirection;
 	(*command)->saved_stdout = 0;
 	return (1);
 }
 
-int transform_node_to_command(char *value, t_command_test **command, t_redirect *redirection, char **envp)
+int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, char **envp)
 {
     char **arg;
 
