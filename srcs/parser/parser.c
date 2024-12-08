@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 11:34:51 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/08 14:17:52 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ t_ast_node *parse(char *input) {
 
 /*
 int main() {
-    t_ast_node *node = parse("echo hello world >&4 | cat -e | wc -l 4>>&3");
+    t_ast_node *node = parse("echo hello world >&4 | cat -e | wc -l 7>&5 3<<&4");
     if(node == NULL) {
         printf("failed to parse lol\n");
         return 1;
@@ -227,4 +227,5 @@ int main() {
     return 0;
 }
 */
+
 

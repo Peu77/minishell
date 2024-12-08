@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 11:35:12 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/08 14:07:44 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void free_redirect(void *content) {
 
 bool is_redirect_token(t_token_type type) {
     return type == TOKEN_REDIRECT_INPUT || type == TOKEN_REDIRECT_OUTPUT ||
-           type == TOKEN_REDIRECT_APPEND;
+           type == TOKEN_REDIRECT_APPEND || type == TOKEN_REDIRECT_INPUT_APPEND;
 }
 
 /**

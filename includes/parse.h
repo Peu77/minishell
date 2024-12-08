@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 11:32:12 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/08 14:06:21 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef enum e_token_type
     TOKEN_AND = 8,
     TOKEN_OR = 9,
     TOKEN_REDIRECT_APPEND = 10,
+    TOKEN_REDIRECT_INPUT_APPEND = 11
 } t_token_type;
 
 typedef struct s_redirect
