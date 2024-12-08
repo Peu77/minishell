@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/07 14:11:56 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:32:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_redirect
     int fd_left;
     int fd_right;
     char *file;
+    t_token_type type;
 } t_redirect;
 
 typedef struct e_token

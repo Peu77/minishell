@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/04 15:45:16 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/08 11:35:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_list *parse_redirects(t_list **redirects, t_list *tokens) {
                    old_redirect->file);
             redirect->fd_left = old_redirect->fd_left;
             redirect->fd_right = old_redirect->fd_right;
+            redirect->type = old_redirect->type;
 
             if (old_redirect->file)
                 redirect->file = ft_strdup(old_redirect->file);
