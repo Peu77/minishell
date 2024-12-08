@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 11:33:02 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/08 14:17:29 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static t_token_type is_redirect(const char* str) {
     while (str[i] && ft_isdigit(str[i]))
         i++;
 
+    if(ft_strncmp(str + i, "<<", 2) == 0)
+        return TOKEN_REDIRECT_INPUT_APPEND;
     if(ft_strncmp(str + i, ">>", 2) == 0)
         return TOKEN_REDIRECT_APPEND;
     if(*(str + i) == '<')
@@ -91,14 +93,14 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
     redirect->type = redirect_type;
     if(ft_isdigit(str[*i]))
     {
-        redirect->fd_left = ft_atoi(str);
+        redirect->fd_left = ft_atoi(str + *i);
         while(ft_isdigit(str[*i]))
             (*i)++;
     }
 
     // skip redirect char like <, >, >>
     (*i)++;
-    if(redirect_type == TOKEN_REDIRECT_APPEND)
+    if(redirect_type >= TOKEN_REDIRECT_APPEND)
         (*i)++;
 
     if(str[*i] == 0 || (str[*i] == '&' && str[*i + 1] == 0))
@@ -149,7 +151,7 @@ static void print_tokens(t_list* tokens){
     {
         node = tokens->content;
 
-        if(node->type == TOKEN_REDIRECT_OUTPUT || node->type == TOKEN_REDIRECT_INPUT || node->type == TOKEN_REDIRECT_APPEND)
+        if(is_redirect_token(node->type))
             printf("TOKEN_REDIRECT: %d, %d, %d, %s\n", node->type, ((t_redirect*)node->data)->fd_left, ((t_redirect*)node->data)->fd_right, ((t_redirect*)node->data)->file);
         else if(node->type == TOKEN_STRING)
             printf("TOKEN_STRING: %s\n", node->value);
