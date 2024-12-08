@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
 
+
 int execution_command(char **arguments, char *path)
 {
     pid_t pid = fork();
@@ -8,28 +9,35 @@ int execution_command(char **arguments, char *path)
     if (pid == -1)
     {
         pe("Fork failed");
-        return 0;  // Return failure if fork fails
+        return 0;
     }
-    if (pid == 0)  // Child process
+    if (pid == 0)
     {
         if (execve(path, arguments, NULL) == -1)
         {
             pe("execve failed");
-            exit(EXIT_FAILURE);  // Exit child process if execve fails
+            exit(EXIT_FAILURE);
         }
     }
-    else  // Parent process
+    else
     {
         int status;
         waitpid(pid, &status, 0);
         if (WIFEXITED(status))
-            return WEXITSTATUS(status);  // Return the exit status of the child
+        {
+            int exit_status = WEXITSTATUS(status);
+            if (exit_status == 0)
+                return 1;
+            else
+                return 0;
+        }
         else
-            return 0;  // Return failure if the child process didn't exit normally
+        {
+            return 0;
+        }
     }
-    return 1;  // Default success return
+    return 1;
 }
-
 
 int prepare_execution_command(t_command_test *command)
 {
