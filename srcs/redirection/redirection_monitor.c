@@ -23,20 +23,22 @@ void redirection_monitor(t_command_test *command)
 
     save_file_descriptors(&command);
     redirect_list = command->redirect;
-    while (redirect_list)
-    {
-        redirect = (t_redirect *)redirect_list->content;
-        if (redirect->type == TOKEN_REDIRECT_OUTPUT)  
-            redirection_output(redirect);
-        else if (redirect->type == TOKEN_REDIRECT_APPEND)
-            redirection_append(redirect);
-        else if (redirect->type == TOKEN_REDIRECT_INPUT)
-            redirection_input(redirect);
-        else
-        {
-            pev("Unknown redirection type encountered");
-            exit(EXIT_FAILURE);
-        }
-        redirect_list = redirect_list->next;
-    }
+	while (redirect_list)
+	{
+		redirect = (t_redirect *)redirect_list->content;
+		if (redirect->type == TOKEN_REDIRECT_OUTPUT)  
+			redirection_output(redirect);
+		else if (redirect->type == TOKEN_REDIRECT_APPEND)
+			redirection_append(redirect);
+		else if (redirect->type == TOKEN_REDIRECT_INPUT)
+			redirection_input(redirect);
+		else if(redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
+			redirection_heredoc(redirect->file);
+		else
+		{
+			pev("Unknown redirection type encountered");
+			exit(EXIT_FAILURE);
+		}
+		redirect_list = redirect_list->next;
+	}
 }
