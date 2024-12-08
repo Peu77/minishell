@@ -62,6 +62,8 @@ typedef struct s_pipe
 // main
 //monitor 
 int tree_monitor(t_ast_node *node, t_command_test *command, char **envp);
+
+//command
 void get_command_from_node(t_command_test **command);
 void print_command(t_command_test *command);
 int concatenate_arguments(char **arg, char **result);
@@ -90,29 +92,6 @@ int unset(t_command_test *command);
 int execution_monitor(t_command_test *command);
 int prepare_execution_command(t_command_test *command);
 int execution_command(char **arguments, char *path);
-//parser
-
-
-//pipe 
-void create_pipes(t_pipe *pip);
-void close_unused_pipes(t_pipe *pip);
-void create_parent_pipe(t_pipe *pip);
-void prepare_execution(t_pipe *pipe, t_command *command, int i);
-void close_all_fds(t_pipe *pipe);
-
-
-//pipe monitor
-int pipe_monitor(t_pipe *pipe, t_command *command, char *user_prompt);
-
-//pipe utils
-void add_node_back(t_command **head, t_command *new_node);
-t_command *create_node(char *command_str, char **envp);
-void print_command_list(t_command *command_list);
-
-//initialiser
-int initialise_pipe(t_pipe **pipe, char *user_prompt);
-int initialise_monitor(t_pipe **pipe, t_command **command, char *user_prompt, char **envp);
-int initialise_command(t_command **command, char *user_prompt, char **envp);
 
 //redirection
 void redirection_monitor(t_command_test *command);
