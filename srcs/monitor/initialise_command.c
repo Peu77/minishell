@@ -11,6 +11,7 @@ void print_command(t_command_test *command)
     printf("Command Name: %s\n", command->command_name ? command->command_name : "(NULL)");
     printf("Arguments: %s\n", command->argument ? command->argument : "(NULL)");
     printf("Paths: %s\n", command->path ? command->path : "(NULL)");
+    printf("Redirection: %s\n", command->fd_redirection ? command->fd_redirection : "(NULL)");
 }
 
 int concatenate_arguments(char **arg, char **result)
@@ -34,12 +35,21 @@ int concatenate_arguments(char **arg, char **result)
     return (1);
 }
 
+int get_redirection(t_command_test **command, t_redirect *redirection)
+{
+	(*command)->fd_redirection = redirection->file;
+	(*command)->saved_stdout = 0;
+	return (1);
+}
 
-int transform_node_to_command(char *value, t_command_test **command, char **envp)
+int transform_node_to_command(char *value, t_command_test **command, t_redirect *redirection, char **envp)
 {
     char **arg;
 
-    *command = malloc(sizeof(t_command_test));
+	*command = malloc(sizeof(t_command_test));
+	if (!(*command))
+ 	   return pe(ERROR_MALLOC);
+	ft_memset(*command, 0, sizeof(t_command_test));
     if (!(*command))
         return pe(ERROR_MALLOC);
     arg = ft_split(value, ' ');
@@ -58,6 +68,8 @@ int transform_node_to_command(char *value, t_command_test **command, char **envp
     }
 	get_path(command);
 	(*command)->envp = envp;
+	if(redirection)
+		get_redirection(command, redirection);
     free_command_split(arg);
     return (1);
 }

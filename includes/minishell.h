@@ -27,6 +27,8 @@ typedef struct s_command_test
 	char *path;
 	char *argument;
 	char *command_name;
+	char *fd_redirection;
+	int saved_stdout;
 } t_command_test;
 
 typedef struct s_command
@@ -62,8 +64,9 @@ int tree_monitor(t_ast_node *node, t_command_test *command, char **envp);
 void get_command_from_node(t_command_test **command);
 void print_command(t_command_test *command);
 int concatenate_arguments(char **arg, char **result);
-int transform_node_to_command(char *value, t_command_test **command, char **envp);
+int transform_node_to_command(char *value, t_command_test **command, t_redirect *redirection, char **envp);
 int get_path(t_command_test **command);
+int get_redirection(t_command_test **command, t_redirect *redirection);
 
 //error
 int pe(const char *message);
@@ -112,7 +115,7 @@ int initialise_command(t_command **command, char *user_prompt, char **envp);
 
 //redirection
 void redirection_monitor(t_command *command, t_pipe *pipe);
-void redirection_output(t_command *command, t_pipe *pipe);
+void redirection_output(t_command_test *command);
 void redirection_input(t_command *command, t_pipe *pipe);
 void redirection_append(t_command *command, t_pipe *pipe);
 void redirection_heredoc(const char *str);
