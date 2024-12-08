@@ -23,7 +23,7 @@ int prepare_execution_command(t_command_test *command)
     char **arguments;
 	int result;
 
-	str = ft_strdup(command->command_name);
+		str = ft_strdup(command->command_name);
     if (command->argument != NULL)
     {
         char *temp = ft_strjoin(str, " ");
@@ -39,7 +39,7 @@ int prepare_execution_command(t_command_test *command)
         return (0);
     }
     result = execution_command(arguments, command->path);
-    free(str);
+	if (command->saved_stdout)    free(str);
     free_command(&command);
     return (result);
 }

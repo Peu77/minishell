@@ -1,14 +1,14 @@
 #include "../../includes/minishell.h"
 
-void redirection_output(t_command *command, t_pipe *pipe)
+void redirection_output(t_command_test *command)
 {
-    pipe->saved_stdout = dup(STDOUT_FILENO);
-    if (pipe->saved_stdout == -1)
+    command->saved_stdout = dup(STDOUT_FILENO);
+    if (command->saved_stdout == -1)
     {
         pev("dup failed for saving STDOUT");
         exit(EXIT_FAILURE);
     }
-    int fd = open(command->redirection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    int fd = open(command->fd_redirection, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd == -1)
     {
         pev("open failed for redirection");
