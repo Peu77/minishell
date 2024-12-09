@@ -10,7 +10,7 @@ int env(t_command_test *command)
     {
         while (command->envp[++i])
             printf("%s\n", command->envp[i]);
-        return (1);
+        return (0);
     }
 	if (ft_strnstr(arg[0], "=", ft_strlen(arg[1])))
 	{
@@ -26,5 +26,5 @@ int env(t_command_test *command)
 	else
 		printf("Invalid argument. Use key=value to set an environment variable.\n");
 	free_command_split(arg);
-	return (1);
+	return (0);
 }

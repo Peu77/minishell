@@ -9,14 +9,20 @@ int cd(t_command_test *command)
     if (!path[0])
     {
         if (chdir("/") != 0) 
-            pe("Problem with the path");
+		{
+            pev("Problem with the path");
+			return (1);
+		}
     }
     else 
     {
         if (chdir(path[0]) != 0) 
-            pe("Problem with the path");
+		{
+            pev("Problem with the path");
+			return (1);
+		}
     }
     printf("New repository: %s\n", getcwd(buffer, MAX_PATH));
 	free_command_split(path);
-    return (1);
+    return (0);
 }

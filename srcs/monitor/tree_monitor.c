@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-
 int handle_pipe(t_ast_node *node, char **envp)
 {
     int pipe_fds[2];
@@ -18,8 +17,8 @@ int handle_pipe(t_ast_node *node, char **envp)
         close(pipe_fds[0]);
         dup2(pipe_fds[1], STDOUT_FILENO);
         close(pipe_fds[1]);
-        tree_monitor(node->left, NULL, envp);
-        exit(EXIT_SUCCESS);
+        int left_result = tree_monitor(node->left, NULL, envp);
+        exit(left_result);
     }
     if ((right_pid = fork()) == -1)
         return pe("Fork for right process failed");
@@ -28,18 +27,19 @@ int handle_pipe(t_ast_node *node, char **envp)
         close(pipe_fds[1]);
         dup2(pipe_fds[0], STDIN_FILENO);
         close(pipe_fds[0]);
-        tree_monitor(node->right, NULL, envp);
-        exit(EXIT_SUCCESS);  
+        int right_result = tree_monitor(node->right, NULL, envp);
+        exit(right_result);
     }
     close(pipe_fds[0]);
     close(pipe_fds[1]);
     waitpid(left_pid, &left_status, 0);
     waitpid(right_pid, &right_status, 0);
-    if (WEXITSTATUS(left_status) != 0 || WEXITSTATUS(right_status) != 0)
+    if ( WIFEXITED(right_status) && WEXITSTATUS(right_status) == 0)
+    {
         return 0;
-    return 1;
+    }
+    return 1 ;
 }
-
 
 int tree_monitor(t_ast_node *node, t_command_test *command, char **envp)
 {
@@ -58,10 +58,8 @@ int tree_monitor(t_ast_node *node, t_command_test *command, char **envp)
 
         if (node->left)
             left_result = tree_monitor(node->left, command, envp);
-		printf ("left result is %d\n", left_result);
-        if (left_result && node->right)
+        if (!left_result && node->right)
             return tree_monitor(node->right, command, envp);
-        return (0);
     }
     else if (node->type == AST_COMMAND)
     {

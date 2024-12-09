@@ -40,10 +40,10 @@ t_list *duplicate_list(t_list *original)
     t_list *new_node;
     while (original)
     {
-        new_node = ft_lstnew(original->content); // Adjust based on your `t_list` implementation
+        new_node = ft_lstnew(original->content);
         if (!new_node)
         {
-            ft_lstclear(&copy, free); // Free any nodes already allocated
+            ft_lstclear(&copy, free);
             return NULL;
         }
         ft_lstadd_back(&copy, new_node);
@@ -55,7 +55,7 @@ int get_redirection(t_command_test **command, t_list *redirection)
 {
     (*command)->redirect = duplicate_list(redirection);
     if (!(*command)->redirect)
-        return pe(ERROR_MALLOC); // Handle allocation failure
+        return pe(ERROR_MALLOC);
     (*command)->saved_stdout = 0;
     return 1;
 }

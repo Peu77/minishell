@@ -13,5 +13,5 @@ int echo(t_command_test *command, bool is_n)
 	}
 	else
 		ft_putstr_fd(command->argument, STDOUT_FILENO);
-	return (1);
+	return (0);
 }

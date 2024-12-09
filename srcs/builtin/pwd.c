@@ -9,8 +9,8 @@ int pwd(void)
 	{
 		pe("error with getting path");
         free(buffer);
-        return (0);
+        return (1);
     }
 	printf("%s \n", buffer);
-	return (1);
+	return (0);
 }
