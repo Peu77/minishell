@@ -62,6 +62,5 @@ int prepare_execution_command(t_command_test *command)
     }
     result = execution_command(arguments, command->path);
 	if (command->saved_stdout)    free(str);
-    free_command(&command);
     return (result);
 }

@@ -58,6 +58,7 @@ int tree_monitor(t_ast_node *node, t_command_test *command, char **envp)
 
         if (node->left)
             left_result = tree_monitor(node->left, command, envp);
+		printf ("left result is %d\n", left_result);
         if (left_result && node->right)
             return tree_monitor(node->right, command, envp);
         return (0);

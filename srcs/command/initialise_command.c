@@ -34,11 +34,30 @@ int concatenate_arguments(char **arg, char **result)
     return (1);
 }
 
+t_list *duplicate_list(t_list *original)
+{
+    t_list *copy = NULL;
+    t_list *new_node;
+    while (original)
+    {
+        new_node = ft_lstnew(original->content); // Adjust based on your `t_list` implementation
+        if (!new_node)
+        {
+            ft_lstclear(&copy, free); // Free any nodes already allocated
+            return NULL;
+        }
+        ft_lstadd_back(&copy, new_node);
+        original = original->next;
+    }
+    return copy;
+}
 int get_redirection(t_command_test **command, t_list *redirection)
 {
-	(*command)->redirect = redirection;
-	(*command)->saved_stdout = 0;
-	return (1);
+    (*command)->redirect = duplicate_list(redirection);
+    if (!(*command)->redirect)
+        return pe(ERROR_MALLOC); // Handle allocation failure
+    (*command)->saved_stdout = 0;
+    return 1;
 }
 
 int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, char **envp)
