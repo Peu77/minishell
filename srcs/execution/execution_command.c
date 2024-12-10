@@ -15,7 +15,7 @@ int execution_command(char **arguments, char *path)
     if (pid == 0)
     {
 		if(!path)
-		return (pec(ERROR_PATH));
+			return (pec(ERROR_PATH));
         if (execve(path, arguments, NULL) == -1)
 			return pec(ERROR_EXECVE);
     }
@@ -40,8 +40,9 @@ int prepare_execution_command(t_command_test *command)
 	char *temp;
 	int result;
 
-		str = ft_strdup(command->command_name);
-	
+	str = ft_strdup(command->command_name);
+	if(!str)
+		return pec(ERROR_MALLOC);
     if (command->argument != NULL)
     {
         temp = ft_strjoin(str, " ");
@@ -50,12 +51,8 @@ int prepare_execution_command(t_command_test *command)
         free(temp);
     }
     arguments = ft_split(str, ' ');
-    if (command->path == NULL)
-    {
-        printf("Command %s not found\n", command->command_name);
-        free(str);
-    }
     result = execution_command(arguments, command->path);
 	free_command_split(arguments);
+	free(str);
     return (result);
 }
