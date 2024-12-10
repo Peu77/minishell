@@ -14,11 +14,10 @@ int execution_command(char **arguments, char *path)
     }
     if (pid == 0)
     {
+		if(!path)
+		return (pec(ERROR_PATH));
         if (execve(path, arguments, NULL) == -1)
-        {
-            pev("execve failed");
-            exit(1);
-        }
+			return pec(ERROR_EXECVE);
     }
     else
     {
@@ -38,12 +37,14 @@ int prepare_execution_command(t_command_test *command)
 {
     char *str;
     char **arguments;
+	char *temp;
 	int result;
 
 		str = ft_strdup(command->command_name);
+	
     if (command->argument != NULL)
     {
-        char *temp = ft_strjoin(str, " ");
+        temp = ft_strjoin(str, " ");
         free(str);
         str = ft_strjoin(temp, command->argument);
         free(temp);
@@ -55,6 +56,6 @@ int prepare_execution_command(t_command_test *command)
         free(str);
     }
     result = execution_command(arguments, command->path);
-	if (command->saved_stdout)    free(str);
+	free_command_split(arguments);
     return (result);
 }

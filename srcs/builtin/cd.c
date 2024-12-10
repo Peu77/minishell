@@ -3,6 +3,8 @@
 int cd(t_command_test *command)
 {
     char **path = ft_split(command->argument, ' ');
+	if(!path)
+		pec(ERROR_SPLIT);
     char buffer[MAX_PATH];
 
     printf("Old repository: %s\n", getcwd(buffer, MAX_PATH));
@@ -10,16 +12,16 @@ int cd(t_command_test *command)
     {
         if (chdir("/") != 0) 
 		{
-            pev("Problem with the path");
-			return (1);
+			free_command_split(path);
+			return pec(ERROR_PATH);
 		}
     }
     else 
     {
         if (chdir(path[0]) != 0) 
 		{
-            pev("Problem with the path");
-			return (1);
+			free_command_split(path);
+			return pec(ERROR_PATH);
 		}
     }
     printf("New repository: %s\n", getcwd(buffer, MAX_PATH));

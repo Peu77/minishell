@@ -28,18 +28,21 @@ int main(int argc, char **argv, char **envp)
     t_ast_node  *node = parse(user_prompt);
 	if(node == NULL)
 	{
-        printf("failed to parse\n");
-        return 1;
-    }
-    if(node == PARSE_ERROR) {
-        printf("parse error\n");
-        return 1;
-    }
+		free(user_prompt);
+        return pec("failed to parse\n");
+	}
+    if(node == PARSE_ERROR)
+	{
+		free(user_prompt);
+        return pec("parse error\n");
+	}
 
     printf("result: %d\n", node->type);
     print_ast_node(node, 0);
 	tree_monitor(node, command, envp);
     free_ast_node(node);	
+	free_command(&command);
+	free(user_prompt);
 	}
 	return (EXIT_SUCCESS);
 }

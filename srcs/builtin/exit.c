@@ -9,5 +9,4 @@ int exit_command(t_command_test *command)
 		return (1);
 	}
 	exit(EXIT_SUCCESS);
-	return (0);
 }
