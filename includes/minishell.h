@@ -45,23 +45,23 @@ typedef struct s_command
 	struct s_command *previous;
 } t_command;
 
-
-typedef struct s_pipe
+typedef struct s_pipe_data
 {
-    bool should_exit;
-    int pid_signal;
-    int pipe_current_process;
-    int number_pipe;
-    int number_command;
-    int (*pipe_fd)[2];
-    int parent_pipe_fd[2];
-    int pipe_redirection[2];
-    int saved_stdout;
-} t_pipe;
+    int pipe_fds[2];
+    pid_t left_pid;
+    pid_t right_pid;
+    int right_status;
+    int right_result;
+} t_pipe_data;
+
 
 // main
 //monitor 
 int tree_monitor(t_ast_node *node, t_command_test *command, char **envp);
+int pipe_monitor(t_ast_node *node, char **envp);
+int and_monitor(t_ast_node *node, t_command_test *command, char **envp);
+int or_monitor(t_ast_node *node, t_command_test *command, char **envp);
+int command_monitor(t_ast_node *node, t_command_test *command, char **envp);
 
 //command
 void get_command_from_node(t_command_test **command);
@@ -73,6 +73,7 @@ int get_redirection(t_command_test **command, t_list *redirection);
 
 //error
 int pe(const char *message);
+int pec(const char *message);
 void pev(const char *message);
 
 //prompt
@@ -100,16 +101,18 @@ void redirection_input(t_redirect *redirect);
 void redirection_append(t_redirect *redirect);
 void redirection_heredoc(const char *str);
 
+//pipe_monitor
+
 //signal 
 void signal_waiting(void);
 
 //utils
-void exit_shell(t_pipe *pipe, int erxno);
+//void exit_shell(t_pipe *pipe, int erxno);
 void remove_newline(char *buffer);
 void free_command(t_command_test **command);
-void free_pipe(t_pipe **pipe);
+//void free_pipe(t_pipe **pipe);
 void free_command_split(char **command_split);
-int free_all(t_pipe **pipe, t_command **command);
+//int free_all(t_pipe **pipe, t_command **command);
 
 
 //parser

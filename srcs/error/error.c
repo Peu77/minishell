@@ -16,3 +16,12 @@ void pev(const char *message)
     write(STDERR_FILENO, RESET, ft_strlen(RESET));
     write(STDERR_FILENO, "\n", 1);
 }
+
+int pec(const char *message)
+{
+    write(STDERR_FILENO, RED, ft_strlen(RED));
+    write(STDERR_FILENO, message, ft_strlen(message));
+    write(STDERR_FILENO, RESET, ft_strlen(RESET));
+    write(STDERR_FILENO, "\n", 1);
+	return (1);
+}

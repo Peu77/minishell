@@ -27,6 +27,9 @@ SRC =  srcs/main.c \
 	   srcs/parser/ast_utils.c \
 	   srcs/parser/token_utils.c \
 	   srcs/monitor/tree_monitor.c \
+	   srcs/monitor/pipe_monitor.c \
+	   srcs/monitor/and_or_monitor.c \
+	   srcs/monitor/command_monitor.c \
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell
