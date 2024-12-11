@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:13:02 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:16:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_redirect* create_redirect(int fd_left, int fd_right, t_token_type type, char *
  * @param tokens
  * @return the last token of the redirect/commands section
  */
-t_list *parse_redirects(t_list **redirects, t_list *tokens) {
+t_list *parse_redirects_tokens_to_tree(t_list **redirects, t_list *tokens) {
     t_list *new_node;
 
     while (tokens && (is_redirect_token(((t_token *) tokens->content)->type) ||

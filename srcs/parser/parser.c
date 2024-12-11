@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 14:17:52 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:16:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_ast_node *parse_command(t_list **tokens) {
     t_list *redirects = NULL;
     char *cmd_value_cpy;
 
-    t_list *last_valid_token_node = parse_redirects(&redirects, *tokens);
+    t_list *last_valid_token_node = parse_redirects_tokens_to_tree(&redirects, *tokens);
 
 
     if (last_valid_token_node == PARSE_ERROR) {

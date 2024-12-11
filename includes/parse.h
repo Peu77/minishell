@@ -72,7 +72,7 @@ bool lex_tokens(char *input, t_list** tokens);
 
 #define PARSE_ERROR ((void *)-1)
 
-t_list *parse_redirects(t_list **redirects, t_list *tokens);
+t_list *parse_redirects_tokens_to_tree(t_list **redirects, t_list *tokens);
 
 bool is_redirect_token(t_token_type type);
 
