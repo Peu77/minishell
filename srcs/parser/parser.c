@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:16:13 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:37:42 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ t_ast_node *parse_command(t_list **tokens) {
 
     while (*tokens && ((t_token *) (*tokens)->content)->type == TOKEN_STRING) {
         if (!cmd_node) {
-            cmd_value_cpy = ft_strdup(((t_token *) (*tokens)->content)->value);
-            if (!cmd_value_cpy) {
-                pe("failed to allocate memory");
-                return (ft_lstclear(&redirects, free_redirect), PARSE_ERROR);
-            }
+            cmd_value_cpy = ((t_token *) (*tokens)->content)->value;
+            ((t_token *) (*tokens)->content)->value = NULL;
             cmd_node = create_ast_node(AST_COMMAND, cmd_value_cpy, redirects);
         } else {
             // append argument to existing command
@@ -156,6 +153,7 @@ t_ast_node *parse(char *input) {
 
     t_ast_node *result = parse_logical(&tokens);
     ft_lstclear(&tokens_cpy, free_token);
+    apply_env_variables(result);
     return result;
 }
 

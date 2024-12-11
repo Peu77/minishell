@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:20:25 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:37:15 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ void print_tokens(t_list* tokens);
 void print_ast_node(t_ast_node *node, int depth);
 
 void print_ast_type(const t_ast_type type);
+
+void apply_env_variables(t_ast_node* node);
 
 #endif
