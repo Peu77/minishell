@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 14:06:21 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:50:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,14 @@ bool is_redirect_token(t_token_type type);
 
 void free_redirect(void *redirect);
 
+t_redirect* create_redirect(int fd_left, int fd_right, t_token_type type, char *file);
+
 t_ast_node* create_ast_node(t_ast_type type, char *value, t_list* redirects);
 
 void free_ast_node(void *content);
 
 void free_token(void *content);
+
+t_token* create_token(t_token_type type, char* value, void* data);
 
 #endif

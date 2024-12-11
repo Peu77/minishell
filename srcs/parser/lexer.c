@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 14:17:29 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:06:35 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,10 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
     t_token* token;
     t_list* new_node;
 
-    redirect = malloc(sizeof(t_redirect));
-    token = malloc(sizeof(t_token));
+    redirect = create_redirect(0, 0, redirect_type, NULL);
+    token = create_token(redirect_type, NULL, redirect);
     if(!redirect || !token)
         return (free(redirect), free(token), false);
-    redirect->fd_left = 0;
-    redirect->fd_right = 0;
-    redirect->file = NULL;
-    redirect->type = redirect_type;
     if(ft_isdigit(str[*i]))
     {
         redirect->fd_left = ft_atoi(str + *i);
@@ -131,9 +127,6 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
         *i += filename_len;
     }
 
-    token->value = NULL;
-    token->type = redirect_type;
-    token->data = redirect;
     new_node = ft_lstnew(token);
     if(!new_node)
         return (free_redirect(redirect),free(token), false);
@@ -256,7 +249,7 @@ bool lex_tokens(char *input, t_list** tokens)
 
 
 /*
- * compile with: cc lexer.c ../../libft/libft.a ../error/error.c redirects.c -I ../../includes && ./a.out
+ * compile with: cc lexer.c ../../libft/libft.a ../error/error.c redirects.c token_utils.c -I ../../includes && ./a.out
  *
  */
 
@@ -270,5 +263,6 @@ int main() {
     return 0;
 }
 */
+
 
 

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/08 14:07:44 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:13:02 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ bool is_redirect_token(t_token_type type) {
            type == TOKEN_REDIRECT_APPEND || type == TOKEN_REDIRECT_INPUT_APPEND;
 }
 
+t_redirect* create_redirect(int fd_left, int fd_right, t_token_type type, char *file) {
+    t_redirect *redirect;
+
+    redirect = malloc(sizeof(t_redirect));
+    if (!redirect)
+        return NULL;
+    redirect->fd_left = fd_left;
+    redirect->fd_right = fd_right;
+    redirect->type = type;
+    redirect->file = file;
+    return redirect;
+}
+
 /**
  * parse all redirects and save them in the redirects list also skip all the command tokens and return the last token
  * @param redirects
@@ -43,24 +56,9 @@ t_list *parse_redirects(t_list **redirects, t_list *tokens) {
         t_token *token = tokens->content;
 
         if (token->type != TOKEN_STRING) {
-            printf("creating redirect\n");
-            t_redirect *old_redirect = token->data;
-            t_redirect *redirect = malloc(sizeof(t_redirect));
-            if (!redirect)
-                return PARSE_ERROR;
-            printf("fd_left: %d, fd_right: %d, file: %s\n", old_redirect->fd_left, old_redirect->fd_right,
-                   old_redirect->file);
-            redirect->fd_left = old_redirect->fd_left;
-            redirect->fd_right = old_redirect->fd_right;
-            redirect->type = old_redirect->type;
+            t_redirect *redirect = token->data;
 
-            if (old_redirect->file)
-                redirect->file = ft_strdup(old_redirect->file);
-            else
-                redirect->file = NULL;
-
-            if (!redirect->file && old_redirect->file)
-                return (free(redirect), PARSE_ERROR);
+            token->data = NULL;
             new_node = ft_lstnew(redirect);
             if (!new_node)
                 return (free_redirect(redirect), PARSE_ERROR);
@@ -68,7 +66,5 @@ t_list *parse_redirects(t_list **redirects, t_list *tokens) {
         }
         tokens = tokens->next;
     }
-
-
     return tokens;
 }
