@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:06:35 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:20:02 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,25 +133,6 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
     ft_lstadd_back(tokens, new_node);
 
     return true;
-}
-
-
-static void print_tokens(t_list* tokens){
-
-    t_token* node;
-
-    while(tokens)
-    {
-        node = tokens->content;
-
-        if(is_redirect_token(node->type))
-            printf("TOKEN_REDIRECT: %d, %d, %d, %s\n", node->type, ((t_redirect*)node->data)->fd_left, ((t_redirect*)node->data)->fd_right, ((t_redirect*)node->data)->file);
-        else if(node->type == TOKEN_STRING)
-            printf("TOKEN_STRING: %s\n", node->value);
-        else
-            printf("TOKEN: %d\n", node->type);
-        tokens = tokens->next;
-    }
 }
 
 bool parse_single_quote(char *input, size_t *i, t_list** tokens)

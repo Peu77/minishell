@@ -18,52 +18,7 @@
 
 t_ast_node *parse_primary(t_list **tokens);
 
-void print_ast_type(t_ast_type type) {
-    if (type == AST_COMMAND)
-        printf("command");
-    if (type == AST_PIPE)
-        printf("pipe");
-    if (type == AST_SEMICOLON)
-        printf("semicolon");
-    if (type == AST_PARENTHESES)
-        printf("parentheses");
-    if (type == AST_AND)
-        printf("and");
-    if (type == AST_OR)
-        printf("or");
-}
 
-void print_ast_node(t_ast_node *node, int depth) {
-    if (!node || node == PARSE_ERROR) {
-        return;
-    }
-
-    for (int i = 0; i < depth; i++) {
-        printf("  ");
-    }
-
-    if (node->type == AST_COMMAND) {
-        printf("command: %s\n", node->value);
-
-        t_list *redirects = node->redirects;
-        while (redirects) {
-            for (int i = 0; i < depth; i++) {
-                printf("  ");
-            }
-            t_redirect *redirect = redirects->content;
-            printf("Redirect: %d, %d, %s\n", redirect->fd_left, redirect->fd_right, redirect->file);
-            redirects = redirects->next;
-        }
-    } else {
-            printf("Node: %s, Type: ", node->value);
-            print_ast_type(node->type);
-            printf("\n");
-    }
-
-
-    print_ast_node(node->left, depth + 1);
-    print_ast_node(node->right, depth + 1);
-}
 
 t_ast_node *parse_command(t_list **tokens) {
     t_ast_node *cmd_node = NULL;

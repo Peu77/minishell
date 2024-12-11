@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 15:50:12 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:20:25 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,11 @@ void free_ast_node(void *content);
 void free_token(void *content);
 
 t_token* create_token(t_token_type type, char* value, void* data);
+
+void print_tokens(t_list* tokens);
+
+void print_ast_node(t_ast_node *node, int depth);
+
+void print_ast_type(const t_ast_type type);
 
 #endif

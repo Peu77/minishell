@@ -26,6 +26,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/lexer.c \
 	   srcs/parser/ast_utils.c \
 	   srcs/parser/token_utils.c \
+	   srcs/parser/debug.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/and_or_monitor.c \
