@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-
-
-
 int execution_command(char **arguments, char *path)
 {
     pid_t pid = fork();
