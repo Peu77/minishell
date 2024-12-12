@@ -13,6 +13,7 @@ SRC =  srcs/main.c \
 	   srcs/command/initialise_command.c \
 	   srcs/redirection/redirection_monitor.c \
 	   srcs/redirection/redirection.c \
+	   srcs/redirection/redirection_heredoc.c \
 	   srcs/builtin/pwd.c \
 	   srcs/builtin/echo.c \
 	   srcs/builtin/exit.c \

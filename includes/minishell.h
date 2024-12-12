@@ -27,6 +27,8 @@
 #define ERROR_FIND_ENV "ERROR FINDING PATH ENV"
 #define ERROR_PATH "ERROR WITH FINDING PATH"
 #define ERROR_EXECVE "ERROR EXECVE FAILED"
+#define ERROR_HEREDOC "Erreu opening temporary heredoc"
+#define ERROR_HEREDOC_SIGNAL "EXITING HEREDOC"
 
 typedef struct s_command_test
 {
@@ -106,7 +108,7 @@ void redirection_monitor(t_command_test *command);
 void redirection_output(t_redirect *redirect);
 void redirection_input(t_redirect *redirect);
 void redirection_append(t_redirect *redirect);
-void redirection_heredoc(const char *str);
+void redirection_heredoc(const char *delimiter);
 
 //pipe_monitor
 

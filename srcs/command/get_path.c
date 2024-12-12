@@ -37,22 +37,45 @@ static char *find_command_in_path(const char *command)
         full_path = NULL;
     }
     free_command_split(paths);
-    return NULL;
+    return (NULL);
 }
 
+int check_absolute_path(const char *path)
+{
+    if (access(path, F_OK) == -1)
+    {
+        printf("Command '%s' not found (invalid path).\n", path);
+        return 0;
+    }
+    if (access(path, X_OK) == -1)
+    {
+        printf("Command '%s' is not executable.\n", path);
+        return 0;
+    }
+
+    return 1;
+}
 int get_path(t_command_test **command)
 {
     char *found_path;
 
-        found_path = find_command_in_path((*command)->command_name);
-        if (found_path)
-        {
-            (*command)->path = found_path;
-        }
-        else
+    if ((*command)->command_name[0] == '/')
+    {
+        if (!check_absolute_path((*command)->command_name))
         {
             (*command)->path = NULL;
-            printf("Command '%s' not found in PATH.\n", (*command)->command_name );
+            return 1;
         }
-    return (1);
+        (*command)->path = (*command)->command_name;
+        return 1;
+    }
+    found_path = find_command_in_path((*command)->command_name);
+    if (found_path)
+        (*command)->path = found_path;
+    else
+    {
+        (*command)->path = NULL;
+        printf("Command '%s' not found in PATH.\n", (*command)->command_name);
+    }
+    return 1;
 }
