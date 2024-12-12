@@ -3,6 +3,8 @@
 int execution_command(char **arguments, char *path)
 {
     pid_t pid = fork();
+	int status;
+	int exit_status;
 
     if (pid == -1)
     {
@@ -12,20 +14,15 @@ int execution_command(char **arguments, char *path)
     if (pid == 0)
     {
 		if(!path)
-			return (pec(ERROR_PATH));
+			exit(pec(ERROR_PATH));
         if (execve(path, arguments, NULL) == -1)
-			return pec(ERROR_EXECVE);
+			exit(pec(ERROR_EXECVE));
     }
     else
     {
-        int status;
-        waitpid(pid, &status, 0);
-        if (WIFEXITED(status))
-        {
-            int exit_status = WEXITSTATUS(status);
-            return exit_status; 
-        }
-        return 1;
+    	waitpid(pid, &status, 0);
+    	exit_status = WEXITSTATUS(status);
+    	return (exit_status); 
     }
     return 1;
 }

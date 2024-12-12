@@ -1,6 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = libft
+LIBREADLINE = -lreadline  # Add this to link Readline
 LIBFT = $(LIBFT_DIR)/libft.a
 INCLUDES = -I./includes
 SRC =  srcs/main.c \
@@ -38,7 +39,7 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LIBFT)
+	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

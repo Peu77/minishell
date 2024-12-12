@@ -8,6 +8,11 @@
 #include <signal.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <termios.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <errno.h>
+
 
 #define RED     "\033[1;31m"
 #define RESET   "\033[0m"

@@ -1,33 +1,19 @@
 #include "../includes/minishell.h"
-#include <termios.h>
 
 /*
-
-void handle_sigint(int sig)
+void sighandler(int sig)
 {
     (void)sig;
-    printf("\n >>>> Minishell");
+    rl_on_new_line();
+    rl_replace_line("", 0);
+	rl_redisplay();
+    printf("\n>>>> Minishell>$ ");
 }
 
-
-
-void configure_terminal()
+void handle_signals(void)
 {
-    struct termios term_settings;
-
-    if (tcgetattr(STDIN_FILENO, &term_settings) == -1)
-    {
-        perror("Erreur lors de la récupération des paramètres du terminal");
-        exit(EXIT_FAILURE);
-    }
-
-    term_settings.c_lflag &= ~ECHOCTL;
-    term_settings.c_lflag &= ~(ISIG);
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &term_settings) == -1)
-    {
-        perror("Erreur lors de la configuration des paramètres du terminal");
-        exit(EXIT_FAILURE);
-    }
+    signal(SIGINT, sighandler); 
+    signal(SIGQUIT, SIG_IGN);
 }
 */
 
@@ -38,11 +24,9 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 
- //   signal(SIGINT, handle_sigint);
-  //  signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-//		configure_terminal();
+		//handle_signals();
 		t_command_test *command = NULL;
 		user_prompt = NULL;
 		if(!get_user_prompt(&user_prompt))
@@ -67,3 +51,4 @@ int main(int argc, char **argv, char **envp)
 	}
 	return (EXIT_SUCCESS);
 }
+
