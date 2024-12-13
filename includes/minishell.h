@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
+/*   Updated: 2024/12/13 22:04:28 by ftapponn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
@@ -31,6 +43,8 @@
 #define ERROR_HEREDOC_SIGNAL "EXITING HEREDOC"
 #define ERROR_TOO_ARGUMENT "ERROR TOO MUCH ARGUMENT"
 #define ERROR_DIGIT_ARGUMENT "ERROR ARGUMENT IS NOT DIGIT"
+#define ERROR_SET_ARGUMENT "ERROR : COMMAND SHOULD BE ./minishell 'commande'"
+
 
 extern int g_last_exit_status;
 
@@ -87,6 +101,12 @@ typedef struct s_command
 
 // main
 void print_env_list(t_env *env_list);
+
+//minishell
+void minishell_non_interactive_argument(t_env *env, char *line);
+void minishell_non_interactive(t_env *env);
+void minishell_interactive(t_env *env);
+
 //monitor 
 int tree_monitor(t_ast_node *node, t_command_test *command, t_env *env);
 int pipe_monitor(t_ast_node *node, t_env *env);
@@ -154,6 +174,7 @@ char *ft_strndup(const char *src, size_t len);
 void free_command(t_command_test **command);
 void free_command_split(char **command_split);
 int free_export_command(t_export *export_list);
+void free_all(t_command_test **command, t_env *env);
 
 
 //parser

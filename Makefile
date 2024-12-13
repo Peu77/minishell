@@ -35,6 +35,7 @@ SRC =  srcs/main.c \
 	   srcs/monitor/command_monitor.c \
 	   srcs/env/initialise_env.c \
 	   srcs/env/env_utils.c \
+	   srcs/minishell.c \
 
 OBJ = $(SRC:.c=.o)
 NAME = minishell

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   user_prompt.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 21:06:59 by ftapponn          #+#    #+#             */
+/*   Updated: 2024/12/13 21:07:19 by ftapponn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int get_user_prompt(char **user_prompt)
@@ -8,12 +20,10 @@ int get_user_prompt(char **user_prompt)
     {
         clear_history();
         printf("exit\n");
-        free(*user_prompt);  // Free memory allocated by readline
-        return 0;  // Return 0 to signal exit
+        free(*user_prompt);
+        return 0;
     }
-
     add_history(*user_prompt);
     remove_newline(*user_prompt);
-
     return 1;
 }

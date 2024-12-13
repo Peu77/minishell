@@ -1,19 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
+/*   Updated: 2024/12/13 22:06:50 by ftapponn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
-
-
 
 void free_command_split(char **command_split)
 {
-    int i = 0;
+    int i = -1;
 
     if (!command_split)
         return;
-
-    while (command_split[i])
-    {
+    while (command_split[++i])
         free(command_split[i]);
-        i++;
-    }
     free(command_split);
 }
 
@@ -63,4 +69,26 @@ void free_command(t_command_test **command)
     }
     free(*command);
     *command = NULL;
+}
+
+void free_env_list(t_env *env)
+{
+    t_env *current;
+    t_env *next;
+
+    current = env;
+    while (current)
+    {
+        next = current->next;
+        free(current->variable_name);
+        free(current->variable_value);
+        free(current);
+        current = next;
+    }
+}
+
+void free_all(t_command_test **command, t_env *env)
+{
+	free_command(command);
+	free_env_list(env);
 }

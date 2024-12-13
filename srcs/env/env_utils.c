@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
+/*   Updated: 2024/12/13 22:12:10 by ftapponn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-static void delete_env_variable(t_env *current, t_env *prev, t_env *env_list)
+
+static void delete_env_variable(t_env *current, t_env *prev)
 {
     if (prev)
         prev->next = current->next;
-    else
-        env_list = current->next;
-
+    else if (current->next)
+        current->next->previous = NULL;
     if (current->next)
         current->next->previous = prev;
-
     free(current->variable_name);
     free(current->variable_value);
     free(current);
@@ -27,7 +38,7 @@ int unset_variable(t_env *env, const char *var_name)
         if (ft_strncmp(current->variable_name, var_name, ft_strlen(var_name)) == 0 &&
             current->variable_name[ft_strlen(var_name)] == '\0')
         {
-            delete_env_variable(current, prev, env_list);
+            delete_env_variable(current, prev);
             return 0;
         }
         prev = current;
