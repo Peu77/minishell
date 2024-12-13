@@ -107,6 +107,9 @@ void pev(const char *message);
 
 //env
 t_env *initialise_env(char **env);
+//env utils
+int unset_variable(t_env *env, const char *var_name);
+void print_env_list(t_env *env_list);
 
 //prompt
 int get_user_prompt(char **result);
@@ -120,7 +123,6 @@ int env(t_command_test *command, t_env *env_list);
 int export_command(t_command_test *command, t_env *env_list);
 int unset(t_command_test *command, t_env *env_list);
 
-//env
 
 //execution
 int execution_monitor(t_command_test *command, t_env *env_var);

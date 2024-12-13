@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-
 void remove_newline(char *buffer) 
 {
     size_t len = ft_strlen(buffer);

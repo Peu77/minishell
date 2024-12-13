@@ -9,16 +9,13 @@ int add_env_to_end(t_env *env, char *variable_name, char *variable_value)
         current = current->next;
     new_node = malloc(sizeof(t_env));
     if (!new_node)
-    {
-        perror("malloc");
-        return 1;
-    }
+        return pec(ERROR_MALLOC);
     new_node->variable_name = variable_name;
     new_node->variable_value = variable_value;
     new_node->next = NULL;
     new_node->previous = current;
     current->next = new_node;
-    return 0;
+    return (0);
 }
 
 int update_or_add_env_variable(t_env *env, char *variable_name, char *variable_value)
@@ -52,17 +49,18 @@ int update_or_add_env_variable(t_env *env, char *variable_name, char *variable_v
 
 int extract_variable_name_and_value(char *argument, char **variable_name, char **variable_value)
 {
-    char *equal_sign = ft_strchr(argument, '=');
+    char *equal_sign;
+	size_t name_len;
 
+	equal_sign = ft_strchr(argument, '=');
     if (!equal_sign || equal_sign == argument || *(equal_sign + 1) == '\0')
         return (1);
-    size_t name_len = equal_sign - argument;
+    name_len = equal_sign - argument;
     *variable_name = malloc(name_len + 1);
     if (!(*variable_name))
         return pec(ERROR_MALLOC);
     ft_memcpy(*variable_name, argument, name_len);
     (*variable_name)[name_len] = '\0';
-
     *variable_value = ft_strdup(equal_sign + 1);
     if (!(*variable_value))
     {
@@ -71,7 +69,6 @@ int extract_variable_name_and_value(char *argument, char **variable_name, char *
     }
     return (0);
 }
-
 
 int export_command(t_command_test *command, t_env *env)
 {
