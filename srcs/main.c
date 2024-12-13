@@ -17,13 +17,14 @@ void handle_signals(void)
 }
 */
 
+
 int main(int argc, char **argv, char **envp)
 {
 	pe("WELCOME TO MINISHELL");
 	char *user_prompt;
 	(void)argc;
 	(void)argv;
-
+	t_env *env = initialise_env(envp);
 	while (1)
 	{
 		//handle_signals();
@@ -44,7 +45,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		printf("result: %d\n", node->type);
 		print_ast_node(node, 0);
-		tree_monitor(node, command, envp);
+		tree_monitor(node, command, env);
 		free_ast_node(node);	
 		free_command(&command);
 		free(user_prompt);

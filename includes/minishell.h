@@ -30,6 +30,36 @@
 #define ERROR_HEREDOC "Erreu opening temporary heredoc"
 #define ERROR_HEREDOC_SIGNAL "EXITING HEREDOC"
 
+
+
+typedef struct s_export
+{
+    char **args;
+    char *equal_sign;
+	int result;
+    int i;
+    char *variable_name;
+    char *variable_value;
+} t_export;
+
+typedef struct s_pipe_data
+{
+    int pipe_fds[2];
+    pid_t left_pid;
+    pid_t right_pid;
+    int right_status;
+    int right_result;
+} t_pipe_data;
+
+
+typedef struct s_env
+{
+	char *variable_name;
+	char *variable_value;
+	struct s_env *next;
+	struct s_env *previous;
+} t_env;
+
 typedef struct s_command_test
 {
 	char **envp;
@@ -47,36 +77,26 @@ typedef struct s_command
 	char *argument;
 	char *command_name;
 	char *redirection;
-	char **envp;
 	char *redirection_token;
 	char *delimiter;
 	struct s_command *next;
 	struct s_command *previous;
 } t_command;
 
-typedef struct s_pipe_data
-{
-    int pipe_fds[2];
-    pid_t left_pid;
-    pid_t right_pid;
-    int right_status;
-    int right_result;
-} t_pipe_data;
-
-
 // main
+void print_env_list(t_env *env_list);
 //monitor 
-int tree_monitor(t_ast_node *node, t_command_test *command, char **envp);
-int pipe_monitor(t_ast_node *node, char **envp);
-int and_monitor(t_ast_node *node, t_command_test *command, char **envp);
-int or_monitor(t_ast_node *node, t_command_test *command, char **envp);
-int command_monitor(t_ast_node *node, t_command_test *command, char **envp);
+int tree_monitor(t_ast_node *node, t_command_test *command, t_env *env);
+int pipe_monitor(t_ast_node *node, t_env *env);
+int and_monitor(t_ast_node *node, t_command_test *command, t_env *env);
+int or_monitor(t_ast_node *node, t_command_test *command, t_env *env);
+int command_monitor(t_ast_node *node, t_command_test *command,t_env *env);
 
 //command
 void get_command_from_node(t_command_test **command);
 void print_command(t_command_test *command);
 int concatenate_arguments(char **arg, char **result);
-int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, char **envp);
+int transform_node_to_command(char *value, t_command_test **command, t_list *redirection);
 int get_path(t_command_test **command);
 int get_redirection(t_command_test **command, t_list *redirection);
 
@@ -84,6 +104,9 @@ int get_redirection(t_command_test **command, t_list *redirection);
 int pe(const char *message);
 int pec(const char *message);
 void pev(const char *message);
+
+//env
+t_env *initialise_env(char **env);
 
 //prompt
 int get_user_prompt(char **result);
@@ -93,13 +116,14 @@ int pwd(void);
 int echo(t_command_test *command, bool is_n);
 int exit_command(t_command_test *command);
 int cd(t_command_test *command);
-int env(t_command_test *command);
-int export_command(t_command_test *command);
-int unset(t_command_test *command);
+int env(t_command_test *command, t_env *env_list);
+int export_command(t_command_test *command, t_env *env_list);
+int unset(t_command_test *command, t_env *env_list);
+
 //env
 
 //execution
-int execution_monitor(t_command_test *command);
+int execution_monitor(t_command_test *command, t_env *env_var);
 int prepare_execution_command(t_command_test *command);
 int execution_command(char **arguments, char *path);
 

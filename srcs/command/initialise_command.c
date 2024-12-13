@@ -60,7 +60,8 @@ int get_redirection(t_command_test **command, t_list *redirection)
     return 1;
 }
 
-int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, char **envp)
+
+int transform_node_to_command(char *value, t_command_test **command, t_list *redirection)
 {
     char **arg;
 
@@ -85,7 +86,6 @@ int transform_node_to_command(char *value, t_command_test **command, t_list *red
         }
     }
 	get_path(command);
-	(*command)->envp = envp;
 	if(redirection)
 		get_redirection(command, redirection);
     free_command_split(arg);

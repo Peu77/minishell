@@ -16,9 +16,6 @@ int exit_command(t_command_test *command)
 		free_command_split(cmd);
 		return 1;
 	}
-	else
-	{
-		free_command_split(cmd);
-		exit(EXIT_SUCCESS);
-	}
+	return (1);
 }
+
