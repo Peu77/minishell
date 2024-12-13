@@ -141,7 +141,9 @@ void redirection_heredoc(const char *delimiter);
 //pipe_monitor
 
 //signal 
-void signal_waiting(void);
+void sighandler(int sig);
+void main_signals(void);
+void heredoc_sighandler(int sig);
 
 //utils
 void remove_newline(char *buffer);

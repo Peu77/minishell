@@ -1,10 +1,12 @@
 #include "../../includes/minishell.h"
 
+
 void create_heredoc_file(const char *delimiter)
 {
     char *buffer;
     int temp_fd;
 
+	//signal(SIGINT, heredoc_sighandler);
 	buffer = NULL;
     temp_fd = open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
     if (temp_fd == -1)
@@ -28,6 +30,7 @@ void create_heredoc_file(const char *delimiter)
         free(buffer);
     }
     close(temp_fd);
+	//main_signals();
 }
 
 void redirect_input_from_heredoc(void)

@@ -1,21 +1,6 @@
 #include "../includes/minishell.h"
 
-/*
-void sighandler(int sig)
-{
-    (void)sig;
-    rl_on_new_line();
-    rl_replace_line("", 0);
-	rl_redisplay();
-    printf("\n>>>> Minishell>$ ");
-}
 
-void handle_signals(void)
-{
-    signal(SIGINT, sighandler); 
-    signal(SIGQUIT, SIG_IGN);
-}
-*/
 int g_last_exit_status = 0;
 
 int main(int argc, char **argv, char **envp)
@@ -27,7 +12,7 @@ int main(int argc, char **argv, char **envp)
 	t_env *env = initialise_env(envp);
 	while (1)
 	{
-		//handle_signals();
+		//main_signals();
 		t_command_test *command = NULL;
 		user_prompt = NULL;
 		if(!get_user_prompt(&user_prompt))

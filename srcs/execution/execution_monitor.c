@@ -58,7 +58,6 @@ int execution_monitor(t_command_test *command, t_env *env_list)
     result = prepare_execution_command(command);
     if (command->saved_stdout)
         restore_standard_fds(command);
-
 	g_last_exit_status = result;
     return (result);
 }
