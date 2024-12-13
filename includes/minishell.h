@@ -32,6 +32,8 @@
 #define ERROR_TOO_ARGUMENT "ERROR TOO MUCH ARGUMENT"
 #define ERROR_DIGIT_ARGUMENT "ERROR ARGUMENT IS NOT DIGIT"
 
+extern int g_last_exit_status;
+
 typedef struct s_export
 {
     char **args;

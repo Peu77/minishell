@@ -51,6 +51,7 @@ int execution_monitor(t_command_test *command, t_env *env_list)
                 result = unset(command, env_list);
             if (command->saved_stdout)
                 restore_standard_fds(command);
+			g_last_exit_status = result;
             return (result);
         }
     }
@@ -58,5 +59,6 @@ int execution_monitor(t_command_test *command, t_env *env_list)
     if (command->saved_stdout)
         restore_standard_fds(command);
 
+	g_last_exit_status = result;
     return (result);
 }

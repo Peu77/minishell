@@ -16,7 +16,7 @@ void handle_signals(void)
     signal(SIGQUIT, SIG_IGN);
 }
 */
-
+int g_last_exit_status = 0;
 
 int main(int argc, char **argv, char **envp)
 {
@@ -49,6 +49,7 @@ int main(int argc, char **argv, char **envp)
 		free_ast_node(node);	
 		free_command(&command);
 		free(user_prompt);
+		printf("last exit status is %d\n", g_last_exit_status);
 	}
 	return (EXIT_SUCCESS);
 }
