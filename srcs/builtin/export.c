@@ -72,25 +72,6 @@ int extract_variable_name_and_value(char *argument, char **variable_name, char *
     return (0);
 }
 
-int free_export_command(t_export *export)
-{
-    if (export->args)
-    {
-        free_command_split(export->args); 
-        export->args = NULL;
-    }
-    if (export->variable_name)
-    {
-        free(export->variable_name);
-        export->variable_name = NULL;
-    }
-    if (export->variable_value)
-    {
-        free(export->variable_value);
-        export->variable_value = NULL;
-    }
-    return 1;
-}
 
 int export_command(t_command_test *command, t_env *env)
 {

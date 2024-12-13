@@ -140,12 +140,14 @@ void redirection_heredoc(const char *delimiter);
 void signal_waiting(void);
 
 //utils
-//void exit_shell(t_pipe *pipe, int erxno);
 void remove_newline(char *buffer);
+long ft_atol(const char *str);
+char *ft_strndup(const char *src, size_t len);
+
+//clean
 void free_command(t_command_test **command);
-//void free_pipe(t_pipe **pipe);
 void free_command_split(char **command_split);
-//int free_all(t_pipe **pipe, t_command **command);
+int free_export_command(t_export *export_list);
 
 
 //parser

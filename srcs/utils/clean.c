@@ -17,8 +17,25 @@ void free_command_split(char **command_split)
     free(command_split);
 }
 
-
-
+int free_export_command(t_export *export_list)
+{
+    if (export_list->args)
+    {
+        free_command_split(export_list->args); 
+        export_list->args = NULL;
+    }
+    if (export_list->variable_name)
+    {
+        free(export_list->variable_name);
+        export_list->variable_name = NULL;
+    }
+    if (export_list->variable_value)
+    {
+        free(export_list->variable_value);
+        export_list->variable_value = NULL;
+    }
+    return 1;
+}
 
 void free_command(t_command_test **command)
 {

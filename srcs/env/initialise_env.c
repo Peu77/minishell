@@ -1,14 +1,6 @@
 #include "../../includes/minishell.h"
 
-char *ft_strndup(const char *src, size_t len)
-{
-    char *dest = (char *)malloc(len + 1);
-    if (!dest)
-        return NULL;
-    strncpy(dest, src, len);
-    dest[len] = '\0';
-    return dest;
-}
+
 
 void split_variable(char *line, char **name, char **value)
 {
@@ -27,12 +19,11 @@ t_env *initialise_env(char **env)
     t_env *new_node = NULL;
     char *name = NULL;
     char *value = NULL;
-    int i = 0;
+    int i = -1;
 
-    while (env[i] != NULL)
+    while (env[++i] != NULL)
     {
         split_variable(env[i], &name, &value);
-
         new_node = (t_env *)malloc(sizeof(t_env));
         if (!new_node)
             return NULL;
@@ -43,12 +34,8 @@ t_env *initialise_env(char **env)
         if (tail)
             tail->next = new_node;
         tail = new_node;
-
         if (!head)
             head = new_node;
-
-        i++;
     }
-
     return head;
 }

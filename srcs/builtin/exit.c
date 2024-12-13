@@ -1,27 +1,6 @@
 #include "../../includes/minishell.h"
 
 
-long ft_atol(const char *str)
-{
-    long result = 0;
-    int sign = 1;
-
-    while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r' || *str == '\v' || *str == '\f')
-        str++;
-    if (*str == '-')
-    {
-        sign = -1;
-        str++;
-    }
-    else if (*str == '+')
-        str++;
-    while (ft_isdigit(*str))
-    {
-        result = result * 10 + (*str - '0');
-        str++;
-    }
-    return (result * sign);
-}
 
 int exit_command(t_command_test *command)
 {
