@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 22:04:28 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:51:54 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_env
 
 typedef struct s_command_test
 {
-	char **envp;
 	char *path;
 	char *argument;
 	char *command_name;
@@ -174,7 +173,7 @@ char *ft_strndup(const char *src, size_t len);
 void free_command(t_command_test **command);
 void free_command_split(char **command_split);
 int free_export_command(t_export *export_list);
-void free_all(t_command_test **command, t_env *env);
+void free_env_list(t_env *env);
 
 
 //parser

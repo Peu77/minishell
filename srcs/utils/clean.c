@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 22:06:50 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:26:34 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ void free_command(t_command_test **command)
 {
     if (!command || !*command)
         return;
-    if ((*command)->path)
-    {
-        free((*command)->path);
-        (*command)->path = NULL;
-    }
+    free((*command)->path);
+    (*command)->path = NULL;
     if ((*command)->command_name)
     {
         free((*command)->command_name);
@@ -85,10 +82,4 @@ void free_env_list(t_env *env)
         free(current);
         current = next;
     }
-}
-
-void free_all(t_command_test **command, t_env *env)
-{
-	free_command(command);
-	free_env_list(env);
 }

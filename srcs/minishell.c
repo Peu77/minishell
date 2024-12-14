@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 22:02:50 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:53:37 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void minishell_interactive(t_env *env)
         print_ast_node(node, 0);
         tree_monitor(node, command, env);
         free_ast_node(node);
-        free_all(&command, env);
+		free_command(&command);
         free(user_prompt);
         printf("last exit status is %d\n", g_last_exit_status);
     }

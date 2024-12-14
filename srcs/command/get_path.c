@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:44 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 21:10:46 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 21:14:49 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char *construct_full_path(char *path, const char *command)
     return (full_path);
 }
 
+
 static char *find_command_in_path(const char *command)
 {
     char *env_path;
@@ -34,22 +35,36 @@ static char *find_command_in_path(const char *command)
 
     env_path = getenv("PATH");
     if (!env_path)
-        return (pev(ERROR_FIND_ENV), NULL);
+    {
+        printf("PATH environment variable not found.\n");
+        return NULL;
+    }
     paths = ft_split(env_path, ':');
     if (!paths)
-        return (pev(ERROR_SPLIT), NULL);
+    {
+        printf("Error splitting PATH.\n");
+        return NULL;
+    }
     while (paths[++i])
     {
         full_path = construct_full_path(paths[i], command);
         if (!full_path)
-            return (free_command_split(paths), NULL);
+        {
+            free_command_split(paths);
+            return NULL;
+        }
+        printf("Trying path: %s\n", full_path);
+
         if (access(full_path, F_OK) == 0) 
-            return (free_command_split(paths), full_path);
+        {
+            free_command_split(paths);
+            return full_path;
+        }
         free(full_path);
-        full_path = NULL;
     }
     free_command_split(paths);
-    return (NULL);
+    printf("Command '%s' not found in any of the paths.\n", command);
+    return NULL;
 }
 
 int check_absolute_path(const char *path)
@@ -64,7 +79,6 @@ int check_absolute_path(const char *path)
         printf("Command '%s' is not executable.\n", path);
         return 0;
     }
-
     return 1;
 }
 int get_path(t_command_test **command)
@@ -83,7 +97,10 @@ int get_path(t_command_test **command)
     }
     found_path = find_command_in_path((*command)->command_name);
     if (found_path)
-        (*command)->path = found_path;
+	{
+	    (*command)->path = ft_strdup(found_path);  // Duplicate the path to keep it independently
+        free(found_path); 
+	}
     else
     {
         (*command)->path = NULL;

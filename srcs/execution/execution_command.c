@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 21:09:42 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 21:04:41 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,39 @@ int execution_command(char **arguments, char *path)
     return 1;
 }
 
+
 int prepare_execution_command(t_command_test *command)
 {
     char *str;
     char **arguments;
-	char *temp;
-	int result;
+    char *temp;
+    int result;
 
-	str = ft_strdup(command->command_name);
-	if(!str)
-		return pec(ERROR_MALLOC);
+    str = ft_strdup(command->command_name);
+    if (!str)
+        return pec(ERROR_MALLOC);
     if (command->argument != NULL)
     {
         temp = ft_strjoin(str, " ");
+        if (!temp)
+		{
+            free(str);
+            return pec(ERROR_MALLOC);
+        }
         free(str);
         str = ft_strjoin(temp, command->argument);
         free(temp);
+        if (!str)
+            return pec(ERROR_MALLOC);
     }
     arguments = ft_split(str, ' ');
+    if (!arguments)
+	{
+        free(str);
+        return pec(ERROR_SPLIT);
+    }
     result = execution_command(arguments, command->path);
-	free_command_split(arguments);
-	free(str);
-    return (result);
+    free_command_split(arguments);
+    free(str);
+    return result;
 }

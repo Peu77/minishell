@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 21:10:36 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:22:15 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void print_command(t_command_test *command)
     printf("Arguments: %s\n", command->argument ? command->argument : "(NULL)");
     printf("Paths: %s\n", command->path ? command->path : "(NULL)");
 }
+
 
 int concatenate_arguments(char **arg, char **result)
 {
@@ -73,33 +74,49 @@ int get_redirection(t_command_test **command, t_list *redirection)
 }
 
 
+
 int transform_node_to_command(char *value, t_command_test **command, t_list *redirection)
 {
     char **arg;
 
-	*command = malloc(sizeof(t_command_test));
-	if (!(*command))
- 	   return pe(ERROR_MALLOC);
-	ft_memset(*command, 0, sizeof(t_command_test));
+    *command = malloc(sizeof(t_command_test));
     if (!(*command))
         return pe(ERROR_MALLOC);
+    ft_memset(*command, 0, sizeof(t_command_test));
+
     arg = ft_split(value, ' ');
     if (!arg)
+    {
+        free(*command);
         return pe(ERROR_SPLIT);
+    }
     (*command)->command_name = ft_strdup(arg[0]);
+    if (!(*command)->command_name)
+    {
+        free_command_split(arg);
+        free(*command);
+        return pe(ERROR_MALLOC);
+    }
     if (!arg[1])
         (*command)->argument = NULL;
     else
     {
         if (concatenate_arguments(arg, &((*command)->argument)) != 1)
         {
-            free(arg);
+            free_command_split(arg);
+            free((*command)->command_name);
+            free(*command);
             return pe(ERROR_MALLOC);
         }
     }
-	get_path(command);
-	if(redirection)
-		get_redirection(command, redirection);
+    get_path(command);
+    if (redirection)
+        get_redirection(command, redirection);
     free_command_split(arg);
-    return (1);
+    if ((*command)->argument)
+    {
+        free((*command)->argument);
+    }
+
+    return 1;
 }
