@@ -6,106 +6,108 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 17:22:39 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:25:18 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int add_env_to_end(t_env *env, char *variable_name, char *variable_value)
-{
-    t_env *current = env;
-    t_env *new_node;
 
-    while (current->next)
-        current = current->next;
-    new_node = malloc(sizeof(t_env));
+char	*ft_strtok(char *str, const char delim)
+{
+	static char		*stock = NULL;
+	static int		i = 0;
+	char			*ptr;
+	int				flg;
+
+	flg = 0;
+	ptr = NULL;
+	if (str != NULL)
+	{
+		stock = ft_strdup(str);
+		i = 0;
+	}
+	while (stock[i] != '\0')
+	{
+		if (flg == 0 && stock[i] != delim)
+		{
+			flg = 1;
+			ptr = &stock[i];
+		}
+		else if (flg == 1 && stock[i] == delim)
+		{
+			stock[i] = '\0';
+			i += 1;
+			break ;
+		}
+		i += 1;
+	}
+	return (ptr);
+}
+
+t_env *create_env_node(char *variable_name, char *variable_value)
+{
+    t_env *new_node = malloc(sizeof(t_env));
     if (!new_node)
-        return pec(ERROR_MALLOC);
-    new_node->variable_name = variable_name;
-    new_node->variable_value = variable_value;
+        return NULL;
+    new_node->variable_name = ft_strdup(variable_name);
+    new_node->variable_value = ft_strdup(variable_value);
     new_node->next = NULL;
-    new_node->previous = current;
-    current->next = new_node;
-    return (0);
+    new_node->previous = NULL;
+    return new_node;
 }
 
-int update_or_add_env_variable(t_env *env, char *variable_name, char *variable_value)
+void add_to_env(t_env *env, char *variable_name, char *variable_value)
 {
-    t_env *current = env;
-    int found = 0;
+    t_env *temp;
+	t_env *new_node;
 
-    while (current)
+	temp = env;
+    while (temp)
     {
-        if (ft_strncmp(current->variable_name, variable_name, ft_strlen(variable_name)) == 0)
-        {
-            free(current->variable_value);
-            current->variable_value = variable_value;
-            free(variable_name);
-            found = 1;
-            break;
-        }
-        current = current->next;
+        if (ft_strncmp(temp->variable_name, variable_name, ft_strlen(variable_name)) == 0)
+            return;
+        temp = temp->next;
     }
-    if (!found)
+    new_node = create_env_node(variable_name, variable_value);
+    if (!new_node)
+        return;
+    if (env == NULL)
+        env = new_node;
+    else
     {
-        if (add_env_to_end(env, variable_name, variable_value) != 0)
-        {
-            free(variable_name);
-            free(variable_value);
-            return 1;
-        }
+        temp = env;
+        while (temp->next)
+            temp = temp->next;
+        temp->next = new_node;
+        new_node->previous = temp;
     }
-    return 0;
-}
-
-int extract_variable_name_and_value(char *argument, char **variable_name, char **variable_value)
-{
-    char *equal_sign;
-	size_t name_len;
-
-	equal_sign = ft_strchr(argument, '=');
-    if (!equal_sign || equal_sign == argument || *(equal_sign + 1) == '\0')
-        return (1);
-    name_len = equal_sign - argument;
-    *variable_name = malloc(name_len + 1);
-    if (!(*variable_name))
-        return pec(ERROR_MALLOC);
-    ft_memcpy(*variable_name, argument, name_len);
-    (*variable_name)[name_len] = '\0';
-    *variable_value = ft_strdup(equal_sign + 1);
-    if (!(*variable_value))
-    {
-        free(*variable_name);
-        return pec(ERROR_MALLOC);
-    }
-    return (0);
 }
 
 int export_command(t_command_test *command, t_env *env)
-{
-    t_export export = {0};
+{	
+	char *arg_copy; 
+    char *token;
+	char *equals_pos;
+	char *variable_name;
+	char *variable_value;
 
-    export.args = ft_split(command->argument, ' ');
-    if (!export.args)
+	if (!command || !command->argument)
         return 1;
-    while (export.args[export.i] != NULL)
+	arg_copy = ft_strdup(command->argument);
+	token = ft_strtok(arg_copy, ' ');
+    while (token)
     {
-        char *argument = export.args[export.i];
-        export.equal_sign = ft_strchr(argument, '=');
-        if (!export.equal_sign || export.equal_sign == argument || *(export.equal_sign + 1) == '\0')
+        equals_pos = ft_strchr(token, '=');
+        if (equals_pos)
         {
-            export.result = 1;
-            export.i++;
-            continue;
+            *equals_pos = '\0';
+            variable_name = token;
+            variable_value = equals_pos + 1;
+            add_to_env(env, variable_name, variable_value);
         }
-        if (extract_variable_name_and_value(argument, &export.variable_name, &export.variable_value) != 0)
-            return free_export_command(&export);
-        if (update_or_add_env_variable(env, export.variable_name, export.variable_value) != 0)
-            return free_export_command(&export);
-        export.i++;
+        token = ft_strtok(NULL, ' ');
     }
-	print_env_list(env);
-    free_command_split(export.args);
+    free(arg_copy);
     return 0;
 }

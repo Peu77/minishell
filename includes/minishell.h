@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 17:20:43 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:03:15 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@
 
 
 extern int g_last_exit_status;
-
-typedef struct s_export
-{
-    char **args;
-    char *equal_sign;
-	int result;
-    int i;
-    char *variable_name;
-    char *variable_value;
-} t_export;
 
 typedef struct s_pipe_data
 {
@@ -161,7 +151,6 @@ char *ft_strndup(const char *src, size_t len);
 //clean
 void free_command(t_command_test **command);
 void free_command_split(char **command_split);
-int free_export_command(t_export *export_list);
 void free_env_list(t_env *env);
 
 
