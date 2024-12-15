@@ -6,11 +6,12 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/14 20:26:34 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:23:07 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdlib.h>
 
 void free_command_split(char **command_split)
 {
@@ -47,8 +48,11 @@ void free_command(t_command_test **command)
 {
     if (!command || !*command)
         return;
-    free((*command)->path);
-    (*command)->path = NULL;
+    if ((*command)->path)
+    {
+        free((*command)->path);
+        (*command)->path = NULL;
+    }
     if ((*command)->command_name)
     {
         free((*command)->command_name);
@@ -64,22 +68,25 @@ void free_command(t_command_test **command)
         ft_lstclear(&(*command)->redirect, free);
         (*command)->redirect = NULL;
     }
+	if ((*command)->env)
+    {
+		free_env_list((*command)->env);
+        (*command)->env = NULL;
+    }
     free(*command);
     *command = NULL;
 }
 
 void free_env_list(t_env *env)
 {
-    t_env *current;
-    t_env *next;
+    t_env *tmp;
 
-    current = env;
-    while (current)
+    while (env)
     {
-        next = current->next;
-        free(current->variable_name);
-        free(current->variable_value);
-        free(current);
-        current = next;
+        tmp = env;
+        env = env->next;
+        free(tmp->variable_name);
+        free(tmp->variable_value);
+        free(tmp);
     }
 }

@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/14 20:22:15 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:11:54 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,46 @@ int get_redirection(t_command_test **command, t_list *redirection)
     return 1;
 }
 
+t_env *get_env(t_env *original_env)
+{
+    t_env *new_head = NULL;
+    t_env *new_tail = NULL;
+    t_env *new_node = NULL;
 
+    while (original_env)
+    {
+        new_node = (t_env *)malloc(sizeof(t_env));
+        if (!new_node)
+        {
+            // Free the new list in case of allocation failure
+            while (new_head)
+            {
+                t_env *tmp = new_head;
+                new_head = new_head->next;
+                free(tmp->variable_name);
+                free(tmp->variable_value);
+                free(tmp);
+            }
+            return NULL;
+        }
+        new_node->variable_name = ft_strdup(original_env->variable_name);
+        new_node->variable_value = ft_strdup(original_env->variable_value);
+        new_node->next = NULL;
+        new_node->previous = new_tail;
 
-int transform_node_to_command(char *value, t_command_test **command, t_list *redirection)
+        if (new_tail)
+            new_tail->next = new_node;
+
+        new_tail = new_node;
+        if (!new_head)
+            new_head = new_node;
+
+        original_env = original_env->next;
+    }
+    return new_head;
+}
+
+int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, t_env *env)
 {
     char **arg;
 
@@ -110,6 +147,7 @@ int transform_node_to_command(char *value, t_command_test **command, t_list *red
         }
     }
     get_path(command);
+    (*command)->env = get_env(env);
     if (redirection)
         get_redirection(command, redirection);
     free_command_split(arg);

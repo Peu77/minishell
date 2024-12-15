@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/14 19:53:37 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:29:52 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void minishell_interactive(t_env *env)
     //main_signals();
     while (1)
     {
-        if (!get_user_prompt(&user_prompt))
+        if (!get_user_prompt(&user_prompt, env))
             break;
  		node = parse(user_prompt);
 		if (node == NULL)

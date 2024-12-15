@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/14 19:51:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:29:35 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,11 @@ typedef struct s_command_test
 	char *argument;
 	char *command_name;
 	t_list *redirect;
+	t_env *env;
 	int saved_stdout;
 	int saved_stdin;
 } t_command_test;
 
-typedef struct s_command
-{
-	char *path;
-	char *argument;
-	char *command_name;
-	char *redirection;
-	char *redirection_token;
-	char *delimiter;
-	struct s_command *next;
-	struct s_command *previous;
-} t_command;
 
 // main
 void print_env_list(t_env *env_list);
@@ -117,7 +107,7 @@ int command_monitor(t_ast_node *node, t_command_test *command,t_env *env);
 void get_command_from_node(t_command_test **command);
 void print_command(t_command_test *command);
 int concatenate_arguments(char **arg, char **result);
-int transform_node_to_command(char *value, t_command_test **command, t_list *redirection);
+int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, t_env *env);
 int get_path(t_command_test **command);
 int get_redirection(t_command_test **command, t_list *redirection);
 
@@ -133,20 +123,20 @@ int unset_variable(t_env *env, const char *var_name);
 void print_env_list(t_env *env_list);
 
 //prompt
-int get_user_prompt(char **result);
+int get_user_prompt(char **result, t_env *env);
 
 // builtin
 int pwd(void);
 int echo(t_command_test *command, bool is_n);
 int exit_command(t_command_test *command);
 int cd(t_command_test *command);
-int env(t_command_test *command, t_env *env_list);
-int export_command(t_command_test *command, t_env *env_list);
-int unset(t_command_test *command, t_env *env_list);
+int env(t_command_test *command);
+int export_command(t_command_test *command);
+int unset(t_command_test *command);
 
 
 //execution
-int execution_monitor(t_command_test *command, t_env *env_var);
+int execution_monitor(t_command_test *command);
 int prepare_execution_command(t_command_test *command);
 int execution_command(char **arguments, char *path);
 

@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:06:59 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 21:07:19 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:30:22 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int get_user_prompt(char **user_prompt)
+int get_user_prompt(char **user_prompt, t_env *env)
 {
     *user_prompt = readline(">>>> Minishell>$ ");
 
@@ -21,6 +21,7 @@ int get_user_prompt(char **user_prompt)
         clear_history();
         printf("exit\n");
         free(*user_prompt);
+		free_env_list(env);
         return 0;
     }
     add_history(*user_prompt);

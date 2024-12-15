@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:44 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/14 21:14:49 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/14 21:27:33 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int check_absolute_path(const char *path)
     }
     return 1;
 }
+
 int get_path(t_command_test **command)
 {
     char *found_path;
@@ -97,14 +98,16 @@ int get_path(t_command_test **command)
     }
     found_path = find_command_in_path((*command)->command_name);
     if (found_path)
-	{
-	    (*command)->path = ft_strdup(found_path);  // Duplicate the path to keep it independently
-        free(found_path); 
-	}
+    {
+        if ((*command)->path && (*command)->path != (*command)->command_name)
+            free((*command)->path);
+        
+        (*command)->path = found_path;
+    }
     else
     {
         (*command)->path = NULL;
         printf("Command '%s' not found in PATH.\n", (*command)->command_name);
     }
-    return 1;
+    return 0;
 }
