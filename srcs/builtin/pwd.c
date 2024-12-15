@@ -6,24 +6,25 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:42 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:44:30 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:24:43 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pwd(void)
+int	pwd(t_command_test *command)
 {
 	char	*buffer;
 
+	if(command->argument)
+		return print_error(ERROR_PWD);
 	buffer = malloc(MAX_PATH);
 	if (buffer == NULL)
 		return (0);
 	if (getcwd(buffer, MAX_PATH) == NULL)
 	{
-		pe("error with getting path");
 		free(buffer);
-		return (1);
+		return pec("error with getting path");
 	}
 	printf("%s \n", buffer);
 	free(buffer);

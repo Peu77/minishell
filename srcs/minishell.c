@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 12:29:52 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:26:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void minishell_interactive(t_env *env)
         free_ast_node(node);
 		free_command(&command);
         free(user_prompt);
-        printf("last exit status is %d\n", g_last_exit_status);
     }
 }
 

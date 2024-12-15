@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:44:14 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:00:12 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ t_env	*create_env_node(char *variable_name, char *variable_value)
 	if (!new_node)
 		return (NULL);
 	new_node->variable_name = ft_strdup(variable_name);
+	if(!variable_name)
+		return (NULL);
 	new_node->variable_value = ft_strdup(variable_value);
+	if(!variable_value)
+		return (NULL);
 	new_node->next = NULL;
 	new_node->previous = NULL;
 	return (new_node);
@@ -97,6 +101,8 @@ int	export_command(t_command_test *command, t_env *env)
 	if (!command || !command->argument)
 		return (1);
 	arg_copy = ft_strdup(command->argument);
+	if(!arg_copy)
+		return (pec(ERROR_MALLOC));
 	token = ft_strtok(arg_copy, ' ');
 	while (token)
 	{

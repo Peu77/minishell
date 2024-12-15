@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:53 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:47:51 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:54:14 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ int	pec(const char *message)
 	write(STDERR_FILENO, RED, ft_strlen(RED));
 	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, RESET, ft_strlen(RESET));
+	write(STDERR_FILENO, "\n", 1);
+	return (1);
+}
+
+
+int	print_error(const char *message)
+{
+	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
 	return (1);
 }

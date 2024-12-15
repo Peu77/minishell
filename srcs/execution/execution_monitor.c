@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:49:33 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:23:38 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execution_monitor(t_command_test *command, t_env *env_list)
 			else if (i == 4)
 				result = export_command(command, env_list);
 			else if (i == 5)
-				result = pwd();
+				result = pwd(command);
 			else if (i == 6)
 				result = unset(command, env_list);
 			if (command->saved_stdout)

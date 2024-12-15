@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:03:15 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:23:02 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,18 @@
 #define ERROR_NODE "ERROR CREATING THE NODE"
 #define ERROR_MALLOC "ERROR ALLOCATION MEMORY" 
 #define ERROR_FIND_ENV "ERROR FINDING PATH ENV"
-#define ERROR_PATH "ERROR WITH FINDING PATH"
 #define ERROR_EXECVE "ERROR EXECVE FAILED"
 #define ERROR_HEREDOC "ERROR OPENING TEMPORARY HEREDOC"
 #define ERROR_HEREDOC_SIGNAL "EXITING HEREDOC"
 #define ERROR_TOO_ARGUMENT "ERROR TOO MUCH ARGUMENT"
 #define ERROR_DIGIT_ARGUMENT "ERROR ARGUMENT IS NOT DIGIT"
 #define ERROR_SET_ARGUMENT "ERROR : COMMAND SHOULD BE ./minishell 'commande'"
+#define ERROR_PATH "ERROR WITH GETTING PATH"
+#define ERROR_FORK "ERROR FORK FAILED"
 
+//real command
+#define ERROR_FOUND_COMMAND "zsh: command not found."
+#define ERROR_PWD "pwd : too many arguments"
 
 extern int g_last_exit_status;
 
@@ -104,6 +108,7 @@ int get_redirection(t_command_test **command, t_list *redirection);
 int pe(const char *message);
 int pec(const char *message);
 void pev(const char *message);
+int	print_error(const char *message);
 
 //env
 t_env *initialise_env(char **env);
@@ -115,7 +120,7 @@ void print_env_list(t_env *env_list);
 int get_user_prompt(char **result, t_env *env);
 
 // builtin
-int pwd(void);
+int pwd(t_command_test *command);
 int echo(t_command_test *command, bool is_n);
 int exit_command(t_command_test *command);
 int cd(t_command_test *command);
