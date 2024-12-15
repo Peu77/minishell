@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 12:11:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:17:32 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_env *get_env(t_env *original_env)
     return new_head;
 }
 
-int transform_node_to_command(char *value, t_command_test **command, t_list *redirection, t_env *env)
+int transform_node_to_command(char *value, t_command_test **command, t_list *redirection)
 {
     char **arg;
 
@@ -147,7 +147,6 @@ int transform_node_to_command(char *value, t_command_test **command, t_list *red
         }
     }
     get_path(command);
-    (*command)->env = get_env(env);
     if (redirection)
         get_redirection(command, redirection);
     free_command_split(arg);

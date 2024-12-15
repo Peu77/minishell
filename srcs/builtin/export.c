@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 12:15:39 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:22:39 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int extract_variable_name_and_value(char *argument, char **variable_name, char *
     return (0);
 }
 
-int export_command(t_command_test *command)
+int export_command(t_command_test *command, t_env *env)
 {
     t_export export = {0};
 
@@ -101,10 +101,11 @@ int export_command(t_command_test *command)
         }
         if (extract_variable_name_and_value(argument, &export.variable_name, &export.variable_value) != 0)
             return free_export_command(&export);
-        if (update_or_add_env_variable(command->env, export.variable_name, export.variable_value) != 0)
+        if (update_or_add_env_variable(env, export.variable_name, export.variable_value) != 0)
             return free_export_command(&export);
         export.i++;
     }
+	print_env_list(env);
     free_command_split(export.args);
     return 0;
 }

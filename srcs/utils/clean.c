@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 12:23:07 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:37 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ void free_command(t_command_test **command)
     {
         ft_lstclear(&(*command)->redirect, free);
         (*command)->redirect = NULL;
-    }
-	if ((*command)->env)
-    {
-		free_env_list((*command)->env);
-        (*command)->env = NULL;
     }
     free(*command);
     *command = NULL;
