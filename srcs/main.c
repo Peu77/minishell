@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:26 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/13 21:07:28 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 07:09:58 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,16 @@
 
 int g_last_exit_status = 0;
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv)
 {
-    t_env *env;
 
-	env = initialise_env(envp);
     pe("WELCOME TO MINISHELL");
     if (argc >= 2)
     {
 		if(argc == 2)
 		{
         	printf("Non-interactive mode with argument: %s\n", argv[1]);
-   			minishell_non_interactive_argument(env, argv[1]);
+   			minishell_non_interactive_argument(argv[1]);
 		}
 		else
 			return pec(ERROR_SET_ARGUMENT);
@@ -34,12 +32,12 @@ int main(int argc, char **argv, char **envp)
     else if (isatty(STDIN_FILENO))
     {
         printf("Interactive mode\n");
-        minishell_interactive(env);
+        minishell_interactive();
     }
     else
     {
         printf("Non-interactive mode\n");
-        minishell_non_interactive(env);
+        minishell_non_interactive();
     }
     return (EXIT_SUCCESS);
 }

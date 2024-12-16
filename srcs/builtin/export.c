@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 20:00:12 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 07:59:52 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,78 +44,72 @@ char	*ft_strtok(char *str, const char delim)
 	return (ptr);
 }
 
-t_env	*create_env_node(char *variable_name, char *variable_value)
-{
-	t_env	*new_node;
 
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return (NULL);
-	new_node->variable_name = ft_strdup(variable_name);
-	if(!variable_name)
-		return (NULL);
-	new_node->variable_value = ft_strdup(variable_value);
-	if(!variable_value)
-		return (NULL);
-	new_node->next = NULL;
-	new_node->previous = NULL;
-	return (new_node);
+int is_valid_identifier(const char *str)
+{
+    int i = 1;
+    while (str[i] && str[i] != '=')
+    {
+        if (!ft_isalnum(str[i]) && str[i] != '_')
+            return 0;
+        i++;
+    }
+    return 1;
 }
 
-void	add_to_env(t_env *env, char *variable_name, char *variable_value)
+int add_to_environ(const char *key_value_pair)
 {
-	t_env	*temp;
-	t_env	*new_node;
+    char **new_environ;
+    size_t env_count = 0;
 
-	temp = env;
-	while (temp)
-	{
-		if (ft_strncmp(temp->variable_name, variable_name,
-				ft_strlen(variable_name)) == 0)
-			return ;
-		temp = temp->next;
-	}
-	new_node = create_env_node(variable_name, variable_value);
-	if (!new_node)
-		return ;
-	if (env == NULL)
-		env = new_node;
-	else
-	{
-		temp = env;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new_node;
-		new_node->previous = temp;
-	}
+    while (environ && environ[env_count])
+        env_count++;
+    new_environ = malloc(sizeof(char *) * (env_count + 2));
+    if (!new_environ)
+    {
+        perror(ERROR_MALLOC);
+        return -1;
+    }
+    size_t i = 0;
+    while (i < env_count)
+    {
+        new_environ[i] = environ[i];
+        i++;
+    }
+    new_environ[env_count] = ft_strdup(key_value_pair);
+    if (!new_environ[env_count])
+    {
+        perror(ERROR_MALLOC);
+        free(new_environ);
+        return -1;
+    }
+    new_environ[env_count + 1] = NULL;
+    environ = new_environ;
+    return 0;
 }
 
-int	export_command(t_command_test *command, t_env *env)
-{
-	char	*arg_copy;
-	char	*token;
-	char	*equals_pos;
-	char	*variable_name;
-	char	*variable_value;
 
-	if (!command || !command->argument)
-		return (1);
-	arg_copy = ft_strdup(command->argument);
-	if(!arg_copy)
-		return (pec(ERROR_MALLOC));
-	token = ft_strtok(arg_copy, ' ');
-	while (token)
-	{
-		equals_pos = ft_strchr(token, '=');
-		if (equals_pos)
+int export_command(t_command_test *command)
+{
+    char *arg = command->argument;
+    char *pair;
+    char *equal_sign;
+
+    if (!command || !command->argument)
+        return -1;
+
+    pair = ft_strtok(arg, ' ');
+    while (pair) {
+        equal_sign = ft_strchr(pair, '=');
+        if (!equal_sign || equal_sign == pair || !is_valid_identifier(pair))
 		{
-			*equals_pos = '\0';
-			variable_name = token;
-			variable_value = equals_pos + 1;
-			add_to_env(env, variable_name, variable_value);
+			if(!is_valid_identifier(pair))
+				return print_error(ERROR_EXPORT);
+			return (0);
 		}
-		token = ft_strtok(NULL, ' ');
-	}
-	free(arg_copy);
-	return (0);
+        if (add_to_environ(pair) < 0)
+            return 1;
+        pair = ft_strtok(NULL, ' ');
+    }
+    return 0;
 }

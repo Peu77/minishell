@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 20:23:02 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 07:56:57 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@
 //real command
 #define ERROR_FOUND_COMMAND "zsh: command not found."
 #define ERROR_PWD "pwd : too many arguments"
+#define ERROR_EXPORT "inconsistant type for assignement"
 
 extern int g_last_exit_status;
+extern char **environ;
 
 typedef struct s_pipe_data
 {
@@ -60,15 +62,6 @@ typedef struct s_pipe_data
     int right_status;
     int right_result;
 } t_pipe_data;
-
-
-typedef struct s_env
-{
-	char *variable_name;
-	char *variable_value;
-	struct s_env *next;
-	struct s_env *previous;
-} t_env;
 
 typedef struct s_command_test
 {
@@ -82,19 +75,19 @@ typedef struct s_command_test
 
 
 // main
-void print_env_list(t_env *env_list);
+void print_env_list();
 
 //minishell
-void minishell_non_interactive_argument(t_env *env, char *line);
-void minishell_non_interactive(t_env *env);
-void minishell_interactive(t_env *env);
+void minishell_non_interactive_argument(char *line);
+void minishell_non_interactive();
+void minishell_interactive();
 
 //monitor 
-int tree_monitor(t_ast_node *node, t_command_test *command, t_env *env);
-int pipe_monitor(t_ast_node *node, t_env *env);
-int and_monitor(t_ast_node *node, t_command_test *command, t_env *env);
-int or_monitor(t_ast_node *node, t_command_test *command, t_env *env);
-int command_monitor(t_ast_node *node, t_command_test *command,t_env *env);
+int tree_monitor(t_ast_node *node, t_command_test *command);
+int pipe_monitor(t_ast_node *node);
+int and_monitor(t_ast_node *node, t_command_test *command);
+int or_monitor(t_ast_node *node, t_command_test *command);
+int command_monitor(t_ast_node *node, t_command_test *command);
 
 //command
 void get_command_from_node(t_command_test **command);
@@ -110,27 +103,25 @@ int pec(const char *message);
 void pev(const char *message);
 int	print_error(const char *message);
 
-//env
-t_env *initialise_env(char **env);
 //env utils
-int unset_variable(t_env *env, const char *var_name);
-void print_env_list(t_env *env_list);
+int unset_variable(const char *var_name);
+void print_env_list();
 
 //prompt
-int get_user_prompt(char **result, t_env *env);
+int get_user_prompt(char **result);
 
 // builtin
 int pwd(t_command_test *command);
 int echo(t_command_test *command, bool is_n);
 int exit_command(t_command_test *command);
 int cd(t_command_test *command);
-int env(t_command_test *command, t_env *env);
-int export_command(t_command_test *command, t_env *env);
-int unset(t_command_test *command, t_env *env);
+int env(t_command_test *command);
+int export_command(t_command_test *command);
+int unset(t_command_test *command);
 
 
 //execution
-int execution_monitor(t_command_test *command, t_env *env_list);
+int execution_monitor(t_command_test *command);
 int prepare_execution_command(t_command_test *command);
 int execution_command(char **arguments, char *path);
 
@@ -156,7 +147,7 @@ char *ft_strndup(const char *src, size_t len);
 //clean
 void free_command(t_command_test **command);
 void free_command_split(char **command_split);
-void free_env_list(t_env *env);
+void free_env_list();
 
 
 //parser

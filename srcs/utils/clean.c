@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 19:18:28 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 06:57:21 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,3 @@ void	free_command(t_command_test **command)
 	*command = NULL;
 }
 
-void	free_env_list(t_env *env)
-{
-	t_env	*tmp;
-
-	while (env)
-	{
-		tmp = env;
-		env = env->next;
-		free(tmp->variable_name);
-		free(tmp->variable_value);
-		free(tmp);
-	}
-}

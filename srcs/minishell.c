@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 20:26:45 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 07:09:22 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void minishell_interactive(t_env *env)
+void minishell_interactive()
 {
     char *user_prompt;
 	t_command_test *command;
@@ -23,7 +23,7 @@ void minishell_interactive(t_env *env)
     //main_signals();
     while (1)
     {
-        if (!get_user_prompt(&user_prompt, env))
+        if (!get_user_prompt(&user_prompt))
             break;
  		node = parse(user_prompt);
 		if (node == NULL)
@@ -38,14 +38,14 @@ void minishell_interactive(t_env *env)
             continue;
         }
         print_ast_node(node, 0);
-        tree_monitor(node, command, env);
+        tree_monitor(node, command);
         free_ast_node(node);
 		free_command(&command);
         free(user_prompt);
     }
 }
 
-void minishell_non_interactive(t_env *env)
+void minishell_non_interactive()
 {
     char *line = NULL;
  	t_command_test *command;
@@ -66,7 +66,7 @@ void minishell_non_interactive(t_env *env)
             free(line);
             continue;
         }
-        tree_monitor(node, command, env);
+        tree_monitor(node, command);
         free_ast_node(node);
         free_command(&command);
         free(line);
@@ -74,7 +74,7 @@ void minishell_non_interactive(t_env *env)
     free(line);
 }
 
-void minishell_non_interactive_argument(t_env *env, char *line)
+void minishell_non_interactive_argument(char *line)
 {
     t_command_test *command;
 	t_ast_node *node;
@@ -85,7 +85,7 @@ void minishell_non_interactive_argument(t_env *env, char *line)
        return pev("No input provided for non-interactive mode.\n");
     if (node == NULL || node == PARSE_ERROR)
         return pev("parse error\n");
-    tree_monitor(node, command, env);
+    tree_monitor(node, command);
     free_ast_node(node);
     free_command(&command);
 }
