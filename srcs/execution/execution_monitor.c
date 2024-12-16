@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 13:11:36 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:10:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	restore_standard_fds(t_command_test *command)
 int	execution_monitor(t_command_test *command)
 {
 	char	*list_builtin[NUM_BUILTINS] = {"cd", "echo", "env", "exit",
-			"export", "pwd", "unset"};
+			"export", "pwd", "unset", "clear"};
 	int		i;
 	int		result;
 
@@ -51,19 +51,21 @@ int	execution_monitor(t_command_test *command)
 				ft_strlen(list_builtin[i]) + 1) == 0)
 		{
 			if (i == 0)
-				result = cd(command);
+				result = ft_cd(command);
 			else if (i == 1)
-				result = echo(command, 0);
+				result = ft_echo(command, 0);
 			else if (i == 2)
-				result = env(command);
+				result = ft_env(command);
 			else if (i == 3)
-				result = exit_command(command);
+				result = ft_exit(command);
 			else if (i == 4)
-				result = export_command(command);
+				result = ft_export(command);
 			else if (i == 5)
-				result = pwd(command);
+				result = ft_pwd(command);
 			else if (i == 6)
-				result = unset(command);
+				result = ft_unset(command);
+			else if (i == 7)
+				result = ft_clear();
 			if (command->saved_stdout)
 				restore_standard_fds(command);
 			free_command(&command);

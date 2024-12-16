@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 07:59:52 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:07:59 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int add_to_environ(const char *key_value_pair)
 }
 
 
-int export_command(t_command_test *command)
+int ft_export(t_command_test *command)
 {
     char *arg = command->argument;
     char *pair;

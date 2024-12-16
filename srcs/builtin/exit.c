@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:24 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:43:27 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:07:41 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	exit_command(t_command_test *command)
+int	ft_exit(t_command_test *command)
 {
 	char	**cmd;
 	long	exit_code;

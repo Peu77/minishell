@@ -23,6 +23,7 @@ SRC =  srcs/main.c \
 	   srcs/utils/utils.c \
 	   srcs/utils/clean.c \
 	   srcs/builtin/env.c \
+	   srcs/builtin/clear.c \
 	   srcs/parser/parser.c \
 	   srcs/parser/redirects.c \
 	   srcs/parser/lexer.c \

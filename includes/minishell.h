@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 13:10:31 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 18:05:17 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #define RED     "\033[1;31m"
 #define RESET   "\033[0m"
 #define MAX_PATH 1024
-#define NUM_BUILTINS 7
+#define NUM_BUILTINS 8
 
 #define ERROR_GET_LINE "ERROR WITH GETTING THE LINE"
 #define ERROR_SPLIT "ERROR WITH SPLIT FUNCTION"
@@ -111,14 +111,14 @@ void print_env_list();
 int get_user_prompt(char **result);
 
 // builtin
-int pwd(t_command_test *command);
-int echo(t_command_test *command, bool is_n);
-int exit_command(t_command_test *command);
-int cd(t_command_test *command);
-int env(t_command_test *command);
-int export_command(t_command_test *command);
-int unset(t_command_test *command);
-
+int ft_pwd(t_command_test *command);
+int ft_echo(t_command_test *command, bool is_n);
+int ft_exit(t_command_test *command);
+int ft_cd(t_command_test *command);
+int ft_env(t_command_test *command);
+int ft_export(t_command_test *command);
+int ft_unset(t_command_test *command);
+int	ft_clear(void);
 
 //execution
 int execution_monitor(t_command_test *command);
@@ -131,8 +131,6 @@ void redirection_output(t_redirect *redirect);
 void redirection_input(t_redirect *redirect);
 void redirection_append(t_redirect *redirect);
 void redirection_heredoc(const char *delimiter);
-
-//pipe_monitor
 
 //signal 
 void sighandler(int sig);
@@ -149,11 +147,7 @@ void free_command(t_command_test **command);
 void free_command_split(char **command_split);
 void free_env_list();
 
-
 //parser
 void print_ast_node(t_ast_node *node, int depth);
-
-
-
 void print_command_test(t_command_test *command);
 #endif

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/16 11:31:31 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/16 18:07:27 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 #include "../../includes/minishell.h"
 
-int	env(t_command_test *command)
+int	ft_env(t_command_test *command)
 {
 	if (command->argument)
 		return (print_error("env: No such file or directory \n"));
