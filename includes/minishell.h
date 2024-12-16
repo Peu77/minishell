@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 18:05:17 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 20:31:48 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int pipe_monitor(t_ast_node *node);
 int and_monitor(t_ast_node *node, t_command_test *command);
 int or_monitor(t_ast_node *node, t_command_test *command);
 int command_monitor(t_ast_node *node, t_command_test *command);
+int	parentheses_monitor(t_ast_node *node, t_command_test *command);
+
 
 //command
 void get_command_from_node(t_command_test **command);

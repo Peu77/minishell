@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear.c                                            :+:      :+:    :+:   */
+/*   parenthesis_monitor.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 18:56:59 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 18:58:16 by ftapponn         ###   ########.fr       */
+/*   Created: 2024/12/16 20:33:08 by ftapponn          #+#    #+#             */
+/*   Updated: 2024/12/16 20:33:09 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_clear(void)
+int	parentheses_monitor(t_ast_node *node, t_command_test *command)
 {
-	write(1, "\033[H\033[2J", 7);
-	return (1);
+	if (!node || node->type != AST_PARENTHESES)
+		return (0);
+	if (node->left)
+	{
+		if (tree_monitor(node->left, command) != 0)
+			return (1);
+	}
+	return (0);
 }

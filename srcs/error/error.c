@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:53 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 19:54:14 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 20:15:13 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	pec(const char *message)
 	write(STDERR_FILENO, "\n", 1);
 	return (1);
 }
-
 
 int	print_error(const char *message)
 {

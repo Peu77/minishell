@@ -6,51 +6,48 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:49 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 18:11:50 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:05:20 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-void print_environ(void)
+int	remove_variable_from_env(char *var_to_remove)
 {
-    char **envp = environ;
+	char	**envp;
+	char	**current;
 
-    while (*envp)
-    {
-        printf("%s\n", *envp);
-        envp++;
-    }
+	envp = environ;
+	while (*envp)
+	{
+		if (strncmp(*envp, var_to_remove, strlen(var_to_remove)) == 0
+			&& (*envp)[strlen(var_to_remove)] == '=')
+		{
+			current = envp;
+			while (*current)
+			{
+				*current = *(current + 1);
+				current++;
+			}
+			return (0);
+		}
+		envp++;
+	}
+	return (-1);
 }
 
 int	ft_unset(t_command_test *command)
 {
-    char    **arg;
-    int     result;
-    char    **envp;
-    char    *var_to_remove;
+	char	**arg;
+	int		result;
 
-    arg = ft_split(command->argument, ' ');
-    result = 0;
-    while (*arg)
-    {
-        var_to_remove = *arg;
-        envp = environ;
-        while (*envp)
-        {
-            if (strncmp(*envp, var_to_remove, strlen(var_to_remove)) == 0 && (*envp)[strlen(var_to_remove)] == '=')
-            {
-                while (*envp)
-                {
-                    *envp = *(envp + 1);
-                    envp++;
-                }
-                break;
-            }
-            envp++;
-        }
-        arg++;
-    }
-    return (result);
+	arg = ft_split(command->argument, ' ');
+	result = 0;
+	while (*arg)
+	{
+		if (remove_variable_from_env(*arg) != 0)
+			result = -1;
+		arg++;
+	}
+	return (result);
 }
