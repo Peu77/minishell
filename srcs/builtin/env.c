@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
+/*   Updated: 2024/12/16 11:31:31 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:18 by ftapponn          #+#    #+#             */
@@ -14,9 +26,8 @@
 
 int	env(t_command_test *command)
 {
-	char **env = environ;
 	if (command->argument)
 		return (print_error("env: No such file or directory \n"));
-	print_env_list(env);
+	print_env_list();
 	return (0);
 }

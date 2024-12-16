@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:40:06 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/16 11:32:39 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_ast_node* create_ast_node(t_ast_type type, char *value, t_list* redirects) {
     return node;
 }
 
-static bool parse_env_variables(t_ast_node* node) {
+// TODO: handle memory leaks
+bool parse_env_variables(t_ast_node* node) {
     if(node->type != AST_COMMAND)
         return (pe("tried to parse env variables in a non command node"),false);
 
@@ -83,13 +84,4 @@ static bool parse_env_variables(t_ast_node* node) {
         i++;
     }
     return true;
-}
-
-void apply_env_variables(t_ast_node* node) {
-    if(node->left)
-        apply_env_variables(node->left);
-    if(node->right)
-        apply_env_variables(node->right);
-    if(node->type == AST_COMMAND)
-        parse_env_variables(node);
 }

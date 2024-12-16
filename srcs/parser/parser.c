@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:37:42 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/16 11:33:18 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ t_ast_node *parse(char *input) {
 
     t_ast_node *result = parse_logical(&tokens);
     ft_lstclear(&tokens_cpy, free_token);
-    apply_env_variables(result);
     return result;
 }
 

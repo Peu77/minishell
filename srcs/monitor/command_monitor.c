@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command_monitor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:08:58 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 06:59:58 by ftapponn         ###   ########.fr       */
+/*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
+/*   Updated: 2024/12/16 11:36:28 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "parse.h"
 
 int	command_monitor(t_ast_node *node, t_command_test *command)
 {
@@ -19,6 +20,7 @@ int	command_monitor(t_ast_node *node, t_command_test *command)
 	redirect = NULL;
 	if (node->redirects)
 		redirect = node->redirects;
+	parse_env_variables(node);
 	transform_node_to_command(node->value, &command, redirect);
 	return (execution_monitor(command));
 }
