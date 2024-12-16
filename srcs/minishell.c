@@ -6,11 +6,47 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 07:09:22 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:10:50 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void print_command_test(t_command_test *command)
+{
+    if (!command)
+        return;
+
+    if (command->path)
+        printf("Path: %s\n", command->path);
+    else
+        printf("Path: NULL\n");
+
+    if (command->argument)
+        printf("Argument: %s\n", command->argument);
+    else
+        printf("Argument: NULL\n");
+
+    if (command->command_name)
+        printf("Command Name: %s\n", command->command_name);
+    else
+        printf("Command Name: NULL\n");
+
+    if (command->redirect)
+        printf("Redirect: (Not NULL, need further handling)\n");
+    else
+        printf("Redirect: NULL\n");
+
+    if (command->saved_stdout)
+        printf("Saved Stdout: %d\n", command->saved_stdout);
+    else
+        printf("Saved Stdout: 0\n");
+
+    if (command->saved_stdin)
+        printf("Saved Stdin: %d\n", command->saved_stdin);
+    else
+        printf("Saved Stdin: 0\n");
+}
 
 void minishell_interactive()
 {
@@ -18,6 +54,7 @@ void minishell_interactive()
 	t_command_test *command;
 	t_ast_node *node;
 
+	printf("inter intere");
 	user_prompt = NULL;
 	command = NULL;
     //main_signals();
@@ -40,7 +77,6 @@ void minishell_interactive()
         print_ast_node(node, 0);
         tree_monitor(node, command);
         free_ast_node(node);
-		free_command(&command);
         free(user_prompt);
     }
 }
@@ -68,7 +104,6 @@ void minishell_non_interactive()
         }
         tree_monitor(node, command);
         free_ast_node(node);
-        free_command(&command);
         free(line);
     }
     free(line);
@@ -87,5 +122,4 @@ void minishell_non_interactive_argument(char *line)
         return pev("parse error\n");
     tree_monitor(node, command);
     free_ast_node(node);
-    free_command(&command);
 }

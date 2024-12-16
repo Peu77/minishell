@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 07:01:32 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:11:36 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	execution_monitor(t_command_test *command)
 				result = unset(command);
 			if (command->saved_stdout)
 				restore_standard_fds(command);
+			free_command(&command);
 			g_last_exit_status = result;
 			return (result);
 		}
@@ -74,5 +75,6 @@ int	execution_monitor(t_command_test *command)
 	if (command->saved_stdout)
 		restore_standard_fds(command);
 	g_last_exit_status = result;
+	free_command(&command);
 	return (result);
 }

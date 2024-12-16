@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 19:20:38 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 12:59:20 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	transform_node_to_command(char *value, t_command_test **command,
 		t_list *redirection)
 {
 	char	**arg;
-
 	*command = malloc(sizeof(t_command_test));
 	if (!(*command))
 		return (pe(ERROR_MALLOC));
@@ -71,13 +70,15 @@ int	transform_node_to_command(char *value, t_command_test **command,
 	if (!arg)
 		return (pe(ERROR_SPLIT));
 	(*command)->command_name = ft_strdup(arg[0]);
+	
 	if (!arg[1])
 		(*command)->argument = NULL;
 	else
 	{
 		if (concatenate_arguments(arg, &((*command)->argument)) != 1)
 		{
-			free(arg);
+			printf(" ihave been here");
+			free_command_split(arg);
 			return (pe(ERROR_MALLOC));
 		}
 	}
@@ -85,5 +86,6 @@ int	transform_node_to_command(char *value, t_command_test **command,
 	if (redirection)
 		get_redirection(command, redirection);
 	free_command_split(arg);
+
 	return (1);
 }

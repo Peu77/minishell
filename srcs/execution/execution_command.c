@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 20:23:14 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:03:01 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,43 +37,39 @@ int	execution_command(char **arguments, char *path)
 	return (1);
 }
 
-int	prepare_execution_command(t_command_test *command)
+int prepare_execution_command(t_command_test *command)
 {
-	char	*str;
-	char	**arguments;
-	char	*temp;
-	int		result;
-	char	*new_str;
+    char *str;
+    char **arguments;
+    int result;
+    
+    str = ft_strdup(command->command_name);
+    if (!str)
+        return (pec(ERROR_MALLOC));
 
-	str = ft_strdup(command->command_name);
-	if (!str)
-		return (pec(ERROR_MALLOC));
-	if (command->argument != NULL)
-	{
-		temp = ft_strjoin(str, " ");
-		if (!temp)
-		{
-			free(str);
-			return (pec(ERROR_MALLOC));
-		}
-		new_str = ft_strjoin(temp, command->argument);
-		free(temp);
-		if (!new_str)
-		{
-			free(str);
-			return (pec(ERROR_MALLOC));
-		}
-		free(str);
-		str = new_str;
-	}
-	arguments = ft_split(str, ' ');
-	if (!arguments)
-	{
-		free(str);
-		return (pec(ERROR_SPLIT));
-	}
-	result = execution_command(arguments, command->path);
-	free_command_split(arguments);
-	free(str);
-	return (result);
+    if (command->argument != NULL && *command->argument != '\0')
+    {
+        char *temp = ft_strjoin(str, " ");
+        if (!temp)
+        {
+            free(str);
+            return (pec(ERROR_MALLOC));
+        }
+        char *new_str = ft_strjoin(temp, command->argument);
+        free(temp);
+        if (!new_str)
+        {
+            free(str);
+            return (pec(ERROR_MALLOC));
+        }
+        free(str);
+        str = new_str;
+    }
+    arguments = ft_split(str, ' ');
+    free(str);
+    if (!arguments)
+        return (pec(ERROR_SPLIT));
+    result = execution_command(arguments, command->path);
+    free_command_split(arguments);
+    return (result);
 }

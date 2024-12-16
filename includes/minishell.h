@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 07:56:57 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:10:31 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,4 +152,8 @@ void free_env_list();
 
 //parser
 void print_ast_node(t_ast_node *node, int depth);
+
+
+
+void print_command_test(t_command_test *command);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 06:57:21 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:14:10 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ void	free_command_split(char **command_split)
 	while (command_split[++i])
 		free(command_split[i]);
 	free(command_split);
+}
+
+static void del_redirect(void *content)
+{
+    t_redirect *redirect = (t_redirect *)content;
+
+    if (redirect->file)
+        free(redirect->file);
+    free(redirect);
 }
 
 void	free_command(t_command_test **command)
@@ -46,8 +55,18 @@ void	free_command(t_command_test **command)
 	}
 	if ((*command)->redirect)
 	{
-		ft_lstclear(&(*command)->redirect, free);
+		ft_lstclear(&(*command)->redirect, del_redirect);
 		(*command)->redirect = NULL;
+	}
+	if ((*command)->saved_stdout > 0)
+	{
+	    close((*command)->saved_stdout);
+	    (*command)->saved_stdout = 0;
+	}
+	if ((*command)->saved_stdin > 0)
+	{
+	    close((*command)->saved_stdin);
+	    (*command)->saved_stdin = 0;
 	}
 	free(*command);
 	*command = NULL;
