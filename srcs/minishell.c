@@ -6,12 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:12:55 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:03:13 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*
 void	print_command_test(t_command_test *command)
 {
 	if (!command)
@@ -41,6 +42,23 @@ void	print_command_test(t_command_test *command)
 	else
 		printf("Saved Stdin: 0\n");
 }
+*/
+
+
+static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
+{
+	if (node == NULL)
+	{
+		free(user_prompt);
+		return (1);
+	}
+	if (node == PARSE_ERROR)
+	{
+		free(user_prompt);
+		return pec("parse error\n");
+	}
+	return (0);
+}
 
 void	minishell_interactive(void)
 {
@@ -48,26 +66,16 @@ void	minishell_interactive(void)
 	t_command_test	*command;
 	t_ast_node		*node;
 
-	printf("inter intere");
 	user_prompt = NULL;
 	command = NULL;
-	// main_signals();
+	main_signals();
 	while (1)
 	{
 		if (!get_user_prompt(&user_prompt))
 			break ;
 		node = parse(user_prompt);
-		if (node == NULL)
-		{
-			free(user_prompt);
+		if (handle_parse_errors(user_prompt, node))
 			continue ;
-		}
-		if (node == PARSE_ERROR)
-		{
-			free(user_prompt);
-			pec("parse error\n");
-			continue ;
-		}
 		print_ast_node(node, 0);
 		tree_monitor(node, command);
 		free_ast_node(node);

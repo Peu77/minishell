@@ -6,12 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:13:42 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:31:21 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
 void	print_command(t_command_test *command)
 {
 	printf("\n STRUCT COMMAND : \n ");
@@ -25,6 +26,7 @@ void	print_command(t_command_test *command)
 	printf("Arguments: %s\n", command->argument ? command->argument : "(NULL)");
 	printf("Paths: %s\n", command->path ? command->path : "(NULL)");
 }
+*/
 
 int	concatenate_arguments(char **arg, char **result)
 {
@@ -76,11 +78,7 @@ int	transform_node_to_command(char *value, t_command_test **command,
 	else
 	{
 		if (concatenate_arguments(arg, &((*command)->argument)) != 1)
-		{
-			printf(" ihave been here");
-			free_command_split(arg);
-			return (pe(ERROR_MALLOC));
-		}
+			return (free_command_split(arg), pe(ERROR_MALLOC));
 	}
 	get_path(command);
 	if (redirection)

@@ -6,13 +6,12 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:10 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 19:18:14 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/16 20:35:06 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
 void	sighandler(int sig)
 {
 	(void)sig;
@@ -36,4 +35,3 @@ void	heredoc_sighandler(int sig)
 	rl_redisplay();
 	printf("\nheredoc> ");
 }
-*/

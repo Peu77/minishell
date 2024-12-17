@@ -6,11 +6,23 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:13:58 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:27:20 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	initialise_builtin(char *list_builtin[NUM_BUILTINS])
+{
+	list_builtin[0] = "cd";
+	list_builtin[1] = "echo";
+	list_builtin[2] = "env";
+	list_builtin[3] = "exit";
+	list_builtin[4] = "export";
+	list_builtin[5] = "pwd";
+	list_builtin[6] = "unset";
+	list_builtin[7] = "clear";
+}
 
 void	restore_standard_fds(t_command_test *command)
 {
@@ -34,13 +46,40 @@ void	restore_standard_fds(t_command_test *command)
 	}
 }
 
+int	execute_builtin(t_command_test *command, int builtin_index)
+{
+	int	result;
+
+	result = 0;
+	if (builtin_index == 0)
+		result = ft_cd(command);
+	else if (builtin_index == 1)
+		result = ft_echo(command, 0);
+	else if (builtin_index == 2)
+		result = ft_env(command);
+	else if (builtin_index == 3)
+		result = ft_exit(command);
+	else if (builtin_index == 4)
+		result = ft_export(command);
+	else if (builtin_index == 5)
+		result = ft_pwd(command);
+	else if (builtin_index == 6)
+		result = ft_unset(command);
+	else if (builtin_index == 7)
+		result = ft_clear();
+	if (command->saved_stdout)
+		restore_standard_fds(command);
+	free_command(&command);
+	return (result);
+}
+
 int	execution_monitor(t_command_test *command)
 {
-	char	*list_builtin[NUM_BUILTINS] = {"cd", "echo", "env", "exit",
-			"export", "pwd", "unset", "clear"};
+	char	*list_builtin[NUM_BUILTINS];
 	int		i;
 	int		result;
 
+	initialise_builtin(list_builtin);
 	i = -1;
 	result = 0;
 	if (command->redirect)
@@ -50,25 +89,7 @@ int	execution_monitor(t_command_test *command)
 		if (ft_strncmp(command->command_name, list_builtin[i],
 				ft_strlen(list_builtin[i]) + 1) == 0)
 		{
-			if (i == 0)
-				result = ft_cd(command);
-			else if (i == 1)
-				result = ft_echo(command, 0);
-			else if (i == 2)
-				result = ft_env(command);
-			else if (i == 3)
-				result = ft_exit(command);
-			else if (i == 4)
-				result = ft_export(command);
-			else if (i == 5)
-				result = ft_pwd(command);
-			else if (i == 6)
-				result = ft_unset(command);
-			else if (i == 7)
-				result = ft_clear();
-			if (command->saved_stdout)
-				restore_standard_fds(command);
-			free_command(&command);
+			result = execute_builtin(command, i);
 			g_last_exit_status = result;
 			return (result);
 		}
@@ -78,5 +99,5 @@ int	execution_monitor(t_command_test *command)
 		restore_standard_fds(command);
 	g_last_exit_status = result;
 	free_command(&command);
-	return (result);
+	return (free_command(&command), result);
 }

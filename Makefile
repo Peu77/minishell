@@ -36,6 +36,7 @@ SRC =  srcs/main.c \
 	   srcs/monitor/command_monitor.c \
 	   srcs/monitor/parenthesis_monitor.c \
 	   srcs/env/env_utils.c \
+	   srcs/signal/signal.c \
 	   srcs/minishell.c \
 
 OBJ = $(SRC:.c=.o)

@@ -6,12 +6,11 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:14:53 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:55:04 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdlib.h>
 
 void	free_command_split(char **command_split)
 {
@@ -35,40 +34,50 @@ static void	del_redirect(void *content)
 	free(redirect);
 }
 
+static void	free_command_strings(t_command_test *command)
+{
+	if (command->path)
+	{
+		free(command->path);
+		command->path = NULL;
+	}
+	if (command->command_name)
+	{
+		free(command->command_name);
+		command->command_name = NULL;
+	}
+	if (command->argument)
+	{
+		free(command->argument);
+		command->argument = NULL;
+	}
+}
+
+static void	close_command_fds(t_command_test *command)
+{
+	if (command->saved_stdout > 0)
+	{
+		close(command->saved_stdout);
+		command->saved_stdout = 0;
+	}
+	if (command->saved_stdin > 0)
+	{
+		close(command->saved_stdin);
+		command->saved_stdin = 0;
+	}
+}
+
 void	free_command(t_command_test **command)
 {
 	if (!command || !*command)
 		return ;
-	if ((*command)->path)
-	{
-		free((*command)->path);
-		(*command)->path = NULL;
-	}
-	if ((*command)->command_name)
-	{
-		free((*command)->command_name);
-		(*command)->command_name = NULL;
-	}
-	if ((*command)->argument)
-	{
-		free((*command)->argument);
-		(*command)->argument = NULL;
-	}
+	free_command_strings(*command);
 	if ((*command)->redirect)
 	{
 		ft_lstclear(&(*command)->redirect, del_redirect);
 		(*command)->redirect = NULL;
 	}
-	if ((*command)->saved_stdout > 0)
-	{
-		close((*command)->saved_stdout);
-		(*command)->saved_stdout = 0;
-	}
-	if ((*command)->saved_stdin > 0)
-	{
-		close((*command)->saved_stdin);
-		(*command)->saved_stdin = 0;
-	}
+	close_command_fds(*command);
 	free(*command);
 	*command = NULL;
 }

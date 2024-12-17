@@ -6,22 +6,16 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:25 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:14:37 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:50:13 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	create_heredoc_file(const char *delimiter)
+static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 {
 	char	*buffer;
-	int		temp_fd;
 
-	// signal(SIGINT, heredoc_sighandler);
-	buffer = NULL;
-	temp_fd = open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (temp_fd == -1)
-		exit(pec(ERROR_HEREDOC));
 	while (1)
 	{
 		buffer = readline("heredoc> ");
@@ -40,11 +34,22 @@ void	create_heredoc_file(const char *delimiter)
 		write(temp_fd, "\n", 1);
 		free(buffer);
 	}
-	close(temp_fd);
-	// main_signals();
 }
 
-void	redirect_input_from_heredoc(void)
+static void	create_heredoc_file(const char *delimiter)
+{
+	int	temp_fd;
+
+	signal(SIGINT, heredoc_sighandler);
+	temp_fd = open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (temp_fd == -1)
+		exit(pec(ERROR_HEREDOC));
+	handle_heredoc_input(temp_fd, delimiter);
+	close(temp_fd);
+	main_signals();
+}
+
+static void	redirect_input_from_heredoc(void)
 {
 	int	temp_fd;
 

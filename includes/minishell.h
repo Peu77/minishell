@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:31:48 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:35:29 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@ void pev(const char *message);
 int	print_error(const char *message);
 
 //env utils
-int unset_variable(const char *var_name);
+char	*ft_strtok(char *str, const char delim);
 void print_env_list();
+int	is_valid_identifier(const char *str);
 
 //prompt
 int get_user_prompt(char **result);
