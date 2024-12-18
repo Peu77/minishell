@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/18 20:08:59 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:16:40 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	print_env_list(char **env)
 		env++;
 	}
 }
-char **initialise_env(char **env, int exnum)
-{
-	static char **environ = NULL;
 
-	if(exnum == 1)
+char	**initialise_env(char **env, int exnum)
+{
+	static char	**environ = NULL;
+
+	if (exnum == 1)
 		environ = env;
-	if(exnum == 2)
+	if (exnum == 2)
 		return (environ);
 	return (NULL);
 }

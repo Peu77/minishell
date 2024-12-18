@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:49 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 19:05:20 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:15:07 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	remove_variable_from_env(char *var_to_remove)
 	char	**envp;
 	char	**current;
 
-	envp = environ;
+	envp = initialise_env(NULL, 2);
 	while (*envp)
 	{
 		if (strncmp(*envp, var_to_remove, strlen(var_to_remove)) == 0
