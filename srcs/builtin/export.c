@@ -6,11 +6,32 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:39:37 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:22:34 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	variable_exists(const char *key_value_pair)
+{
+	char	*equal_sign;
+	size_t	name_len;
+	size_t	i;
+
+	equal_sign = ft_strchr(key_value_pair, '=');
+	if (!equal_sign)
+		return (0);
+	name_len = equal_sign - key_value_pair;
+	i = 0;
+	while (environ && environ[i])
+	{
+		if (ft_strncmp(environ[i], key_value_pair, name_len) == 0
+			&& environ[i][name_len] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	add_to_environ(const char *key_value_pair)
 {
@@ -18,6 +39,8 @@ int	add_to_environ(const char *key_value_pair)
 	size_t	env_count;
 	size_t	i;
 
+	if (variable_exists(key_value_pair))
+		return (0);
 	env_count = 0;
 	while (environ && environ[env_count])
 		env_count++;
@@ -46,7 +69,7 @@ int	ft_export(t_command_test *command)
 
 	arg = command->argument;
 	if (!command || !command->argument)
-		return (-1);
+		return (1);
 	pair = ft_strtok(arg, ' ');
 	while (pair)
 	{

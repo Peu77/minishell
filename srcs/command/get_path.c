@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:44 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:13:34 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:37:31 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ int	get_path(t_command_test **command)
 {
 	char	*found_path;
 
+	if (ft_strncmp((*command)->command_name, "./minishell",
+			ft_strlen((*command)->command_name)) == 0)
+	{
+		(*command)->path = "./minishell";
+		return (1);
+	}
 	found_path = find_command_in_path((*command)->command_name);
 	if (found_path)
 		(*command)->path = found_path;

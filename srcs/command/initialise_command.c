@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:31:21 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:01:02 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,60 @@ int	concatenate_arguments(char **arg, char **result)
 	return (1);
 }
 
+t_redirect	*copy_redirect_node(t_redirect *original)
+{
+	t_redirect	*new_redirect;
+
+	new_redirect = (t_redirect *)malloc(sizeof(t_redirect));
+	if (!new_redirect)
+		return (NULL);
+	new_redirect->fd_left = original->fd_left;
+	new_redirect->fd_right = original->fd_right;
+	new_redirect->type = original->type;
+	if (original->file)
+	{
+		new_redirect->file = ft_strdup(original->file);
+		if (!new_redirect->file)
+		{
+			free(new_redirect);
+			return (NULL);
+		}
+	}
+	else
+		new_redirect->file = NULL;
+	return (new_redirect);
+}
+
+t_list	*copy_redirection_list(t_list *redirection)
+{
+	t_list		*new_list;
+	t_list		*current;
+	t_list		*new_node;
+	t_redirect	*new_redirect;
+
+	new_list = NULL;
+	current = redirection;
+	while (current)
+	{
+		new_redirect = copy_redirect_node((t_redirect *)(current->content));
+		if (!new_redirect)
+			return (NULL);
+		new_node = ft_lstnew(new_redirect);
+		if (!new_node)
+		{
+			free(new_redirect->file);
+			free(new_redirect);
+			return (NULL);
+		}
+		ft_lstadd_back(&new_list, new_node);
+		current = current->next;
+	}
+	return (new_list);
+}
+
 int	get_redirection(t_command_test **command, t_list *redirection)
 {
-	(*command)->redirect = redirection;
+	(*command)->redirect = copy_redirection_list(redirection);
 	(*command)->saved_stdout = 0;
 	return (1);
 }
