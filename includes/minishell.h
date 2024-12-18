@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:35:29 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:16:33 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@
 #define ERROR_PWD "pwd : too many arguments"
 #define ERROR_EXPORT "inconsistant type for assignement"
 
-extern int g_last_exit_status;
 extern char **environ;
 
 typedef struct s_pipe_data
@@ -144,6 +143,7 @@ void heredoc_sighandler(int sig);
 void remove_newline(char *buffer);
 long ft_atol(const char *str);
 char *ft_strndup(const char *src, size_t len);
+int update_exit_status(int new_value);
 
 //clean
 void free_command(t_command_test **command);

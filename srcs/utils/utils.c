@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:00 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 19:18:34 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:15:18 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ long	ft_atol(const char *str)
 		str++;
 	}
 	return (result * sign);
+}
+
+int update_exit_status(int new_value)
+{
+    static int status = 0;
+    if (new_value != -1) 
+	{
+        status = new_value;
+    }
+    return status;
 }

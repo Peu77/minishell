@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:27:20 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 19:18:31 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,16 @@ int	execution_monitor(t_command_test *command)
 				ft_strlen(list_builtin[i]) + 1) == 0)
 		{
 			result = execute_builtin(command, i);
-			g_last_exit_status = result;
+			update_exit_status(result);
+			printf("Exit status is %d \n", update_exit_status(-1));
 			return (result);
 		}
 	}
 	result = prepare_execution_command(command);
 	if (command->saved_stdout)
 		restore_standard_fds(command);
-	g_last_exit_status = result;
+	update_exit_status(result);
+	printf("Exit status is %d \n", update_exit_status(-1));
 	free_command(&command);
 	return (free_command(&command), result);
 }
