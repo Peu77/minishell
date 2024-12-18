@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/18 19:16:33 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:02:03 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_command_test
 
 
 // main
-void print_env_list();
+void print_env_list(char **env);
 
 //minishell
 void minishell_non_interactive_argument(char *line);
@@ -106,8 +106,9 @@ int	print_error(const char *message);
 
 //env utils
 char	*ft_strtok(char *str, const char delim);
-void print_env_list();
+void print_env_list(char **env);
 int	is_valid_identifier(const char *str);
+char **initialise_env(char **env, int exnum);
 
 //prompt
 int get_user_prompt(char **result);

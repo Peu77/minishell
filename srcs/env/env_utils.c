@@ -6,22 +6,29 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:56:48 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:08:59 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_env_list(void)
+void	print_env_list(char **env)
 {
-	char	**envp;
-
-	envp = environ;
-	while (*envp)
+	while (*env)
 	{
-		printf("%s\n", *envp);
-		envp++;
+		printf("%s\n", *env);
+		env++;
 	}
+}
+char **initialise_env(char **env, int exnum)
+{
+	static char **environ = NULL;
+
+	if(exnum == 1)
+		environ = env;
+	if(exnum == 2)
+		return (environ);
+	return (NULL);
 }
 
 static char	*initialize_stock(char *str, char **stock, int *i)

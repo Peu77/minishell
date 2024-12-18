@@ -6,16 +6,15 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:26 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:23:05 by ftapponn         ###   ########.fr       */
+/*   Updated: 2024/12/18 20:09:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_last_exit_status = 0;
-
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **env)
 {
+	initialise_env(env, 1);
 	if (argc >= 2)
 	{
 		if (argc == 2)
