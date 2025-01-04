@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:20:02 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/04 14:28:58 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,32 +135,6 @@ static bool parse_redirect_to_token(t_list** tokens, const char* str, t_token_ty
     return true;
 }
 
-bool parse_single_quote(char *input, size_t *i, t_list** tokens)
-{
-    int j;
-    char* sub_str;
-    bool add_token_result;
-
-    j = 0;
-    while(input[*i + j] && input[*i + j] != '\'')
-        j++;
-
-    if(input[*i + j] != '\'')
-    {
-        pe("Error: missing closing quote");
-        return false;
-    }
-    sub_str = ft_substr(input, *i, j);
-    if(!sub_str)
-        return false;
-    add_token_result = add_token(tokens, TOKEN_STRING, sub_str);
-    if(!add_token_result)
-        return (free(sub_str),false);
-    *i += j + 1;
-    return true;
-}
-
-// TODO: handle $var
 bool lex_tokens(char *input, t_list** tokens)
 {
     t_token_type type;
@@ -177,12 +151,6 @@ bool lex_tokens(char *input, t_list** tokens)
             i++;
             continue;
         }
-        if(input[i] == '\'') {
-            i++;
-            if(!parse_single_quote(input, &i, tokens))
-                break;
-        }
-
         type = get_token_type(input + i);
         if(is_redirect_token(type))
         {
@@ -205,7 +173,7 @@ bool lex_tokens(char *input, t_list** tokens)
         }
 
         string_i = 0;
-        while(type == TOKEN_STRING && input[i + string_i] && input[i + string_i] != '\'')
+        while(type == TOKEN_STRING && input[i + string_i])
         {
             string_i++;
             type = get_token_type(input + i + string_i);

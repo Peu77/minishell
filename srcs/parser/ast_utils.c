@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/16 11:32:39 by eebert           ###   ########.fr       */
+/*   Updated: 2024/12/16 16:10:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool parse_env_variables(t_ast_node* node) {
             if(!sub_str)
                 return false;
             char* env_value = getenv(sub_str);
-            if(env_value) {
+
                 char* new_str = ft_strjoin(ft_substr(str, 0, i), env_value);
                 if(!new_str)
                     return (free(sub_str), false);
@@ -79,9 +79,10 @@ bool parse_env_variables(t_ast_node* node) {
                 node->value = tmp;
                 i += ft_strlen(env_value);
                 str = node->value;
-            }
+
         }else
-        i++;
+            i++;
     }
     return true;
 }
+
