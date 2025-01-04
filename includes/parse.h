@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/16 11:33:00 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/04 13:16:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ typedef enum e_ast_type {
     AST_SEMICOLON,
     AST_PARENTHESES,
     AST_AND,
-    AST_OR,
-    AST_STRING
+    AST_OR
 } t_ast_type;
 
 typedef struct s_ast_node
