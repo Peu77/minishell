@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/04 13:16:56 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:55:24 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ void print_ast_node(t_ast_node *node, int depth);
 
 void print_ast_type(const t_ast_type type);
 
-bool parse_env_variables(t_ast_node* node);
+bool interpret_command_string(t_ast_node *node);
 
 #endif

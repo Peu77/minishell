@@ -1,9 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = libft
-LIBREADLINE = -lreadline  # Add this to link Readline
+LIBREADLINE = -lreadline
 LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -I./includes
+INCLUDES = -I./includes -I/opt/homebrew/opt/readline/include
 SRC =  srcs/main.c \
 	   srcs/prompt/user_prompt.c \
 	   srcs/error/error.c \
@@ -30,6 +30,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/ast_utils.c \
 	   srcs/parser/token_utils.c \
 	   srcs/parser/debug.c \
+	   srcs/parser/str_interpreter.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/and_or_monitor.c \
@@ -39,13 +40,14 @@ SRC =  srcs/main.c \
 	   srcs/signal/signal.c \
 	   srcs/minishell.c \
 
+
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE)
+	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE) -L/opt/homebrew/opt/readline/lib
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)

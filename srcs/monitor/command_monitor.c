@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/16 20:13:16 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/05 15:54:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	command_monitor(t_ast_node *node, t_command_test *command)
 	redirect = NULL;
 	if (node->redirects)
 		redirect = node->redirects;
-	parse_env_variables(node);
+	interpret_command_string(node);
 	transform_node_to_command(node->value, &command, redirect);
 	return (execution_monitor(command));
 }
