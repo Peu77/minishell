@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/05 15:21:19 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/06 13:09:57 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ static bool add_token(t_list **tokens, t_token_type type, char *value) {
     t_token *new_token;
     t_list *new_node;
 
-    new_token = malloc(sizeof(t_token));
+    new_token = create_token(type, value, NULL);
     if (!new_token)
         return false;
 
-    new_token->type = type;
-    new_token->value = value;
     new_node = ft_lstnew(new_token);
     if (!new_node)
         return (free(new_token), false);

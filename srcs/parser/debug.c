@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:18:25 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/11 16:20:07 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:48:58 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,17 @@ void print_ast_node(t_ast_node *node, int depth) {
     } else {
         printf("Node: %s, Type: ", node->value);
         print_ast_type(node->type);
+        if (node->redirects) {
+            t_list *redirects = node->redirects;
+            while (redirects) {
+                for (int i = 0; i < depth; i++) {
+                    printf("  ");
+                }
+                t_redirect *redirect = redirects->content;
+                printf("Redirect: %d, %d, %s\n", redirect->fd_left, redirect->fd_right, redirect->file);
+                redirects = redirects->next;
+            }
+        }
         printf("\n");
     }
 
@@ -60,17 +71,16 @@ void print_ast_node(t_ast_node *node, int depth) {
     print_ast_node(node->right, depth + 1);
 }
 
-void print_tokens(t_list* tokens){
+void print_tokens(t_list *tokens) {
+    t_token *node;
 
-    t_token* node;
-
-    while(tokens)
-    {
+    while (tokens) {
         node = tokens->content;
 
-        if(is_redirect_token(node->type))
-            printf("TOKEN_REDIRECT: %d, %d, %d, %s\n", node->type, ((t_redirect*)node->data)->fd_left, ((t_redirect*)node->data)->fd_right, ((t_redirect*)node->data)->file);
-        else if(node->type == TOKEN_STRING)
+        if (is_redirect_token(node->type))
+            printf("TOKEN_REDIRECT: %d, %d, %d, %s\n", node->type, ((t_redirect *) node->data)->fd_left,
+                   ((t_redirect *) node->data)->fd_right, ((t_redirect *) node->data)->file);
+        else if (node->type == TOKEN_STRING)
             printf("TOKEN_STRING: %s\n", node->value);
         else
             printf("TOKEN: %d\n", node->type);

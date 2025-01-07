@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/16 11:33:18 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/07 20:10:00 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 t_ast_node *parse_primary(t_list **tokens);
 
 
-
 t_ast_node *parse_command(t_list **tokens) {
     t_ast_node *cmd_node = NULL;
     t_list *redirects = NULL;
@@ -27,13 +26,18 @@ t_ast_node *parse_command(t_list **tokens) {
 
     t_list *last_valid_token_node = parse_redirects_tokens_to_tree(&redirects, *tokens);
 
-
     if (last_valid_token_node == PARSE_ERROR) {
         printf("failed to parse redirects\n");
         return (ft_lstclear(&redirects, free_redirect), PARSE_ERROR);
     }
 
-    while (*tokens && ((t_token *) (*tokens)->content)->type == TOKEN_STRING) {
+    while (*tokens && (((t_token *) (*tokens)->content)->type == TOKEN_STRING || is_redirect_token(
+                           ((t_token *) (*tokens)->content)->type))) {
+        if (((t_token *) (*tokens)->content)->type != TOKEN_STRING) {
+            *tokens = (*tokens)->next;
+            continue;
+        }
+
         if (!cmd_node) {
             cmd_value_cpy = ((t_token *) (*tokens)->content)->value;
             ((t_token *) (*tokens)->content)->value = NULL;
@@ -116,7 +120,7 @@ t_ast_node *parse_parentheses(t_list **tokens) {
     *tokens = (*tokens)->next;
 
     t_ast_node *parentheses_node = create_ast_node(AST_PARENTHESES, NULL, NULL);
-    if(!parentheses_node)
+    if (!parentheses_node)
         return PARSE_ERROR;
 
     parentheses_node->left = parse_logical(tokens);
@@ -127,6 +131,35 @@ t_ast_node *parse_parentheses(t_list **tokens) {
     }
 
     *tokens = (*tokens)->next;
+
+    while (*tokens && (is_redirect_token(((t_token *) (*tokens)->content)->type) ||
+                       ((t_token *) (*tokens)->content)->type == TOKEN_STRING)) {
+        t_token *token = (*tokens)->content;
+        t_redirect *redirect = token->data;
+
+        if (((t_token *) (*tokens)->content)->type == TOKEN_STRING) {
+            char *trimmed = ft_strtrim(token->value, " ");
+
+            if (ft_strlen(trimmed) != 0) {
+                printf("parse error near `%s'\n", trimmed);
+                free(trimmed);
+                return (free_redirect(redirect), PARSE_ERROR);
+            }
+
+            *tokens = (*tokens)->next;
+            continue;
+        }
+
+        token->data = NULL;
+        t_list *new_node = ft_lstnew(redirect);
+        if (!new_node)
+            return (free_redirect(redirect), PARSE_ERROR);
+        ft_lstadd_back(&parentheses_node->redirects, new_node);
+
+        printf("added redirect to parentheses\n");
+
+        *tokens = (*tokens)->next;
+    }
 
     return parentheses_node;
 }
@@ -179,5 +212,3 @@ int main() {
     return 0;
 }
 */
-
-
