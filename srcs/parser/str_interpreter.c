@@ -136,7 +136,6 @@ bool interpret_command_string(t_ast_node *node) {
     }
 
     free(node->value);
-    printf("char_count: %d\n", char_count);
     node->value = strlst_to_str(result_chars, char_count);
 
     ft_lstclear(&result_chars, free);
