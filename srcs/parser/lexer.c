@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/06 13:09:57 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/11 18:06:19 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static bool parse_redirect_to_token(t_list **tokens, const char *str, t_token_ty
     t_token *token;
     t_list *new_node;
 
-    redirect = create_redirect(STDIN_FILENO, -1, redirect_type, NULL);
+    redirect = create_redirect(-1, -1, redirect_type, NULL);
     token = create_token(redirect_type, NULL, redirect);
     if (!redirect || !token)
         return (free(redirect), free(token), false);
