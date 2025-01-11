@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/18 20:02:03 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:25:31 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void heredoc_sighandler(int sig);
 void remove_newline(char *buffer);
 long ft_atol(const char *str);
 char *ft_strndup(const char *src, size_t len);
-int update_exit_status(int new_value);
+int *update_exit_status();
 
 //clean
 void free_command(t_command_test **command);
