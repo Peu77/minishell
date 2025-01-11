@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/11 17:27:45 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:06 by ftapponn          #+#    #+#             */
@@ -16,13 +28,16 @@ void	redirection_output(t_redirect *redirect)
 {
 	int	fd;
 
-	fd = open(redirect->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if(redirect->file)
+		fd = open(redirect->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = redirect->fd_right;
 	if (fd == -1)
 	{
 		pev("open failed for output redirection");
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1)
+	if (dup2(fd, redirect->fd_left) == -1)
 	{
 		pev("dup2 failed for output redirection");
 		close(fd);
@@ -41,7 +56,7 @@ void	redirection_append(t_redirect *redirect)
 		pev("open failed for append redirection");
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1)
+	if (dup2(fd, redirect->fd_left) == -1)
 	{
 		pev("dup2 failed for append redirection");
 		close(fd);
@@ -60,7 +75,7 @@ void	redirection_input(t_redirect *redirect)
 		pev("open failed for input redirection");
 		exit(EXIT_FAILURE);
 	}
-	if (dup2(fd, STDIN_FILENO) == -1)
+	if (dup2(fd, redirect->fd_left) == -1)
 	{
 		pev("dup2 failed for input redirection");
 		close(fd);

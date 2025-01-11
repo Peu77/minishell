@@ -80,7 +80,7 @@ static bool parse_redirect_to_token(t_list **tokens, const char *str, t_token_ty
     t_token *token;
     t_list *new_node;
 
-    redirect = create_redirect(0, 0, redirect_type, NULL);
+    redirect = create_redirect(STDIN_FILENO, -1, redirect_type, NULL);
     token = create_token(redirect_type, NULL, redirect);
     if (!redirect || !token)
         return (free(redirect), free(token), false);
