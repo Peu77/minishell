@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/11 17:42:00 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
@@ -22,16 +34,6 @@ void	free_command_split(char **command_split)
 	while (command_split[++i])
 		free(command_split[i]);
 	free(command_split);
-}
-
-static void	del_redirect(void *content)
-{
-	t_redirect	*redirect;
-
-	redirect = (t_redirect *)content;
-	if (redirect->file)
-		free(redirect->file);
-	free(redirect);
 }
 
 static void	free_command_strings(t_command_test *command)
@@ -74,7 +76,7 @@ void	free_command(t_command_test **command)
 	free_command_strings(*command);
 	if ((*command)->redirect)
 	{
-		ft_lstclear(&(*command)->redirect, del_redirect);
+		ft_lstclear(&(*command)->redirect, free_redirect);
 		(*command)->redirect = NULL;
 	}
 	close_command_fds(*command);
