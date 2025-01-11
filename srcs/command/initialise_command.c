@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   initialise_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/11 16:59:26 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialise_command.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
@@ -75,40 +87,6 @@ t_redirect	*copy_redirect_node(t_redirect *original)
 	return (new_redirect);
 }
 
-t_list	*copy_redirection_list(t_list *redirection)
-{
-	t_list		*new_list;
-	t_list		*current;
-	t_list		*new_node;
-	t_redirect	*new_redirect;
-
-	new_list = NULL;
-	current = redirection;
-	while (current)
-	{
-		new_redirect = copy_redirect_node((t_redirect *)(current->content));
-		if (!new_redirect)
-			return (NULL);
-		new_node = ft_lstnew(new_redirect);
-		if (!new_node)
-		{
-			free(new_redirect->file);
-			free(new_redirect);
-			return (NULL);
-		}
-		ft_lstadd_back(&new_list, new_node);
-		current = current->next;
-	}
-	return (new_list);
-}
-
-int	get_redirection(t_command_test **command, t_list *redirection)
-{
-	(*command)->redirect = copy_redirection_list(redirection);
-	(*command)->saved_stdout = 0;
-	return (1);
-}
-
 int	transform_node_to_command(char *value, t_command_test **command,
 		t_list *redirection)
 {
@@ -132,8 +110,10 @@ int	transform_node_to_command(char *value, t_command_test **command,
 			return (free_command_split(arg), pe(ERROR_MALLOC));
 	}
 	get_path(command);
-	if (redirection)
-		get_redirection(command, redirection);
+	if (redirection) {
+		(*command)->redirect = redirection;
+		(*command)->saved_stdout = 0;
+	}
 	free_command_split(arg);
 	return (1);
 }
