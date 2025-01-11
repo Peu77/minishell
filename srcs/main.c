@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:26 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/05 20:23:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:39:41 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	if (env)
-		initialise_env(env, 1);
+		initialise_env(env);
 	if (argc >= 2)
 	{
 		if (argc == 2)

@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/18 20:14:19 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:41:42 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	variable_exists(const char *key_value_pair)
 	size_t	name_len;
 	size_t	i;
 
-	environ = initialise_env(NULL, 2);
+	environ = initialise_env(NULL);
 	equal_sign = ft_strchr(key_value_pair, '=');
 	if (!equal_sign)
 		return (0);
@@ -41,7 +41,7 @@ int	add_to_environ(const char *key_value_pair)
 	size_t	env_count;
 	size_t	i;
 
-	environ = initialise_env(NULL, 2);
+	environ = initialise_env(NULL);
 	if (variable_exists(key_value_pair))
 		return (0);
 	env_count = 0;
@@ -60,7 +60,7 @@ int	add_to_environ(const char *key_value_pair)
 		return (pec(ERROR_MALLOC));
 	}
 	new_environ[env_count + 1] = NULL;
-	initialise_env(new_environ, 1);
+	initialise_env(new_environ);
 	return (0);
 }
 

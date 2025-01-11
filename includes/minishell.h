@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:25:31 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:39:04 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	print_error(const char *message);
 char	*ft_strtok(char *str, const char delim);
 void print_env_list(char **env);
 int	is_valid_identifier(const char *str);
-char **initialise_env(char **env, int exnum);
+char **initialise_env(char **env);
 
 //prompt
 int get_user_prompt(char **result);

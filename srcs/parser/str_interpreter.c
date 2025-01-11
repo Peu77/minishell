@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/05 18:52:42 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/11 17:46:40 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static bool handle_dollar_sign(char *str, int *i, t_list **result_chars, int* ch
     char* value;
 
     if(str[*i] == '?') {
-        value = ft_itoa(update_exit_status(-1));
+
+		value = ft_itoa(*update_exit_status());
         if (!value)
             return (pe("malloc failed"), false);
         new_node = ft_lstnew(value);

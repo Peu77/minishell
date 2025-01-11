@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/06 11:40:44 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:40:06 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execution_command(char **arguments, char *path)
 	int		exit_status;
 	char **env;
 
-	env = initialise_env(NULL, 2);
+	env = initialise_env(NULL);
 	pid = fork();
 	if (pid == -1)
 		return (pec(ERROR_FORK));
