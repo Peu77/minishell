@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:42 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 18:59:21 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:01 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_pwd(t_command_test *command)
+int	ft_pwd(t_command *command)
 {
 	char	*buffer;
 

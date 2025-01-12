@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:49 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:42:10 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:03 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	remove_variable_from_env(char *var_to_remove)
 	return (-1);
 }
 
-int	ft_unset(t_command_test *command)
+int	ft_unset(t_command *command)
 {
 	char	**arg;
 	int		result;

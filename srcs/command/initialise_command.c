@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/11 16:59:26 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #include "../../includes/minishell.h"
 
 /*
-void	print_command(t_command_test *command)
+void	print_command(t_command *command)
 {
 	printf("\n STRUCT COMMAND : \n ");
 	if (!command)
@@ -87,15 +87,15 @@ t_redirect	*copy_redirect_node(t_redirect *original)
 	return (new_redirect);
 }
 
-int	transform_node_to_command(char *value, t_command_test **command,
+int	transform_node_to_command(char *value, t_command **command,
 		t_list *redirection)
 {
 	char	**arg;
 
-	*command = malloc(sizeof(t_command_test));
+	*command = malloc(sizeof(t_command));
 	if (!(*command))
 		return (pe(ERROR_MALLOC));
-	ft_memset(*command, 0, sizeof(t_command_test));
+	ft_memset(*command, 0, sizeof(t_command));
 	if (!(*command))
 		return (pe(ERROR_MALLOC));
 	arg = ft_split(value, ' ');

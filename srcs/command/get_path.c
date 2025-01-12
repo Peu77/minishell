@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:44 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/18 18:37:31 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:07 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*find_command_in_path(const char *command)
 	return (NULL);
 }
 
-int	get_path(t_command_test **command)
+int	get_path(t_command **command)
 {
 	char	*found_path;
 

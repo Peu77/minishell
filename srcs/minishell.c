@@ -6,14 +6,14 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/06 11:40:13 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:23 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /*
-void	print_command_test(t_command_test *command)
+void	print_command(t_command *command)
 {
 	if (!command)
 		return ;
@@ -63,7 +63,7 @@ static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
 void	minishell_interactive(void)
 {
 	char			*user_prompt;
-	t_command_test	*command;
+	t_command	*command;
 	t_ast_node		*node;
 
 	user_prompt = NULL;
@@ -86,7 +86,7 @@ void	minishell_interactive(void)
 void	minishell_non_interactive(void)
 {
 	char			*line;
-	t_command_test	*command;
+	t_command	*command;
 	t_ast_node		*node;
 
 	line = NULL;
@@ -114,7 +114,7 @@ void	minishell_non_interactive(void)
 
 void	minishell_non_interactive_argument(char *line)
 {
-	t_command_test	*command;
+	t_command	*command;
 	t_ast_node		*node;
 
 	node = parse(line);

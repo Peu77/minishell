@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:33:08 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 11:31:12 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:37 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	redirect_parentheses_monitor(t_list *redirects)
 	}
 }
 
-int	parentheses_monitor(t_ast_node *node, t_command_test *command)
+int	parentheses_monitor(t_ast_node *node, t_command *command)
 {
 	int	fd_backup_stdout;
 	int	fd_backup_stdin;

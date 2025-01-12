@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:17 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 18:55:35 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:47 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	save_file_descriptors(t_command_test **command)
+static void	save_file_descriptors(t_command **command)
 {
 	(*command)->saved_stdout = dup(STDOUT_FILENO);
 	if ((*command)->saved_stdout == -1)
@@ -28,7 +28,7 @@ static void	save_file_descriptors(t_command_test **command)
 	}
 }
 
-void	redirection_monitor(t_command_test *command)
+void	redirection_monitor(t_command *command)
 {
 	t_list		*redirect_list;
 	t_redirect	*redirect;

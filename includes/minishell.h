@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:39:04 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:52:52 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_command_test
 	t_list *redirect;
 	int saved_stdout;
 	int saved_stdin;
-} t_command_test;
+} t_command;
 
 
 // main
@@ -82,21 +82,21 @@ void minishell_non_interactive();
 void minishell_interactive();
 
 //monitor 
-int tree_monitor(t_ast_node *node, t_command_test *command);
+int tree_monitor(t_ast_node *node, t_command *command);
 int pipe_monitor(t_ast_node *node);
-int and_monitor(t_ast_node *node, t_command_test *command);
-int or_monitor(t_ast_node *node, t_command_test *command);
-int command_monitor(t_ast_node *node, t_command_test *command);
-int	parentheses_monitor(t_ast_node *node, t_command_test *command);
+int and_monitor(t_ast_node *node, t_command *command);
+int or_monitor(t_ast_node *node, t_command *command);
+int command_monitor(t_ast_node *node, t_command *command);
+int	parentheses_monitor(t_ast_node *node, t_command *command);
 
 
 //command
-void get_command_from_node(t_command_test **command);
-void print_command(t_command_test *command);
+void get_command_from_node(t_command **command);
+void print_command(t_command *command);
 int concatenate_arguments(char **arg, char **result);
-int transform_node_to_command(char *value, t_command_test **command, t_list *redirection);
-int get_path(t_command_test **command);
-int get_redirection(t_command_test **command, t_list *redirection);
+int transform_node_to_command(char *value, t_command **command, t_list *redirection);
+int get_path(t_command **command);
+int get_redirection(t_command **command, t_list *redirection);
 
 //error
 int pe(const char *message);
@@ -114,22 +114,22 @@ char **initialise_env(char **env);
 int get_user_prompt(char **result);
 
 // builtin
-int ft_pwd(t_command_test *command);
-int ft_echo(t_command_test *command, bool is_n);
-int ft_exit(t_command_test *command);
-int ft_cd(t_command_test *command);
-int ft_env(t_command_test *command);
-int ft_export(t_command_test *command);
-int ft_unset(t_command_test *command);
+int ft_pwd(t_command *command);
+int ft_echo(t_command *command, bool is_n);
+int ft_exit(t_command *command);
+int ft_cd(t_command *command);
+int ft_env(t_command *command);
+int ft_export(t_command *command);
+int ft_unset(t_command *command);
 int	ft_clear(void);
 
 //execution
-int execution_monitor(t_command_test *command);
-int prepare_execution_command(t_command_test *command);
+int execution_monitor(t_command *command);
+int prepare_execution_command(t_command *command);
 int execution_command(char **arguments, char *path);
 
 //redirection
-void redirection_monitor(t_command_test *command);
+void redirection_monitor(t_command *command);
 void redirection_output(t_redirect *redirect);
 void redirection_input(t_redirect *redirect);
 void redirection_append(t_redirect *redirect);
@@ -147,11 +147,11 @@ char *ft_strndup(const char *src, size_t len);
 int *update_exit_status();
 
 //clean
-void free_command(t_command_test **command);
+void free_command(t_command **command);
 void free_command_split(char **command_split);
 void free_env_list();
 
 //parser
 void print_ast_node(t_ast_node *node, int depth);
-void print_command_test(t_command_test *command);
+void print_command_test(t_command *command);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:27:52 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:19 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	initialise_builtin(char *list_builtin[NUM_BUILTINS])
 	list_builtin[7] = "clear";
 }
 
-void	restore_standard_fds(t_command_test *command)
+void	restore_standard_fds(t_command *command)
 {
 	if (command->saved_stdout != -1)
 	{
@@ -46,7 +46,7 @@ void	restore_standard_fds(t_command_test *command)
 	}
 }
 
-int	execute_builtin(t_command_test *command, int builtin_index)
+int	execute_builtin(t_command *command, int builtin_index)
 {
 	int	result;
 
@@ -73,7 +73,7 @@ int	execute_builtin(t_command_test *command, int builtin_index)
 	return (result);
 }
 
-int	execution_monitor(t_command_test *command)
+int	execution_monitor(t_command *command)
 {
 	char	*list_builtin[NUM_BUILTINS];
 	int		i;

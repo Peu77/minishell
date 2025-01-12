@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:40:06 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:14 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	execution_command(char **arguments, char *path)
 	return (1);
 }
 
-int	build_command_string(t_command_test *command, char **output_str)
+int	build_command_string(t_command *command, char **output_str)
 {
 	char	*temp;
 	char	*new_str;
@@ -62,7 +62,7 @@ int	build_command_string(t_command_test *command, char **output_str)
 	return (0);
 }
 
-int	prepare_execution_command(t_command_test *command)
+int	prepare_execution_command(t_command *command)
 {
 	char	*str;
 	char	**arguments;

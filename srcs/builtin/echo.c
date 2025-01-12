@@ -6,14 +6,14 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:01 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/18 18:22:46 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:50:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <unistd.h>
 
-int	ft_echo(t_command_test *command, bool is_n)
+int	ft_echo(t_command *command, bool is_n)
 {
 	char	*arg;
 

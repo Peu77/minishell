@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:49 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:13:12 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:27 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	and_monitor(t_ast_node *node, t_command_test *command)
+int	and_monitor(t_ast_node *node, t_command *command)
 {
 	int	left_result;
 
@@ -24,7 +24,7 @@ int	and_monitor(t_ast_node *node, t_command_test *command)
 	return (left_result);
 }
 
-int	or_monitor(t_ast_node *node, t_command_test *command)
+int	or_monitor(t_ast_node *node, t_command *command)
 {
 	int	left_result;
 

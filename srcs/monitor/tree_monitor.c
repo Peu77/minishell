@@ -6,13 +6,13 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:25:23 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/17 14:47:56 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:51:43 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	tree_monitor(t_ast_node *node, t_command_test *command)
+int	tree_monitor(t_ast_node *node, t_command *command)
 {
 	if (!node)
 		return (0);

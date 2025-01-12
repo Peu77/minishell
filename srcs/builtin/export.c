@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:41:42 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:50:57 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	add_to_environ(const char *key_value_pair)
 	return (0);
 }
 
-int	ft_export(t_command_test *command)
+int	ft_export(t_command *command)
 {
 	char	*arg;
 	char	*pair;

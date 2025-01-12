@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/11 17:42:00 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:50:38 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_command_split(char **command_split)
 	free(command_split);
 }
 
-static void	free_command_strings(t_command_test *command)
+static void	free_command_strings(t_command *command)
 {
 	if (command->path)
 	{
@@ -55,7 +55,7 @@ static void	free_command_strings(t_command_test *command)
 	}
 }
 
-static void	close_command_fds(t_command_test *command)
+static void	close_command_fds(t_command *command)
 {
 	if (command->saved_stdout > 0)
 	{
@@ -69,7 +69,7 @@ static void	close_command_fds(t_command_test *command)
 	}
 }
 
-void	free_command(t_command_test **command)
+void	free_command(t_command **command)
 {
 	if (!command || !*command)
 		return ;

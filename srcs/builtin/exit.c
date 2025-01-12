@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:24 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 19:01:46 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/12 19:50:54 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	validate_exit_arguments(char *argument, char ***cmd)
 	return (0);
 }
 
-int	ft_exit(t_command_test *command)
+int	ft_exit(t_command *command)
 {
 	char	**cmd;
 	long	exit_code;
