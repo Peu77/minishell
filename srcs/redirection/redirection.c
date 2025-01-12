@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/11 18:08:17 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/12 11:30:31 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,15 @@
 void	redirection_output(t_redirect *redirect)
 {
 	int	fd;
-	int fromFd;
+	int	fromFd;
 
 	fromFd = STDOUT_FILENO;
-	if(redirect->fd_left >= 0)
+	if (redirect->fd_left >= 0)
 		fromFd = redirect->fd_left;
-
-
-	if(redirect->file)
+	if (redirect->file)
 		fd = open(redirect->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = redirect->fd_right;
-
 	if (fd == -1)
 	{
 		pev("open failed for output redirection");
@@ -56,12 +53,11 @@ void	redirection_output(t_redirect *redirect)
 void	redirection_append(t_redirect *redirect)
 {
 	int	fd;
-	int fromFd;
+	int	fromFd;
 
 	fromFd = STDOUT_FILENO;
-	if(redirect->fd_left >= 0)
+	if (redirect->fd_left >= 0)
 		fromFd = redirect->fd_left;
-
 	fd = open(redirect->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
@@ -80,12 +76,11 @@ void	redirection_append(t_redirect *redirect)
 void	redirection_input(t_redirect *redirect)
 {
 	int	fd;
-	int fromFd;
+	int	fromFd;
 
 	fromFd = STDIN_FILENO;
-	if(redirect->fd_left >= 0)
+	if (redirect->fd_left >= 0)
 		fromFd = redirect->fd_left;
-
 	fd = open(redirect->file, O_RDONLY);
 	if (fd == -1)
 	{

@@ -6,13 +6,13 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:17 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/15 18:50:32 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/11 18:55:35 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	save_file_descriptors(t_command_test **command)
+static void	save_file_descriptors(t_command_test **command)
 {
 	(*command)->saved_stdout = dup(STDOUT_FILENO);
 	if ((*command)->saved_stdout == -1)
