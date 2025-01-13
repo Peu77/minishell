@@ -6,22 +6,21 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/11 17:46:40 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:40:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool handle_dollar_sign(char *str, int *i, t_list **result_chars, int* char_count) {
+static bool handle_dollar_sign(char *str, int *i, t_list **result_chars, int *char_count) {
     int start;
     int end;
     t_list *new_node;
     char *sub_str;
-    char* value;
+    char *value;
 
-    if(str[*i] == '?') {
-
-		value = ft_itoa(*update_exit_status());
+    if (str[*i] == '?') {
+        value = ft_itoa(*update_exit_status());
         if (!value)
             return (pe("malloc failed"), false);
         new_node = ft_lstnew(value);
@@ -39,7 +38,7 @@ static bool handle_dollar_sign(char *str, int *i, t_list **result_chars, int* ch
     if (!sub_str)
         return (pe("malloc failed"), false);
     value = getenv(sub_str);
-    if(value)
+    if (value)
         value = ft_strdup(value);
     else
         value = ft_strdup("");
@@ -53,8 +52,8 @@ static bool handle_dollar_sign(char *str, int *i, t_list **result_chars, int* ch
     return true;
 }
 
-static char* strlst_to_str(t_list *lst, int char_count) {
-    char* result;
+static char *strlst_to_str(t_list *lst, int char_count) {
+    char *result;
     int cpy_offset;
 
     cpy_offset = 0;
@@ -103,7 +102,7 @@ bool interpret_command_string(t_ast_node *node) {
         if (str[i] == '\"') {
             i++;
             while (str[i] && str[i] != '\"') {
-                if(str[i] == '$') {
+                if (str[i] == '$') {
                     i++;
                     if (!handle_dollar_sign(str, &i, &result_chars, &char_count))
                         return (ft_lstclear(&result_chars, free), false);
@@ -120,7 +119,15 @@ bool interpret_command_string(t_ast_node *node) {
             continue;
         }
 
-        if(str[i] == '$') {
+        int wildcard_len = get_wildcard_len(str + i);
+        if (wildcard_len > 0) {
+            if (!expand_wildcard(str + i, wildcard_len, &result_chars, &char_count))
+                return (ft_lstclear(&result_chars, free), false);
+            i += wildcard_len;
+            continue;
+        }
+
+        if (str[i] == '$') {
             i++;
             if (!handle_dollar_sign(str, &i, &result_chars, &char_count))
                 return (ft_lstclear(&result_chars, free), false);
@@ -138,8 +145,8 @@ bool interpret_command_string(t_ast_node *node) {
 
     free(node->value);
     node->value = strlst_to_str(result_chars, char_count);
-
     ft_lstclear(&result_chars, free);
+
     return true;
 }
 
@@ -155,5 +162,3 @@ int main() {
     return 0;
 }
 */
-
-
