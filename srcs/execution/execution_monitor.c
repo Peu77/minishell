@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:51:19 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:41:48 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,5 @@ int	execution_monitor(t_command *command)
 		restore_standard_fds(command);
 	*update_exit_status() = result;
 	printf("Exit status is %d \n", *update_exit_status());
-	free_command(&command);
 	return (free_command(&command), result);
 }

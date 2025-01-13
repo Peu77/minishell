@@ -18,7 +18,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:52:52 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:24:56 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void redirection_heredoc(const char *delimiter);
 //signal 
 void sighandler(int sig);
 void main_signals(void);
+void reset_signals(void);
 void heredoc_sighandler(int sig);
 
 //utils
