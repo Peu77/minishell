@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 11:43:15 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:30:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ int	execution_command(char **arguments, char *path)
 	pid = fork();
 	if (pid == -1)
 		return (pec(ERROR_FORK));
+
+	reset_signals();
 	if (pid == 0)
 	{
+		reset_signals();
 		if (!path)
 			exit(print_error(ERROR_FOUND_COMMAND));
 		if (execve(path, arguments, env) == -1)
@@ -33,6 +36,7 @@ int	execution_command(char **arguments, char *path)
 	else
 	{
 		waitpid(pid, &status, 0);
+		main_signals();
 		exit_status = WEXITSTATUS(status);
 		return (exit_status);
 	}
