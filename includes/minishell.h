@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 13:23:24 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/13 18:27:21 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 #define ERROR_NODE "ERROR CREATING THE NODE"
 #define ERROR_MALLOC "ERROR ALLOCATION MEMORY" 
 #define ERROR_FIND_ENV "ERROR FINDING PATH ENV"
-#define ERROR_EXECVE "ERROR EXECVE FAILED"
+#define ERROR_EXECVE "ERROR EXECVE FAILED (COMMAND NOT FOUND)"
 #define ERROR_HEREDOC "ERROR OPENING TEMPORARY HEREDOC"
 #define ERROR_HEREDOC_SIGNAL "EXITING HEREDOC"
 #define ERROR_TOO_ARGUMENT "ERROR TOO MUCH ARGUMENT"

@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 12:30:45 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:30:47 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ int	execution_command(char **arguments, char *path)
 	reset_signals();
 	if (pid == 0)
 	{
-		reset_signals();
-		if (!path)
-			exit(print_error(ERROR_FOUND_COMMAND));
 		if (execve(path, arguments, env) == -1)
 			exit(pec(ERROR_EXECVE));
 	}
