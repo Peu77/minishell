@@ -3,10 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/13 13:23:24 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
 /*   Updated: 2025/01/12 19:52:52 by ftapponn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/07 15:06:03 by eebert            #+#    #+#             */
+/*   Updated: 2024/12/07 15:25:48 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +96,12 @@ typedef struct s_command_test
 	int saved_stdin;
 } t_command;
 
+typedef struct s_shell {
+	char* path;
+	char** env;
+	int exit_status;
+} t_shell;
+
 
 // main
 void print_env_list(char **env);
@@ -103,6 +133,8 @@ int pe(const char *message);
 int pec(const char *message);
 void pev(const char *message);
 int	print_error(const char *message);
+
+t_shell* get_shell(void);
 
 //env utils
 char	*ft_strtok(char *str, const char delim);

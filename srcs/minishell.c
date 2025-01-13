@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/13 13:27:12 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
@@ -44,6 +56,12 @@ void	print_command(t_command *command)
 }
 */
 
+t_shell* get_shell(void)
+{
+	static t_shell shell;
+
+	return (&shell);
+}
 
 static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
 {
