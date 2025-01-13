@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 19:34:30 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:49:43 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,30 +101,30 @@ void	minishell_interactive(void)
 	}
 }
 
-void    minishell_non_interactive(void)
+void	minishell_non_interactive(void)
 {
-    char        *line;
-    t_command   *command;
-    t_ast_node  *node;
+	char		*line;
+	t_command	*command;
+	t_ast_node	*node;
 
-    while (1)
-    {
-        line = readline(NULL);
-        if (line == NULL)
-            break;
-        if (*line == '\0')
-        {
-            free(line);
-            continue ;
-        }
-        command = NULL;
-        node = parse(line);
-        if (handle_parse_errors(line, node))
-			continue;
-        tree_monitor(node, command);
-        free_ast_node(node);
-        free(line);
-    }
+	while (1)
+	{
+		line = readline(NULL);
+		if (line == NULL)
+			break ;
+		if (*line == '\0')
+		{
+			free(line);
+			continue ;
+		}
+		command = NULL;
+		node = parse(line);
+		if (handle_parse_errors(line, node))
+			continue ;
+		tree_monitor(node, command);
+		free_ast_node(node);
+		free(line);
+	}
 }
 
 void	minishell_non_interactive_argument(char *line)
