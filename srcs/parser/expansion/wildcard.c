@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 15:42:00 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:05:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 static char* expand_env_vars(const char* input) {
     if (!input) return NULL;
 
-    // First pass: calculate required size
     size_t size = 0;
     for (int i = 0; input[i]; i++) {
         if (input[i] == '$' && input[i + 1]) {
@@ -86,6 +85,27 @@ static bool is_match(const char *pattern, int pattern_len, const char *str) {
     return false;
 }
 
+static void ft_pop_back(t_list **list) {
+    if (list == NULL || *list == NULL) return;
+
+    t_list *current = *list;
+    t_list *previous = NULL;
+
+    while (current->next != NULL) {
+        previous = current;
+        current = current->next;
+    }
+
+    if (previous != NULL) {
+        previous->next = NULL;
+    } else {
+        *list = NULL;
+    }
+
+    free(current->content);
+    free(current);
+}
+
 int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int* char_count) {
     int matches;
 
@@ -104,14 +124,22 @@ int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int
 
     char *file_name;
     struct dirent *entry;
+
     while ((entry = readdir(dir)) != NULL) {
+
         file_name = entry->d_name;
         if(is_match(pattern, pattern_len, file_name)) {
 
             ft_lstadd_back(list, ft_lstnew(ft_strdup(file_name)));
-            (*char_count) += ft_strlen(file_name);
+            ft_lstadd_back(list, ft_lstnew(ft_strdup(" ")));
+            (*char_count) += ft_strlen(file_name) + 1;
             matches++;
         }
+    }
+
+    if(matches > 0) {
+        ft_pop_back(list);
+        (*char_count)--;
     }
 
     closedir(dir);
