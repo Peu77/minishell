@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 16:05:12 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:32:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-static char* expand_env_vars(const char* input) {
+static char *expand_env_vars(const char *input) {
     if (!input) return NULL;
 
     size_t size = 0;
@@ -30,14 +30,14 @@ static char* expand_env_vars(const char* input) {
             }
             i--;
 
-            const char* value = getenv(var_name);
+            const char *value = getenv(var_name);
             size += value ? strlen(value) : 0;
         } else {
             size++;
         }
     }
 
-    char* result = (char*)malloc(size + 1);
+    char *result = (char *) malloc(size + 1);
     if (!result) return NULL;
 
     size_t pos = 0;
@@ -52,7 +52,7 @@ static char* expand_env_vars(const char* input) {
             }
             i--;
 
-            const char* value = getenv(var_name);
+            const char *value = getenv(var_name);
             if (value) {
                 strcpy(result + pos, value);
                 pos += strlen(value);
@@ -66,20 +66,22 @@ static char* expand_env_vars(const char* input) {
     return result;
 }
 
-static bool is_match(const char *pattern, int pattern_len, const char *str) {
+static bool is_match(const char *pattern, int pattern_len, const char *str, int index) {
     if (pattern_len == 0) {
         return *str == '\0';
     }
 
     if (*pattern == '*') {
-        if (is_match(pattern + 1, pattern_len - 1, str))
+        if (is_match(pattern + 1, pattern_len - 1, str, index + 1))
             return true;
-        if (*str && is_match(pattern, pattern_len, str + 1))
+        if (*str && is_match(pattern, pattern_len, str + 1, index + 1))
             return true;
     }
 
-    if (*str && *pattern == *str) {
-        return is_match(pattern + 1, pattern_len - 1, str + 1);
+    if (index == 0 && *pattern == '.') {
+        return is_match(pattern + 1, pattern_len - 1, str, index + 1);
+    } else if (*str && (*pattern == *str || *pattern == '?')) {
+        return is_match(pattern + 1, pattern_len - 1, str + 1, index + 1);
     }
 
     return false;
@@ -106,13 +108,12 @@ static void ft_pop_back(t_list **list) {
     free(current);
 }
 
-int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int* char_count) {
+int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int *char_count) {
     int matches;
 
-    char* pattern = expand_env_vars(old_pattern);
-
-    printf("new pattern: %s\n", pattern);
-
+    char *pattern = expand_env_vars(old_pattern);
+    if (!pattern)
+        return -1;
     matches = 0;
     (void) matches;
     char *path = ".";
@@ -126,10 +127,11 @@ int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int
     struct dirent *entry;
 
     while ((entry = readdir(dir)) != NULL) {
-
         file_name = entry->d_name;
-        if(is_match(pattern, pattern_len, file_name)) {
+        if (*file_name == '.' && *pattern != '.')
+            continue;
 
+        if (is_match(pattern, pattern_len, file_name, 0)) {
             ft_lstadd_back(list, ft_lstnew(ft_strdup(file_name)));
             ft_lstadd_back(list, ft_lstnew(ft_strdup(" ")));
             (*char_count) += ft_strlen(file_name) + 1;
@@ -137,9 +139,13 @@ int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int
         }
     }
 
-    if(matches > 0) {
+    if (matches > 0) {
         ft_pop_back(list);
         (*char_count)--;
+    } else {
+        ft_lstadd_back(list, ft_lstnew(pattern));
+        (*char_count) += ft_strlen(pattern);
+        pattern = NULL;
     }
 
     closedir(dir);
@@ -147,7 +153,6 @@ int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int
 
     return true;
 }
-
 
 
 static bool is_wildcard_separator(char c) {
@@ -183,4 +188,3 @@ int main() {
     return 0;
 }
 */
-
