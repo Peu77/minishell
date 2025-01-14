@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 19:49:43 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:37:23 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	minishell_interactive(void)
 		node = parse(user_prompt);
 		if (handle_parse_errors(user_prompt, node))
 			continue ;
-		print_ast_node(node, 0);
 		tree_monitor(node, command);
 		free_ast_node(node);
 		free(user_prompt);
