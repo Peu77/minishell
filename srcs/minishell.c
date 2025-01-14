@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 13:27:12 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/13 19:49:43 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	print_command(t_command *command)
 }
 */
 
-t_shell* get_shell(void)
+t_shell	*get_shell(void)
 {
-	static t_shell shell;
+	static t_shell	shell;
 
 	return (&shell);
 }
@@ -73,16 +73,16 @@ static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
 	if (node == PARSE_ERROR)
 	{
 		free(user_prompt);
-		return pec("parse error\n");
+		return (pec("parse error\n"));
 	}
 	return (0);
 }
 
 void	minishell_interactive(void)
 {
-	char			*user_prompt;
+	char		*user_prompt;
 	t_command	*command;
-	t_ast_node		*node;
+	t_ast_node	*node;
 
 	user_prompt = NULL;
 	command = NULL;
@@ -103,13 +103,15 @@ void	minishell_interactive(void)
 
 void	minishell_non_interactive(void)
 {
-	char			*line;
+	char		*line;
 	t_command	*command;
-	t_ast_node		*node;
+	t_ast_node	*node;
 
-	line = NULL;
-	while ((line = readline(NULL)) != NULL)
+	while (1)
 	{
+		line = readline(NULL);
+		if (line == NULL)
+			break ;
 		if (*line == '\0')
 		{
 			free(line);
@@ -117,23 +119,18 @@ void	minishell_non_interactive(void)
 		}
 		command = NULL;
 		node = parse(line);
-		if (node == NULL || node == PARSE_ERROR)
-		{
-			pec("parse error\n");
-			free(line);
+		if (handle_parse_errors(line, node))
 			continue ;
-		}
 		tree_monitor(node, command);
 		free_ast_node(node);
 		free(line);
 	}
-	free(line);
 }
 
 void	minishell_non_interactive_argument(char *line)
 {
 	t_command	*command;
-	t_ast_node		*node;
+	t_ast_node	*node;
 
 	node = parse(line);
 	command = NULL;

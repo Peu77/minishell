@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:48:23 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:50:01 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**initialise_env(char **env)
 
 	if (env)
 		environ = env;
-	return environ;
+	return (environ);
 }
 
 static char	*initialize_stock(char *str, char **stock, int *i)

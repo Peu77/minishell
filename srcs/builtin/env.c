@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:11:18 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:50:50 by ftapponn         ###   ########.fr       */
+/*   Created: 2025/01/13 18:58:36 by ftapponn          #+#    #+#             */
+/*   Updated: 2025/01/13 18:58:44 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_env(t_command *command)
 {
-	char **env;
+	char	**env;
 
 	env = initialise_env(NULL);
 	if (command->argument)

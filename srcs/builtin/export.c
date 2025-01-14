@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 18:50:17 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:00:52 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	variable_exists(const char *key_value_pair)
 {
 	char	*equal_sign;
-	char 	**environ;
+	char	**environ;
 	size_t	name_len;
 	size_t	i;
 
@@ -69,14 +69,10 @@ int	ft_export(t_command *command)
 	char	*arg;
 	char	*pair;
 	char	*equal_sign;
-	char	**env;
 
 	arg = command->argument;
 	if (!command || !command->argument)
-	{
-		env = initialise_env(NULL);
-		return (print_env_list(env), 0);
-	}
+		return (ft_env(command));
 	pair = ft_strtok(arg, ' ');
 	while (pair)
 	{
