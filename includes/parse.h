@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 15:34:27 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 16:08:25 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,6 @@ bool get_files_in_dir(const char* path, t_list **list, size_t* amount);
 int* get_char_count();
 
 bool handle_dollar_sign(const char *str, int *i, t_list **result_chars);
+
+bool parse_redirect_to_token(t_list **tokens, const char *str, t_token_type redirect_type, size_t *i);
 #endif

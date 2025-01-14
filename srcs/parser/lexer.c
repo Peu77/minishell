@@ -74,62 +74,6 @@ static bool add_token(t_list **tokens, t_token_type type, char *value) {
     return true;
 }
 
-// TODO: handle memory leaks
-static bool parse_redirect_to_token(t_list **tokens, const char *str, t_token_type redirect_type, size_t *i) {
-    t_redirect *redirect;
-    t_token *token;
-    t_list *new_node;
-
-    redirect = create_redirect(-1, -1, redirect_type, NULL);
-    token = create_token(redirect_type, NULL, redirect);
-    if (!redirect || !token)
-        return (free(redirect), free(token), false);
-    if (ft_isdigit(str[*i])) {
-        redirect->fd_left = ft_atoi(str + *i);
-        while (ft_isdigit(str[*i]))
-            (*i)++;
-    }
-
-    // skip redirect char like <, >, >>
-    (*i)++;
-    if (redirect_type >= TOKEN_REDIRECT_APPEND)
-        (*i)++;
-
-    if (str[*i] == 0 || (str[*i] == '&' && str[*i + 1] == 0))
-        return (pe("parse error near `\\n'"), free(redirect), free(token), false);
-
-    if (str[*i] == '&') {
-        (*i)++;
-        redirect->fd_right = ft_atoi(str + *i);
-        while (str[*i] && ft_isdigit(str[*i]))
-            (*i)++;
-    } else {
-        // in case if filename is provided
-        while (str[*i] && ft_isspace(str[*i]))
-            (*i)++;
-
-        int filename_len = 0;
-        while (str[*i + filename_len] && !ft_isspace(str[*i + filename_len]))
-            filename_len++;
-
-        if (filename_len == 0)
-            return (pe("parse error near `\\n'"), free(redirect), free(token), false);
-
-
-        redirect->file = ft_substr(str, *i, filename_len);
-        if (redirect->file == NULL)
-            return (free(redirect), free(token), false);
-        *i += filename_len;
-    }
-
-    new_node = ft_lstnew(token);
-    if (!new_node)
-        return (free_redirect(redirect), free(token), false);
-    ft_lstadd_back(tokens, new_node);
-
-    return true;
-}
-
 bool lex_tokens(char *input, t_list **tokens) {
     t_token_type type;
     const size_t len = ft_strlen(input);
