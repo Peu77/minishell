@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:25:44 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:36:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void		heredoc_sighandler(int sig);
 long		ft_atol(const char *str);
 char		*ft_strndup(const char *src, size_t len);
 int			*update_exit_status(void);
+void		update_path(void);
 
 // clean
 void		free_command(t_command **command);
@@ -185,4 +186,5 @@ void		free_env_list(void);
 // parser
 void		print_ast_node(t_ast_node *node, int depth);
 void		print_command_test(t_command *command);
+
 #endif

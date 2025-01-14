@@ -6,11 +6,12 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:00 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/14 14:24:26 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:45:53 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <unistd.h>
 
 char	*ft_strndup(const char *src, size_t len)
 {
@@ -52,6 +53,27 @@ long	ft_atol(const char *str)
 int	*update_exit_status(void)
 {
 	static int	status = 0;
+	t_shell		*shell;
 
+	shell = get_shell();
+	shell->exit_status = status;
 	return (&status);
+}
+
+void	update_path(void)
+{
+	char	*path;
+	t_shell	*shell;
+
+	path = malloc(MAX_PATH);
+	if (!path)
+		return ;
+	if (getcwd(path, MAX_PATH) == NULL)
+	{
+		free(path);
+		return ;
+	}
+	shell = get_shell();
+	shell->path = path;
+	return ;
 }

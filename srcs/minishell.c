@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:37:23 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:44:57 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	minishell_interactive(void)
 	main_signals();
 	while (1)
 	{
+		update_path();
 		if (!get_user_prompt(&user_prompt))
 			break ;
 		node = parse(user_prompt);
@@ -108,6 +109,7 @@ void	minishell_non_interactive(void)
 
 	while (1)
 	{
+		update_path();
 		line = readline(NULL);
 		if (line == NULL)
 			break ;
@@ -131,6 +133,7 @@ void	minishell_non_interactive_argument(char *line)
 	t_command	*command;
 	t_ast_node	*node;
 
+	update_path();
 	node = parse(line);
 	command = NULL;
 	if (line == NULL)

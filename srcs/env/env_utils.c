@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 19:50:01 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:46:15 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,14 @@ void	print_env_list(char **env)
 char	**initialise_env(char **env)
 {
 	static char	**environ = NULL;
+	t_shell		*shell;
 
 	if (env)
+	{
 		environ = env;
+		shell = get_shell();
+		shell->env = environ;
+	}
 	return (environ);
 }
 
