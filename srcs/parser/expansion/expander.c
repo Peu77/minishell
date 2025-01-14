@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 15:50:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:52:30 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ bool	interpret_command_string(t_ast_node *node)
 	result_chars = NULL;
 	i = 0;
 	str = node->value;
+	if (!str)
+		return (true);
 	while (str[i])
 	{
 		if ((str[i] == '\'' && !handle_single_quotes(str, &i, &result_chars))

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 16:59:49 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:33:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "libft.h"
 # include <stdbool.h>
 
-#define MAX_VAR_LEN 256
+# define MAX_VAR_LEN 256
 
 typedef enum e_token_type
 {
@@ -78,8 +78,6 @@ t_ast_node				*parse(char *input);
 
 bool					lex_tokens(char *input, t_list **tokens);
 
-# define PARSE_ERROR ((void *)-1)
-
 t_list					*parse_redirects_tokens_to_tree(t_list **redirects,
 							t_list *tokens);
 
@@ -110,23 +108,34 @@ bool					interpret_command_string(t_ast_node *node);
 
 int						get_wildcard_len(const char *str);
 
-bool						expand_wildcard(const char *old_pattern, size_t pattern_len, t_list **list);
+bool					expand_wildcard(const char *old_pattern,
+							size_t pattern_len, t_list **list);
 
-bool is_wildcard_separator(const char c);
+bool					is_wildcard_separator(const char c);
 
-char *expand_env_vars(const char *input, size_t len);
+char					*expand_env_vars(const char *input, size_t len);
 
-bool get_files_in_dir(const char* path, t_list **list, size_t* amount);
+bool					get_files_in_dir(const char *path, t_list **list,
+							size_t *amount);
 
-int* get_char_count();
+int						*get_char_count(void);
 
-bool handle_dollar_sign(const char *str, int *i, t_list **result_chars);
+bool					handle_dollar_sign(const char *str, int *i,
+							t_list **result_chars);
 
-bool parse_redirect_to_token(t_list **tokens, const char *str, t_token_type redirect_type, size_t *i);
+bool					parse_redirect_to_token(t_list **tokens,
+							const char *str, t_token_type redirect_type,
+							size_t *i);
 
-t_token_type	is_redirect(const char *str);
+t_token_type			is_redirect(const char *str);
 
-t_token_type	get_token_type(const char *str, bool in_quote);
+t_token_type			get_token_type(const char *str, bool in_quote);
 
-bool	add_token(t_list **tokens, t_token_type type, char *value);
+bool					add_token(t_list **tokens, t_token_type type,
+							char *value);
+
+bool					parse_redirects_for_parenteses(t_list **tokens,
+							t_ast_node *parentheses_node);
+
+t_ast_node				*parse_command(t_list **tokens);
 #endif

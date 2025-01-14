@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 16:26:40 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:48:25 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ t_list	*parse_redirects_tokens_to_tree(t_list **redirects, t_list *tokens)
 			token->data = NULL;
 			new_node = ft_lstnew(redirect);
 			if (!new_node)
-				return (free_redirect(redirect), PARSE_ERROR);
+				return (free_redirect(redirect), NULL);
 			ft_lstadd_back(redirects, new_node);
 		}
+		if (tokens->next == NULL)
+			return (tokens);
 		tokens = tokens->next;
 	}
 	return (tokens);

@@ -70,11 +70,6 @@ static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
 		free(user_prompt);
 		return (1);
 	}
-	if (node == PARSE_ERROR)
-	{
-		free(user_prompt);
-		return (pec("parse error\n"));
-	}
 	return (0);
 }
 
@@ -138,7 +133,7 @@ void	minishell_non_interactive_argument(char *line)
 	command = NULL;
 	if (line == NULL)
 		return (pev("No input provided for non-interactive mode.\n"));
-	if (node == NULL || node == PARSE_ERROR)
+	if (node == NULL)
 		return (pev("parse error\n"));
 	tree_monitor(node, command);
 	free_ast_node(node);
