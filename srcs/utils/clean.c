@@ -3,18 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 11:44:43 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
@@ -80,6 +68,7 @@ void	free_command(t_command **command)
 		(*command)->redirect = NULL;
 	}
 	close_command_fds(*command);
+	free((*command)->path);
 	free(*command);
 	*command = NULL;
 }
