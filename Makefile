@@ -28,6 +28,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/redirect_lexer.c \
 	   srcs/parser/redirects.c \
 	   srcs/parser/lexer.c \
+	   srcs/parser/lexer_utils.c \
 	   srcs/parser/ast_utils.c \
 	   srcs/parser/token_utils.c \
 	   srcs/parser/debug.c \
