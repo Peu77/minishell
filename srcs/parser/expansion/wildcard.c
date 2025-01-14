@@ -6,65 +6,14 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 11:34:35 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 12:06:20 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 #include <dirent.h>
-#include <stdio.h>
 #include <stdbool.h>
-
-static char *expand_env_vars(const char *input) {
-    if (!input) return NULL;
-
-    size_t size = 0;
-    for (int i = 0; input[i]; i++) {
-        if (input[i] == '$' && input[i + 1]) {
-            char var_name[256] = {0};
-            int j = 0;
-            i++;
-
-            while (input[i] && (ft_isalnum(input[i]) || input[i] == '_') && j < 255) {
-                var_name[j++] = input[i++];
-            }
-            i--;
-
-            const char *value = getenv(var_name);
-            size += value ? strlen(value) : 0;
-        } else {
-            size++;
-        }
-    }
-
-    char *result = (char *) malloc(size + 1);
-    if (!result) return NULL;
-
-    size_t pos = 0;
-    for (int i = 0; input[i]; i++) {
-        if (input[i] == '$' && input[i + 1]) {
-            char var_name[256] = {0};
-            int j = 0;
-            i++;
-
-            while (input[i] && (ft_isalnum(input[i]) || input[i] == '_') && j < 255) {
-                var_name[j++] = input[i++];
-            }
-            i--;
-
-            const char *value = getenv(var_name);
-            if (value) {
-                strcpy(result + pos, value);
-                pos += strlen(value);
-            }
-        } else {
-            result[pos++] = input[i];
-        }
-    }
-    result[pos] = '\0';
-
-    return result;
-}
+#include <parse.h>
 
 static bool is_match(const char *pattern, int pattern_len, const char *str, int index) {
     if (pattern_len == 0) {
@@ -152,11 +101,6 @@ int expand_wildcard(const char *old_pattern, int pattern_len, t_list **list, int
     free(pattern);
 
     return true;
-}
-
-
-static bool is_wildcard_separator(char c) {
-    return (ft_isspace(c) || c == '\'' || c == '\"');
 }
 
 int get_wildcard_len(char *str) {

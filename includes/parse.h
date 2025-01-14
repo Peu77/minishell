@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 19:49:02 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 11:55:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PARSE_H
 # include "libft.h"
 # include <stdbool.h>
+
+#define MAX_VAR_LEN 256
 
 typedef enum e_token_type
 {
@@ -104,5 +106,9 @@ int						get_wildcard_len(char *str);
 
 int						expand_wildcard(const char *old_pattern,
 							int pattern_len, t_list **list, int *char_count);
+
+bool is_wildcard_separator(const char c);
+
+char *expand_env_vars(const char *input);
 
 #endif
