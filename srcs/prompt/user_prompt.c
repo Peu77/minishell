@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:06:59 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 12:15:05 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:25:06 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ int	get_user_prompt(char **user_prompt)
 		return (0);
 	}
 	add_history(*user_prompt);
-	remove_newline(*user_prompt);
 	return (1);
 }

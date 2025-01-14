@@ -6,20 +6,11 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:00 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 19:12:22 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:24:26 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	remove_newline(char *buffer)
-{
-	size_t	len;
-
-	len = ft_strlen(buffer);
-	if (len > 0 && buffer[len - 1] == '\n')
-		buffer[len - 1] = '\0';
-}
 
 char	*ft_strndup(const char *src, size_t len)
 {
