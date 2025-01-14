@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:10:42 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:19:41 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	match_files(const char *pattern, t_list_data files,
 	while (*files.list)
 	{
 		if (is_match(pattern, ft_strlen(pattern), (*files.list)->content)
-			&& (*(char *)(*files.list)->content) != '.' && *pattern != '.')
+			&& !((*(char *)(*files.list)->content) == '.' && *pattern != '.'))
 		{
 			if (files.count > 1)
 				tmp_str = ft_strjoin((*files.list)->content, " ");
