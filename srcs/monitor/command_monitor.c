@@ -15,7 +15,7 @@
 
 int	command_monitor(t_ast_node *node, t_command *command)
 {
-	if (interpret_command_string(node))
+	if (!interpret_command_string(node))
 		return (-1);
 	if (!transform_node_to_command(node->value, &command, node->redirects))
 		return (pe(ERROR_INITIALISE));
