@@ -31,6 +31,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/token_utils.c \
 	   srcs/parser/debug.c \
 	   srcs/parser/expansion/expander.c \
+	   srcs/parser/expansion/expander_utils.c \
 	   srcs/parser/expansion/wildcard.c \
 	   srcs/parser/expansion/wildcard_utils.c \
 	   srcs/parser/expansion/env_utils.c \

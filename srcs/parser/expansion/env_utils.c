@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:40:48 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 13:58:08 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:51:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static size_t	get_env_var_len(const char *input, size_t max_len)
 	return (len);
 }
 
-static void	insert_env_vars(const char *input, size_t len, char *result, size_t *pos)
+static void	insert_env_vars(const char *input, size_t len, char *result,
+		size_t *pos)
 {
 	int		i;
 	char	var_name[MAX_VAR_LEN];

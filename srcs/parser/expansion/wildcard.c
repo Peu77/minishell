@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:19:41 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:34:16 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ bool	expand_wildcard(const char *old_pattern, size_t pattern_len,
 	return (ft_lstclear(&files, free), true);
 }
 
-int	get_wildcard_len(char *str)
+int	get_wildcard_len(const char *str)
 {
 	int		i;
 	bool	found_wildcard;

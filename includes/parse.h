@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 15:23:20 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:34:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void					print_ast_type(const t_ast_type type);
 
 bool					interpret_command_string(t_ast_node *node);
 
-int						get_wildcard_len(char *str);
+int						get_wildcard_len(const char *str);
 
 bool						expand_wildcard(const char *old_pattern, size_t pattern_len, t_list **list);
 
