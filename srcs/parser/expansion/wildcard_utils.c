@@ -6,14 +6,43 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:38:14 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 11:39:52 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 12:55:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <dirent.h>
 #include <libft.h>
+#include <minishell.h>
 #include <stdbool.h>
 
 bool	is_wildcard_separator(const char c)
 {
 	return (ft_isspace(c) || c == '\'' || c == '\"');
+}
+
+bool	get_files_in_dir(const char* path, t_list **list, size_t *amount)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	t_list			*new_node;
+	char			*file_name_cpy;
+
+	dir = opendir(path);
+	if (dir == NULL)
+		return (pe("Error: Unable to open directory"), false);
+	while (1)
+	{
+		entry = readdir(dir);
+		if (entry == NULL)
+			break ;
+		(*amount)++;
+		file_name_cpy = ft_strdup(entry->d_name);
+		if (!file_name_cpy)
+			return (pe("malloc failed"), false);
+		new_node = ft_lstnew(file_name_cpy);
+		if (!new_node)
+			return (free(file_name_cpy), pe("malloc failed"), false);
+		ft_lstadd_back(list, new_node);
+	}
+	return (closedir(dir), true);
 }

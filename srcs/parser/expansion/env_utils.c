@@ -6,14 +6,14 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:40:48 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 12:06:14 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 13:58:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <parse.h>
 
-static size_t	get_env_var_len(const char *input)
+static size_t	get_env_var_len(const char *input, size_t max_len)
 {
 	int		i;
 	size_t	len;
@@ -22,7 +22,7 @@ static size_t	get_env_var_len(const char *input)
 
 	i = -1;
 	len = 0;
-	while (input[++i])
+	while (input[++i] && i < (int)max_len)
 	{
 		if (input[i] == '$' && input[i + 1])
 		{
@@ -42,14 +42,14 @@ static size_t	get_env_var_len(const char *input)
 	return (len);
 }
 
-static void	insert_env_vars(const char *input, char *result, size_t *pos)
+static void	insert_env_vars(const char *input, size_t len, char *result, size_t *pos)
 {
 	int		i;
 	char	var_name[MAX_VAR_LEN];
 	int		j;
 
 	i = -1;
-	while (input[++i])
+	while (input[++i] && i < (int)len)
 	{
 		if (input[i] == '$' && input[i + 1])
 		{
@@ -71,18 +71,18 @@ static void	insert_env_vars(const char *input, char *result, size_t *pos)
 	}
 }
 
-char	*expand_env_vars(const char *input)
+char	*expand_env_vars(const char *input, size_t len)
 {
 	char	*result;
 	size_t	pos;
 
 	if (!input)
 		return (NULL);
-	result = malloc(get_env_var_len(input) + 1);
+	result = malloc(get_env_var_len(input, len) + 1);
 	if (!result)
 		return (NULL);
 	pos = 0;
-	insert_env_vars(input, result, &pos);
+	insert_env_vars(input, len, result, &pos);
 	result[pos] = '\0';
 	return (result);
 }
