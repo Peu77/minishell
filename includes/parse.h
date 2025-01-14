@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 13:55:05 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:34:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,6 @@ char *expand_env_vars(const char *input, size_t len);
 bool get_files_in_dir(const char* path, t_list **list, size_t* amount);
 
 int* get_char_count();
+
+bool handle_dollar_sign(char *str, int *i, t_list **result_chars);
 #endif

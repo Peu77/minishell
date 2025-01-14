@@ -34,6 +34,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/expansion/wildcard.c \
 	   srcs/parser/expansion/wildcard_utils.c \
 	   srcs/parser/expansion/env_utils.c \
+	   srcs/parser/expansion/dollar_sign.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/and_or_monitor.c \

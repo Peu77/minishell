@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 13:55:18 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:38:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,46 +16,6 @@ int *get_char_count() {
     static int char_count = 0;
 
     return &char_count;
-}
-
-static bool handle_dollar_sign(char *str, int *i, t_list **result_chars) {
-    int start;
-    int end;
-    t_list *new_node;
-    char *sub_str;
-    char *value;
-
-    if (str[*i] == '?') {
-        value = ft_itoa(*update_exit_status());
-        if (!value)
-            return (pe("malloc failed"), false);
-        new_node = ft_lstnew(value);
-        if (!new_node)
-            return (free(value), ft_lstclear(result_chars, free), pe("malloc failed"), false);
-        ft_lstadd_back(result_chars, new_node);
-        *i += 1;
-        return true;
-    }
-    start = *i;
-    end = *i;
-    while (str[end] && ft_isalnum(str[end]))
-        end++;
-    sub_str = ft_substr(str, start, end - start);
-    if (!sub_str)
-        return (pe("malloc failed"), false);
-    value = getenv(sub_str);
-    if (value)
-        value = ft_strdup(value);
-    else
-        value = ft_strdup("");
-    new_node = ft_lstnew(value);
-    free(sub_str);
-    if (!new_node)
-        return (ft_lstclear(result_chars, free), pe("malloc failed"), false);
-    ft_lstadd_back(result_chars, new_node);
-    *get_char_count() += ft_strlen(new_node->content);
-    *i = end;
-    return true;
 }
 
 static char *strlst_to_str(t_list *lst) {
