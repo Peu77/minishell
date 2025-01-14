@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:38:14 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 12:55:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:05:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	is_wildcard_separator(const char c)
 	return (ft_isspace(c) || c == '\'' || c == '\"');
 }
 
-bool	get_files_in_dir(const char* path, t_list **list, size_t *amount)
+bool	get_files_in_dir(const char *path, t_list **list, size_t *amount)
 {
 	DIR				*dir;
 	struct dirent	*entry;

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 11:55:56 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 13:55:05 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 }						t_ast_node;
 
+typedef struct s_list_data
+{
+	t_list				**list;
+	size_t				count;
+}						t_list_data;
+
 t_ast_node				*parse(char *input);
 
 bool					lex_tokens(char *input, t_list **tokens);
@@ -104,11 +110,13 @@ bool					interpret_command_string(t_ast_node *node);
 
 int						get_wildcard_len(char *str);
 
-int						expand_wildcard(const char *old_pattern,
-							int pattern_len, t_list **list, int *char_count);
+bool						expand_wildcard(const char *old_pattern, size_t pattern_len, t_list **list);
 
 bool is_wildcard_separator(const char c);
 
-char *expand_env_vars(const char *input);
+char *expand_env_vars(const char *input, size_t len);
 
+bool get_files_in_dir(const char* path, t_list **list, size_t* amount);
+
+int* get_char_count();
 #endif
