@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 16:32:01 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 11:34:35 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int get_wildcard_len(char *str) {
     i = 0;
     found_wildcard = false;
     while (str[i] && !is_wildcard_separator(str[i])) {
-        if (str[i] == '*')
+        if (str[i] == '*' || str[i] == '?')
             found_wildcard = true;
         i++;
     }
