@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:38:22 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:23:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 	return (true);
 }
 
-bool	handle_dollar_sign(char *str, int *i, t_list **result_chars)
+bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 {
 	int		start;
 	int		end;

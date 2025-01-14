@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:38:56 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:23:54 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char *strlst_to_str(t_list *lst) {
     cpy_offset = 0;
     result = malloc(*get_char_count() + 1);
     if (!result)
-        return (pe("malloc failed"), NULL);
+        return (pe(ERROR_MALLOC), NULL);
     result[*get_char_count()] = '\0';
     while (lst) {
         ft_strlcpy(result + cpy_offset, lst->content, ft_strlen(lst->content) + 1);
@@ -33,6 +33,52 @@ static char *strlst_to_str(t_list *lst) {
         lst = lst->next;
     }
     return result;
+}
+
+static bool handle_single_quotes(const char *str, int *i, t_list **result_chars) {
+    t_list *new_node;
+    char *str_cpy;
+    size_t len;
+    len = 0;
+
+
+    (*i)++;
+
+    while (str[*i + len] && str[*i + len] != '\'')
+        len++;
+    str_cpy = ft_substr(str, *i, len);
+    if (!str_cpy)
+        return (pe(ERROR_MALLOC), false);
+    new_node = ft_lstnew(str_cpy);
+    (*get_char_count()) += (int) len;
+    *i += len + 1;
+    if (!new_node)
+        return (pe(ERROR_MALLOC), false);
+    ft_lstadd_back(result_chars, new_node);
+
+    return true;
+}
+
+static bool handle_double_quotes(const char *str, int *i, t_list **result_chars) {
+    t_list *new_node;
+
+    (*i)++;
+    while (str[*i] && str[*i] != '\"') {
+        if (str[*i] == '$') {
+            (*i)++;
+            if (!handle_dollar_sign(str, i, result_chars))
+                return (ft_lstclear(result_chars, free), false);
+            continue;
+        }
+        new_node = ft_lstnew(ft_substr(str, *i, 1));
+        if (!new_node)
+            return (ft_lstclear(result_chars, free), pe(ERROR_MALLOC), false);
+        (*get_char_count())++;
+        ft_lstadd_back(result_chars, new_node);
+        (*i)++;
+    }
+    (*i)++;
+    return (true);
 }
 
 bool interpret_command_string(t_ast_node *node) {
@@ -50,36 +96,13 @@ bool interpret_command_string(t_ast_node *node) {
     str = node->value;
     while (str[i]) {
         if (str[i] == '\'') {
-            i++;
-            while (str[i] && str[i] != '\'') {
-                new_node = ft_lstnew(ft_substr(str, i, 1));
-                (*get_char_count())++;
-                if (!new_node)
-                    return (ft_lstclear(&result_chars, free), pe("malloc failed"), false);
-                ft_lstadd_back(&result_chars, new_node);
-                i++;
-            }
-            i++;
+            if (!handle_single_quotes(str, &i, &result_chars))
+                return (ft_lstclear(&result_chars, free), false);
             continue;
         }
-
         if (str[i] == '\"') {
-            i++;
-            while (str[i] && str[i] != '\"') {
-                if (str[i] == '$') {
-                    i++;
-                    if (!handle_dollar_sign(str, &i, &result_chars))
-                        return (ft_lstclear(&result_chars, free), false);
-                    continue;
-                }
-                new_node = ft_lstnew(ft_substr(str, i, 1));
-                (*get_char_count())++;
-                if (!new_node)
-                    return (ft_lstclear(&result_chars, free), pe("malloc failed"), false);
-                ft_lstadd_back(&result_chars, new_node);
-                i++;
-            }
-            i++;
+            if (!handle_double_quotes(str, &i, &result_chars))
+                return (ft_lstclear(&result_chars, free), false);
             continue;
         }
 
@@ -101,7 +124,7 @@ bool interpret_command_string(t_ast_node *node) {
         new_node = ft_lstnew(ft_substr(str, i, 1));
         (*get_char_count())++;
         if (!new_node)
-            return (ft_lstclear(&result_chars, free), pe("malloc failed"), false);
+            return (ft_lstclear(&result_chars, free), pe(ERROR_MALLOC), false);
         ft_lstadd_back(&result_chars, new_node);
 
         i++;
