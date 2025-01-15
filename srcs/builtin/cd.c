@@ -18,13 +18,15 @@ int	ft_cd(t_command *command)
 
 	if (!command->argument)
 	{
-		if (chdir("/") != 0)
+		if (chdir("/Users/") != 0)
 			return (pec(ERROR_PATH));
 		return (1);
 	}
 	path = ft_split(command->argument, ' ');
 	if (!path)
 		pec(ERROR_SPLIT);
+	if(path[1])
+		return (pec("cd : Too much argument"));
 	if (chdir(path[0]) != 0)
 	{
 		free_command_split(path);
