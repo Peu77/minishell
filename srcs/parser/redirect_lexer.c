@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 16:20:20 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/15 14:38:55 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 	while (str[*i] && ft_isspace(str[*i]))
 		(*i)++;
 	filename_len = 0;
-	while (str[*i + filename_len] && !ft_isspace(str[*i + filename_len]))
+	while (str[*i + filename_len] && !ft_isspace(str[*i + filename_len])
+		&& ft_isalnum(str[*i + filename_len]))
 		filename_len++;
 	if (filename_len == 0)
 		return (pe("parse error near `\\n'"), false);
