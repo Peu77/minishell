@@ -15,10 +15,12 @@
 int	ft_cd(t_command *command)
 {
 	char	**path;
+	const char *home ;
 
+	home = get_env_value("HOME", get_shell()->env);
 	if (!command->argument)
 	{
-		if (chdir("/Users/") != 0)
+		if (!home || chdir(home) != 0)
 			return (pec(ERROR_PATH));
 		return (1);
 	}
