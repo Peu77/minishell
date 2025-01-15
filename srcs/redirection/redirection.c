@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 19:11:41 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:17:42 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,11 @@ void	redirection_output(t_redirect *redirect)
 		fd = redirect->fd_right;
 	if (fd == -1)
 	{
-		pev("open failed for output redirection");
-		exit(EXIT_FAILURE);
+		pev(ERROR_OPEN_FILE);
+		return;
 	}
 	if (dup2(fd, from_fd) == -1)
-	{
 		pev("dup2 failed for output redirection");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
 	close(fd);
 }
 
@@ -61,15 +57,11 @@ void	redirection_append(t_redirect *redirect)
 	fd = open(redirect->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		pev("open failed for append redirection");
-		exit(EXIT_FAILURE);
+		pev(ERROR_OPEN_FILE);
+		return;
 	}
 	if (dup2(fd, from_fd) == -1)
-	{
-		pev("dup2 failed for append redirection");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
+		pev("dup2 failed for output redirection");
 	close(fd);
 }
 
@@ -84,14 +76,10 @@ void	redirection_input(t_redirect *redirect)
 	fd = open(redirect->file, O_RDONLY);
 	if (fd == -1)
 	{
-		pev("open failed for input redirection");
-		exit(EXIT_FAILURE);
+		pev(ERROR_OPEN_FILE);
+		return;
 	}
 	if (dup2(fd, from_fd) == -1)
-	{
 		pev("dup2 failed for input redirection");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
 	close(fd);
 }
