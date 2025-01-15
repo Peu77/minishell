@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 19:18:13 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:50:48 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,6 @@ void	print_command(t_command *command)
 	printf("Paths: %s\n", command->path ? command->path : "(NULL)");
 }
 */
-
-int	concatenate_arguments(char **arg, char **result)
-{
-	int		i;
-	size_t	total_length;
-
-	i = 0;
-	total_length = 0;
-	while (arg[++i])
-		total_length += ft_strlen(arg[i]) + 1;
-	*result = malloc(total_length);
-	if (!(*result))
-		return (pe(ERROR_MALLOC));
-	(*result)[0] = '\0';
-	i = 0;
-	while (arg[++i])
-	{
-		ft_strlcat(*result, arg[i], total_length);
-		if (arg[i + 1])
-			ft_strlcat(*result, " ", total_length);
-	}
-	return (1);
-}
 
 t_redirect	*copy_redirect_node(t_redirect *original)
 {
@@ -111,10 +88,7 @@ int	transform_node_to_command(char *value, t_command **command,
 	if (!arg[1])
 		(*command)->argument = NULL;
 	else
-	{
-		if (concatenate_arguments(arg, &((*command)->argument)) != 1)
-			return (free_command_split(arg), pe(ERROR_MALLOC));
-	}
+		(*command)->argument = ft_strdup(value + ft_strlen(arg[0]));
 	get_path(command);
 	if (redirection)
 		put_redirection(redirection, command);
