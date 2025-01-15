@@ -46,6 +46,7 @@ SRC =  srcs/main.c \
 	   srcs/monitor/command_monitor.c \
 	   srcs/monitor/parenthesis_monitor.c \
 	   srcs/env/env_utils.c \
+	   srcs/env/env_utils2.c \
 	   srcs/signal/signal.c \
 	   srcs/minishell.c \
 

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 18:36:45 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:44:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@
 # define ERROR_SET_ARGUMENT "ERROR : COMMAND SHOULD BE ./minishell 'commande'"
 # define ERROR_PATH "ERROR WITH GETTING PATH"
 # define ERROR_FORK "ERROR FORK FAILED"
+# define ERROR_OPEN_FILE "ERROR OPEN FILE"
 
 // real command
 # define ERROR_FOUND_COMMAND "zsh: command not found."
@@ -186,5 +187,7 @@ void		free_env_list(void);
 // parser
 void		print_ast_node(t_ast_node *node, int depth);
 void		print_command_test(t_command *command);
+
+char		*get_env_value(char *key, char **env);
 
 #endif
