@@ -59,21 +59,3 @@ int	*update_exit_status(void)
 	shell->exit_status = status;
 	return (&status);
 }
-
-void	update_path(void)
-{
-	char	*path;
-	t_shell	*shell;
-
-	path = malloc(MAX_PATH);
-	if (!path)
-		return ;
-	if (getcwd(path, MAX_PATH) == NULL)
-	{
-		free(path);
-		return ;
-	}
-	shell = get_shell();
-	shell->path = path;
-	return ;
-}

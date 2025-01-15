@@ -59,7 +59,9 @@ int	get_path(t_command **command)
 
 	(*command)->path = ft_strdup((*command)->command_name);
 	found_path = find_command_in_path((*command)->command_name);
-	if (found_path)
+	if (found_path) {
+		free((*command)->path);
 		(*command)->path = found_path;
+	}
 	return (1);
 }
