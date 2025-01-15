@@ -120,6 +120,8 @@ bool	interpret_command_string(t_ast_node *node)
 	str = node->value;
 	if (!str)
 		return (true);
+	while(str[i] && ft_isspace(str[i]))
+		i++;
 	while (str[i])
 	{
 		if ((str[i] == '\'' && !handle_single_quotes(str, &i, &result_chars))
