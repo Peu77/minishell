@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 15:23:12 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/15 16:58:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 	sub_str = ft_substr(str, start, end - start);
 	if (!sub_str)
 		return (pe("malloc failed"), false);
-	return (add_value_as_node(result_chars, getenv(sub_str), i, end));
+	return (add_value_as_node(result_chars, get_env_value(sub_str, get_shell()->env), i, end));
 }

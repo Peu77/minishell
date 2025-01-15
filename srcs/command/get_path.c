@@ -33,7 +33,7 @@ static char	*find_command_in_path(const char *command)
 	int		i;
 
 	i = -1;
-	env_path = getenv("PATH");
+	env_path = get_env_value("PATH", get_shell()->env);
 	if (!env_path)
 		return (pev(ERROR_FIND_ENV), NULL);
 	paths = ft_split(env_path, ':');

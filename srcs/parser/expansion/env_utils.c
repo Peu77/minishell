@@ -6,11 +6,12 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:40:48 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 15:51:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/15 17:00:24 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
+#include <minishell.h>
 #include <parse.h>
 
 static size_t	get_env_var_len(const char *input, size_t max_len)
@@ -33,8 +34,8 @@ static size_t	get_env_var_len(const char *input, size_t max_len)
 				&& j < MAX_VAR_LEN - 1)
 				var_name[j++] = input[i++];
 			i--;
-			if (getenv(var_name))
-				len += ft_strlen(getenv(var_name));
+			if (get_env_value(var_name, get_shell()->env))
+				len += ft_strlen(get_env_value(var_name, get_shell()->env));
 		}
 		else
 			len++;
@@ -61,10 +62,10 @@ static void	insert_env_vars(const char *input, size_t len, char *result,
 				&& j < MAX_VAR_LEN - 1)
 				var_name[j++] = input[i++];
 			i--;
-			if (getenv(var_name))
+			if (get_env_value(var_name, get_shell()->env))
 			{
-				strcpy(result + *pos, getenv(var_name));
-				*pos += strlen(getenv(var_name));
+				strcpy(result + *pos, get_env_value(var_name, get_shell()->env));
+				*pos += strlen(get_env_value(var_name, get_shell()->env));
 			}
 		}
 		else
