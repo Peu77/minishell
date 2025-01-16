@@ -15,8 +15,6 @@
 # include "libft.h"
 # include <stdbool.h>
 
-# define MAX_VAR_LEN 256
-
 typedef enum e_token_type
 {
 	TOKEN_NONE = -1,

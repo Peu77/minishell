@@ -14,11 +14,9 @@
 
 int	ft_env(t_command *command)
 {
-	char	**env;
 
-	env = initialise_env(NULL);
 	if (command->argument)
 		return (print_error("env: No such file or directory \n"));
-	print_env_list(env);
+	print_env_list();
 	return (0);
 }

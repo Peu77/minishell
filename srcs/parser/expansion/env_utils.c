@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:40:48 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/15 17:00:24 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 20:47:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static size_t	get_env_var_len(const char *input, size_t max_len)
 				&& j < MAX_VAR_LEN - 1)
 				var_name[j++] = input[i++];
 			i--;
-			if (get_env_value(var_name, get_shell()->env))
-				len += ft_strlen(get_env_value(var_name, get_shell()->env));
+			if (get_env_value(var_name))
+				len += ft_strlen(get_env_value(var_name));
 		}
 		else
 			len++;
@@ -62,10 +62,10 @@ static void	insert_env_vars(const char *input, size_t len, char *result,
 				&& j < MAX_VAR_LEN - 1)
 				var_name[j++] = input[i++];
 			i--;
-			if (get_env_value(var_name, get_shell()->env))
+			if (get_env_value(var_name))
 			{
-				strcpy(result + *pos, get_env_value(var_name, get_shell()->env));
-				*pos += strlen(get_env_value(var_name, get_shell()->env));
+				strcpy(result + *pos, get_env_value(var_name));
+				*pos += strlen(get_env_value(var_name));
 			}
 		}
 		else
