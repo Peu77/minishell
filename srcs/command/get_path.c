@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/16 20:43:23 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_path.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:44 by ftapponn          #+#    #+#             */
@@ -33,7 +45,7 @@ static char	*find_command_in_path(const char *command)
 	int		i;
 
 	i = -1;
-	env_path = get_env_value("PATH", get_shell()->env);
+	env_path = get_env_value("PATH");
 	if (!env_path)
 		return (pev(ERROR_FIND_ENV), NULL);
 	paths = ft_split(env_path, ':');
@@ -43,13 +55,13 @@ static char	*find_command_in_path(const char *command)
 	{
 		full_path = construct_full_path(paths[i], command);
 		if (!full_path)
-			return (free_command_split(paths), NULL);
+			return (free_string_array(paths), NULL);
 		if (access(full_path, F_OK) == 0)
-			return (free_command_split(paths), full_path);
+			return (free_string_array(paths), full_path);
 		free(full_path);
 		full_path = NULL;
 	}
-	free_command_split(paths);
+	free_string_array(paths);
 	return (NULL);
 }
 

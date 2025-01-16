@@ -73,7 +73,7 @@ int	transform_node_to_command(char *value, t_command **command,
 	if (!arg)
 		return (pe(ERROR_SPLIT));
 	if (!arg[0])
-		return (free_command_split(arg), false);
+		return (free_string_array(arg), false);
 	(*command)->command_name = ft_strdup(arg[0]);
 	if (!arg[1] || !ft_strlen(arg[1]))
 		(*command)->argument = NULL;
@@ -84,6 +84,6 @@ int	transform_node_to_command(char *value, t_command **command,
 	get_path(command);
 	if (redirection)
 		put_redirection(redirection, command);
-	free_command_split(arg);
+	free_string_array(arg);
 	return (1);
 }
