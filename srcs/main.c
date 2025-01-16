@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 21:41:32 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 22:04:31 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int	main(int argc, char **argv, char **env)
 	else
 		minishell_non_interactive();
 	ft_lstclear(&get_shell()->env, free_env_entry);
+	rl_clear_history();
 	return (get_shell()->shell_exit_code);
 }
