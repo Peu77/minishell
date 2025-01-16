@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:42:14 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 21:39:58 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 22:50:50 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 #include "../../includes/minishell.h"
 
-bool add_env_pairstr(const char* pair_str) {
-	char key[MAX_VAR_LEN];
-	char value[MAX_VAR_LEN];
+void split_env_pairstr(const char* pair_str, char* key, char* value) {
 	int i;
 	int j;
 
@@ -35,6 +33,13 @@ bool add_env_pairstr(const char* pair_str) {
 		i++;
 	}
 	value[j] = '\0';
+}
+
+bool add_env_pairstr(const char* pair_str) {
+	char key[MAX_VAR_LEN];
+	char value[MAX_VAR_LEN];
+
+	split_env_pairstr(pair_str, key, value);
 	return add_env_entry(key, value);
 }
 
@@ -49,12 +54,12 @@ char	*get_env_value(const char *key)
 }
 
 t_env_entry* get_env_entry(const char* key) {
-	const size_t key_len = ft_strlen(key);
 	t_list* current;
 
 	current = get_shell()->env;
 	while (current) {
-		if (ft_strncmp(((t_env_entry*)current->content)->key, key, key_len) == 0) {
+		if (ft_strlen(((t_env_entry*)current->content)->key) == ft_strlen(key) &&
+			ft_strncmp(((t_env_entry*)current->content)->key, key, ft_strlen(key)) == 0) {
 			return current->content;
 		}
 		current = current->next;
