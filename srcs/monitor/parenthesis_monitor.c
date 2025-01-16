@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:33:08 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:51:37 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 20:35:18 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	redirect_parentheses_monitor(t_list *redirects)
 		else if (redirect->type == TOKEN_REDIRECT_INPUT)
 			redirection_input(redirect);
 		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-			redirection_heredoc(redirect->file);
+			redirection_heredoc(redirect->file, NULL);
 		redirects = redirects->next;
 	}
 }
