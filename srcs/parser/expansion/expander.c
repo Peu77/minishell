@@ -97,6 +97,8 @@ static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 		(*i)++;
 		return (handle_dollar_sign(str, i, result_chars));
 	}
+	if(str[*i] == '~' && !handle_tilde_expansion(i, result_chars))
+		return (false);
 	str_cpy = ft_substr(str, *i, 1);
 	if (!str_cpy)
 		return (pe(ERROR_MALLOC), false);

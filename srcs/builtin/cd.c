@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 20:45:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 23:09:53 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,9 @@
 int	ft_cd(t_command *command)
 {
 	char		**path;
-	const char	*home;
 	char		cwd[PATH_MAX];
 
-	home = get_env_value("HOME");
 	getcwd(cwd, sizeof(cwd));
-	if (!command->argument || ft_strncmp(command->argument, "~", 2) == 0)
-	{
-		if (!home || chdir(home) != 0)
-			return (pec(ERROR_PATH));
-		return (set_env_value("OLDPWD", cwd), 0);
-	}
 	if(ft_strncmp(command->argument, "-", 2) == 0)
 	{
 		if (chdir(get_env_value("OLDPWD")) != 0)
