@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 18:44:57 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 21:32:21 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	minishell_interactive(void)
 	user_prompt = NULL;
 	command = NULL;
 	main_signals();
-	while (1)
+	while (!get_shell()->should_exit)
 	{
 		if (!get_user_prompt(&user_prompt))
 			break ;

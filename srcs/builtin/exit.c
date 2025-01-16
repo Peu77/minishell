@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/16 21:25:16 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:24 by ftapponn          #+#    #+#             */
@@ -21,7 +33,7 @@ int	validate_exit_arguments(char *argument, char ***cmd)
 		return (pec(ERROR_SPLIT));
 	if ((*cmd)[1])
 	{
-		free_command_split(*cmd);
+		free_string_array(*cmd);
 		return (pec(ERROR_TOO_ARGUMENT));
 	}
 	i = -1;
@@ -29,7 +41,7 @@ int	validate_exit_arguments(char *argument, char ***cmd)
 	{
 		if (!ft_isdigit((*cmd)[0][i]))
 		{
-			free_command_split(*cmd);
+			free_string_array(*cmd);
 			return (pec(ERROR_DIGIT_ARGUMENT));
 		}
 	}
@@ -39,13 +51,17 @@ int	validate_exit_arguments(char *argument, char ***cmd)
 int	ft_exit(t_command *command)
 {
 	char	**cmd;
-	long	exit_code;
 
 	if (command->argument == NULL)
-		exit(EXIT_SUCCESS);
+	{
+		get_shell()->shell_exit_code = EXIT_SUCCESS;
+		get_shell()->should_exit = true;
+		return (0);
+	}
 	if (validate_exit_arguments(command->argument, &cmd) != 0)
 		return (-1);
-	exit_code = ft_atol(cmd[0]) % 255;
-	free_command_split(cmd);
-	exit((int)exit_code);
+	get_shell()->shell_exit_code = ft_atol(cmd[0]) % 255;
+	free_string_array(cmd);
+	get_shell()->should_exit = true;
+	return (0);
 }
