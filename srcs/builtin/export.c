@@ -6,19 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 20:40:54 by eebert           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 19:00:52 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:37:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +14,27 @@
 
 int	ft_export(t_command *command)
 {
-	char	*arg;
-	char	*pair;
+	char	**args;
 	char	*equal_sign;
+	char	key[MAX_VAR_LEN];
+	char	value[MAX_VAR_LEN];
+	int i;
 
-	arg = command->argument;
-	if (!command || !command->argument)
+	if (!command->argument)
 		return (ft_env(command));
-	pair = ft_strtok(arg, ' ');
-	while (pair)
+	args = ft_split(command->argument, ' ');
+	i = 0;
+
+	while (args[i])
 	{
-		equal_sign = ft_strchr(pair, '=');
-		if (!equal_sign || equal_sign == pair || !is_valid_identifier(pair))
-		{
-			if (!is_valid_identifier(pair))
-				return (print_error(ERROR_EXPORT));
-			return (0);
-		}
-		if (add_env_pairstr(pair) == 1)
-			return (1);
-		pair = ft_strtok(NULL, ' ');
+		equal_sign = ft_strchr(args[i], '=');
+		if (!equal_sign || equal_sign == args[i] || !is_valid_identifier(args[i]))
+			return (print_error(ERROR_EXPORT));
+		split_env_pairstr(args[i], key, value);
+		if (!set_env_value(key, value))
+			return (free_string_array(args), 1);
+		i++;
 	}
+	free_string_array(args);
 	return (0);
 }
