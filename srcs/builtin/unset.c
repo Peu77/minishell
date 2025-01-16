@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 20:07:52 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 22:45:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	ft_unset(t_command *command)
 	char	**arg;
 	int		result;
 
+	if(!command->argument)
+		return (pev("unset: not enough arguments"), 1);
 	arg = ft_split(command->argument, ' ');
 	result = 0;
 	while (*arg)
