@@ -6,19 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 20:22:08 by eebert           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:55:04 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:47:54 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +21,8 @@ void	free_string_array(char **str_list)
 		return ;
 	while (str_list[++i])
 		free(str_list[i]);
-	free(str_list);
+	if(*str_list)
+		free(str_list);
 }
 
 void free_string_array_at_index(char **str_list, int index)
