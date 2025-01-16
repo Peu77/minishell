@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 21:47:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 22:37:03 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void		free_command(t_command **command);
 void		free_string_array(char **str_list);
 void		free_env_list(void);
 void free_string_array_at_index(char **str_list, int index);
+void split_env_pairstr(const char* pair_str, char* key, char* value);
 
 // parser
 void		print_ast_node(t_ast_node *node, int depth);
