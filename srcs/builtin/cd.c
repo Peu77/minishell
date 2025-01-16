@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/16 20:45:09 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:52 by ftapponn          #+#    #+#             */
@@ -10,19 +22,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
+
 #include "../../includes/minishell.h"
 
 int	ft_cd(t_command *command)
 {
 	char		**path;
 	const char	*home;
+	char		cwd[PATH_MAX];
 
-	home = get_env_value("HOME", get_shell()->env);
+	home = get_env_value("HOME");
+	getcwd(cwd, sizeof(cwd));
 	if (!command->argument || ft_strncmp(command->argument, "~", 2) == 0)
 	{
 		if (!home || chdir(home) != 0)
 			return (pec(ERROR_PATH));
-		return (1);
+		return (set_env_value("OLDPWD", cwd), 0);
+	}
+	if(ft_strncmp(command->argument, "-", 2) == 0)
+	{
+		if (chdir(get_env_value("OLDPWD")) != 0)
+			return (pec(ERROR_PATH));
+		return (set_env_value("OLDPWD", cwd), 0);
 	}
 	path = ft_split(command->argument, ' ');
 	if (!path)
@@ -31,9 +53,9 @@ int	ft_cd(t_command *command)
 		return (pec("cd : Too much argument"));
 	if (chdir(path[0]) != 0)
 	{
-		free_command_split(path);
+		free_string_array(path);
 		return (pec(ERROR_PATH));
 	}
-	free_command_split(path);
-	return (0);
+	free_string_array(path);
+	return (set_env_value("OLDPWD", cwd), 0);
 }
