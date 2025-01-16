@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/15 16:17:42 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 11:21:35 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	redirection_output(t_redirect *redirect)
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
-		return;
+		return ;
 	}
 	if (dup2(fd, from_fd) == -1)
 		pev("dup2 failed for output redirection");
@@ -58,7 +58,7 @@ void	redirection_append(t_redirect *redirect)
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
-		return;
+		return ;
 	}
 	if (dup2(fd, from_fd) == -1)
 		pev("dup2 failed for output redirection");
@@ -77,7 +77,7 @@ void	redirection_input(t_redirect *redirect)
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
-		return;
+		return ;
 	}
 	if (dup2(fd, from_fd) == -1)
 		pev("dup2 failed for input redirection");

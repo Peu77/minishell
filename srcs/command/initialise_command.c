@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/15 22:58:12 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 11:27:23 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,15 @@ int	transform_node_to_command(char *value, t_command **command,
 	arg = ft_split(value, ' ');
 	if (!arg)
 		return (pe(ERROR_SPLIT));
-	if(!arg[0])
+	if (!arg[0])
 		return (free_command_split(arg), false);
 	(*command)->command_name = ft_strdup(arg[0]);
 	if (!arg[1] || !ft_strlen(arg[1]))
 		(*command)->argument = NULL;
-	else {
+	else
+	{
 		(*command)->argument = ft_strdup(value + ft_strlen(arg[0]) + 1);
 	}
-
 	get_path(command);
 	if (redirection)
 		put_redirection(redirection, command);

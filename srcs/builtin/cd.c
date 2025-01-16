@@ -14,11 +14,10 @@
 
 int	ft_cd(t_command *command)
 {
-	char	**path;
-	const char *home ;
+	char		**path;
+	const char	*home;
 
 	home = get_env_value("HOME", get_shell()->env);
-
 	if (!command->argument || ft_strncmp(command->argument, "~", 2) == 0)
 	{
 		if (!home || chdir(home) != 0)
@@ -28,7 +27,7 @@ int	ft_cd(t_command *command)
 	path = ft_split(command->argument, ' ');
 	if (!path)
 		pec(ERROR_SPLIT);
-	if(path[1])
+	if (path[1])
 		return (pec("cd : Too much argument"));
 	if (chdir(path[0]) != 0)
 	{

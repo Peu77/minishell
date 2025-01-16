@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:44 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 18:24:17 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:21:01 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	get_path(t_command **command)
 
 	(*command)->path = ft_strdup((*command)->command_name);
 	found_path = find_command_in_path((*command)->command_name);
-	if (found_path) {
+	if (found_path)
+	{
 		free((*command)->path);
 		(*command)->path = found_path;
 	}

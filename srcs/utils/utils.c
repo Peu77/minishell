@@ -6,12 +6,11 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:00 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/14 18:45:53 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:21:59 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <unistd.h>
 
 char	*ft_strndup(const char *src, size_t len)
 {
