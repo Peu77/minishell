@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:25 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/16 20:24:08 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 20:38:12 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter,
 		if (buffer == NULL)
 		{
 			close(temp_fd);
-			if(command)
+			if (command)
 			{
 				close(command->saved_stdin);
 				close(command->saved_stdout);
