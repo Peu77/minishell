@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 13:55:53 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:14:48 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,49 +51,6 @@ bool	initialise_env(char **env)
 		i++;
 	}
 	return (true);
-}
-
-static char	*initialize_stock(char *str, char **stock, int *i)
-{
-	if (str != NULL)
-	{
-		if (*stock)
-			free(*stock);
-		*stock = ft_strdup(str);
-		*i = 0;
-		if (!*stock)
-			return (NULL);
-	}
-	return (*stock);
-}
-
-char	*ft_strtok(char *str, const char delim)
-{
-	static char	*stock = NULL;
-	static int	i = 0;
-	char		*ptr;
-	int			flg;
-
-	if (initialize_stock(str, &stock, &i) == NULL)
-		return (NULL);
-	flg = 0;
-	ptr = NULL;
-	while (stock[i] != '\0')
-	{
-		if (flg == 0 && stock[i] != delim)
-		{
-			flg = 1;
-			ptr = &stock[i];
-		}
-		else if (flg == 1 && stock[i] == delim)
-		{
-			stock[i] = '\0';
-			i++;
-			break ;
-		}
-		i++;
-	}
-	return (ptr);
 }
 
 int	is_valid_identifier(const char *str)
