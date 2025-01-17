@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 22:04:31 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 13:50:14 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	main(int argc, char **argv, char **env)
 {
 	if (env && !initialise_env(env))
-		return (pec(ERROR_MALLOC), ft_lstclear(&get_shell()->env, free_env_entry),
-			EXIT_FAILURE);
+		return (pec(ERROR_MALLOC), ft_lstclear(&get_shell()->env,
+				free_env_entry), EXIT_FAILURE);
 	if (argc >= 2)
 	{
 		if (argc == 2)

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 23:09:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 13:54:21 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
-
 #include "../../includes/minishell.h"
+#include <limits.h>
 
 int	ft_cd(t_command *command)
 {
-	char		**path;
-	char		cwd[PATH_MAX];
+	char	**path;
+	char	cwd[PATH_MAX];
 
 	getcwd(cwd, sizeof(cwd));
-	if(ft_strncmp(command->argument, "-", 2) == 0)
+	if (ft_strncmp(command->argument, "-", 2) == 0)
 	{
 		if (chdir(get_env_value("OLDPWD")) != 0)
 			return (pec(ERROR_PATH));

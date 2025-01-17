@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:56:26 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/15 22:58:58 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 13:50:51 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	execution_monitor(t_command *command)
 	i = -1;
 	result = 0;
 	if (command->redirect)
-		redirection_monitor(command);
+		redirection_monitor(command, NULL);
 	while (++i < NUM_BUILTINS)
 	{
 		if (ft_strncmp(command->command_name, list_builtin[i],

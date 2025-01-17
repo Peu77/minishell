@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 22:47:54 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 13:49:36 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	free_string_array(char **str_list)
 		return ;
 	while (str_list[++i])
 		free(str_list[i]);
-	if(*str_list)
+	if (*str_list)
 		free(str_list);
 }
 
-void free_string_array_at_index(char **str_list, int index)
+void	free_string_array_at_index(char **str_list, int index)
 {
 	while (index >= 0)
 	{

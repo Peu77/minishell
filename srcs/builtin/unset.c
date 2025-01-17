@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 22:45:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 13:54:54 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,23 @@
 int	remove_variable_from_env(const char *key)
 {
 	const size_t	key_len = ft_strlen(key);
-	t_list		*current;
-	t_list		*previous;
-	t_env_entry	*entry;
+	t_list			*current;
+	t_list			*previous;
+	t_env_entry		*entry;
 
 	previous = NULL;
 	current = get_shell()->env;
-	while (current) {
+	while (current)
+	{
 		entry = current->content;
-		if (ft_strncmp(entry->key, key, key_len) == 0) {
-			if (current == get_shell()->env) {
+		if (ft_strncmp(entry->key, key, key_len) == 0)
+		{
+			if (current == get_shell()->env)
+			{
 				get_shell()->env = current->next;
-			} else {
+			}
+			else
+			{
 				previous->next = current->next;
 			}
 			free_env_entry(entry);
@@ -56,7 +61,7 @@ int	ft_unset(t_command *command)
 	char	**arg;
 	int		result;
 
-	if(!command->argument)
+	if (!command->argument)
 		return (pev("unset: not enough arguments"), 1);
 	arg = ft_split(command->argument, ' ');
 	result = 0;

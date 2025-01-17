@@ -6,13 +6,14 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:25 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/17 13:39:01 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:49:02 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	cleanup_and_exit(int temp_fd, t_command *command, t_parenthesis_fd *parenthesis_fd)
+static void	cleanup_and_exit(int temp_fd, t_command *command,
+		t_parenthesis_fd *parenthesis_fd)
 {
 	close(temp_fd);
 	if (command)
@@ -50,7 +51,8 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter,
 	}
 }
 
-static void	create_heredoc_file(const char *delimiter, t_command *command, t_parenthesis_fd *parenthesis_fd)
+static void	create_heredoc_file(const char *delimiter, t_command *command,
+		t_parenthesis_fd *parenthesis_fd)
 {
 	int	temp_fd;
 
@@ -78,7 +80,8 @@ static void	redirect_input_from_heredoc(void)
 	unlink("heredoc_temp.txt");
 }
 
-void	redirection_heredoc(const char *delimiter, t_command *command, t_parenthesis_fd *parenthesis_fd)
+void	redirection_heredoc(const char *delimiter, t_command *command,
+		t_parenthesis_fd *parenthesis_fd)
 {
 	create_heredoc_file(delimiter, command, parenthesis_fd);
 	redirect_input_from_heredoc();
