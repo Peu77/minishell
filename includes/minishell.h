@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 20:14:48 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:28:38 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,12 @@ typedef struct s_shell
 	int		exit_status;
 }			t_shell;
 
+typedef struct s_parenthesis_fd
+{
+	int fd_backup_stdout;
+	int fd_backup_stdin;
+}t_parenthesis_fd;
+
 // main
 void		print_env_list(char **env);
 
@@ -161,11 +167,11 @@ int			prepare_execution_command(t_command *command);
 int			execution_command(char **arguments, char *path);
 
 // redirection
-void		redirection_monitor(t_command *command);
+void		redirection_monitor(t_command *command, t_parenthesis_fd *parenthesis_fd);
 void		redirection_output(t_redirect *redirect);
 void		redirection_input(t_redirect *redirect);
 void		redirection_append(t_redirect *redirect);
-void		redirection_heredoc(const char *delimiter, t_command *command);
+void		redirection_heredoc(const char *delimiter, t_command *command, t_parenthesis_fd *parenthesis_fd);
 
 // signal
 void		sighandler(int sig);

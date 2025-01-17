@@ -6,21 +6,21 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:33:08 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/16 20:35:18 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:35:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	restore_parentheses_fd(int fd_backup_stdout, int fd_backup_stdin)
+void	restore_parentheses_fd(t_parenthesis_fd *parenthesis_fd)
 {
-	dup2(fd_backup_stdout, STDOUT_FILENO);
-	dup2(fd_backup_stdin, STDIN_FILENO);
-	close(fd_backup_stdout);
-	close(fd_backup_stdin);
+	dup2(parenthesis_fd->fd_backup_stdout, STDOUT_FILENO);
+	dup2(parenthesis_fd->fd_backup_stdin, STDIN_FILENO);
+	close(parenthesis_fd->fd_backup_stdout);
+	close(parenthesis_fd->fd_backup_stdin);
 }
 
-void	redirect_parentheses_monitor(t_list *redirects)
+void	redirect_parentheses_monitor(t_list *redirects, t_parenthesis_fd *parenthesis_fd)
 {
 	t_redirect	*redirect;
 
@@ -34,27 +34,26 @@ void	redirect_parentheses_monitor(t_list *redirects)
 		else if (redirect->type == TOKEN_REDIRECT_INPUT)
 			redirection_input(redirect);
 		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-			redirection_heredoc(redirect->file, NULL);
+			redirection_heredoc(redirect->file, NULL, parenthesis_fd);
 		redirects = redirects->next;
 	}
 }
 
 int	parentheses_monitor(t_ast_node *node, t_command *command)
 {
-	int	fd_backup_stdout;
-	int	fd_backup_stdin;
+	t_parenthesis_fd parenthesis_fd;
 
-	fd_backup_stdout = dup(STDOUT_FILENO);
-	fd_backup_stdin = dup(STDIN_FILENO);
+	parenthesis_fd.fd_backup_stdout = dup(STDOUT_FILENO);
+	parenthesis_fd.fd_backup_stdin = dup(STDIN_FILENO);
 	if (!node || node->type != AST_PARENTHESES)
 		return (0);
 	if (node->redirects)
-		redirect_parentheses_monitor(node->redirects);
+		redirect_parentheses_monitor(node->redirects, &parenthesis_fd);
 	if (node->left)
 	{
 		if (tree_monitor(node->left, command) != 0)
 			return (1);
 	}
-	restore_parentheses_fd(fd_backup_stdout, fd_backup_stdin);
+	restore_parentheses_fd(&parenthesis_fd);
 	return (0);
 }
