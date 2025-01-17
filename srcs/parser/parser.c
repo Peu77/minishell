@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 20:13:31 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 20:18:35 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_ast_node	*parse_parentheses(t_list **tokens)
 {
 	t_ast_node	*parentheses_node;
 
-	while (is_empty_string_token((*tokens)->content))
+	while (*tokens && is_empty_string_token((*tokens)->content))
 		*tokens = (*tokens)->next;
 	if (!*tokens
 		|| ((t_token *)(*tokens)->content)->type != TOKEN_PARENTHESES_OPEN)
