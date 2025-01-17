@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:38:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 20:13:31 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 20:10:44 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ bool	parse_redirects_for_parenteses(t_list **tokens,
 			return (free_redirect(redirect), NULL);
 		ft_lstadd_back(&parentheses_node->redirects, new_node);
 		*tokens = (*tokens)->next;
+	}
+	return (true);
+}
+
+bool	is_empty_string_token(t_token *token)
+{
+	int	i;
+
+	if (token->type != TOKEN_STRING)
+		return (false);
+	if (token->value == NULL || ft_strlen(token->value) == 0)
+		return (true);
+	i = 0;
+	while (token->value[i])
+	{
+		if (!ft_isspace(token->value[i]))
+			return (false);
+		i++;
 	}
 	return (true);
 }

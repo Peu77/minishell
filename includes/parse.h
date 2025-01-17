@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 23:08:18 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 20:11:21 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,6 @@ bool					handle_tilde_expansion(int *i, t_list **result_chars);
 
 bool					add_char_to_result(const char *str, int *i,
 							t_list **result_chars);
+
+bool					is_empty_string_token(t_token *token);
 #endif

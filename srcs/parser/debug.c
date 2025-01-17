@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:18:25 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/07 19:48:58 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 19:56:36 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	print_ast_type(const t_ast_type type)
 
 void	print_ast_node(t_ast_node *node, int depth)
 {
-	if (!node)
+	if (node == NULL)
 		return ;
+	print_ast_type(node->type);
+	printf("\n");
 	print_ast_node(node->left, depth + 1);
 	print_ast_node(node->right, depth + 1);
 }
