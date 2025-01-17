@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/16 21:40:51 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
@@ -10,30 +22,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
+#include <limits.h>
 
-void	print_env_list(char **env)
+void	print_env_list(void)
 {
-	while (*env)
+	t_list	*current;
+	t_env_entry	*entry;
+
+	current = get_shell()->env;
+	while(current)
 	{
-		printf("%s\n", *env);
-		env++;
+		entry = current->content;
+		printf("%s=%s\n", entry->key, entry->value);
+		current = current->next;
 	}
 }
 
-char	**initialise_env(char **env)
+bool initialise_env(char **env)
 {
-	static char	**environ = NULL;
-	t_shell		*shell;
+	int i;
 
-	if (env)
-	{
-		environ = env;
-		shell = get_shell();
-		shell->env = environ;
+	i = 0;
+	while (env[i]) {
+		if(!add_env_pairstr(env[i]))
+			return false;
+		i++;
 	}
-	return (environ);
+	return true;
 }
+
 
 static char	*initialize_stock(char *str, char **stock, int *i)
 {

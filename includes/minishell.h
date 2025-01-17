@@ -3,34 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 13:28:38 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 12:24:56 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 15:06:03 by eebert            #+#    #+#             */
-/*   Updated: 2024/12/07 15:25:48 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 13:44:25 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +24,8 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+
+# define MAX_VAR_LEN 4096 * 32
 
 # define RED "\033[1;31m"
 # define RESET "\033[0m"
@@ -96,11 +74,19 @@ typedef struct s_command_test
 	int		saved_stdin;
 }			t_command;
 
+typedef struct s_env_entry
+{
+	char	*key;
+	char	*value;
+}			t_env_entry;
+
 typedef struct s_shell
 {
 	char	*path;
-	char	**env;
+	t_list*	env;
 	int		exit_status;
+	bool	should_exit;
+	int		shell_exit_code;
 }			t_shell;
 
 typedef struct s_parenthesis_fd
@@ -110,7 +96,7 @@ typedef struct s_parenthesis_fd
 }t_parenthesis_fd;
 
 // main
-void		print_env_list(char **env);
+void		print_env_list();
 
 // minishell
 void		minishell_non_interactive_argument(char *line);
@@ -144,9 +130,15 @@ t_shell		*get_shell(void);
 
 // env utils
 char		*ft_strtok(char *str, const char delim);
-void		print_env_list(char **env);
+void		print_env_list(void);
 int			is_valid_identifier(const char *str);
-char		**initialise_env(char **env);
+bool initialise_env(char **env);
+bool set_env_value(const char *key,const char *value);
+bool add_env_entry(const char* key, const char* value);
+void free_env_entry(void* content);
+char** copy_env_to_string_array();
+t_env_entry* get_env_entry(const char* key);
+bool add_env_pairstr(const char* pair_str);
 
 // prompt
 int			get_user_prompt(char **result);
@@ -187,13 +179,15 @@ void		update_path(void);
 
 // clean
 void		free_command(t_command **command);
-void		free_command_split(char **command_split);
+void		free_string_array(char **str_list);
 void		free_env_list(void);
+void free_string_array_at_index(char **str_list, int index);
+void split_env_pairstr(const char* pair_str, char* key, char* value);
 
 // parser
 void		print_ast_node(t_ast_node *node, int depth);
 void		print_command_test(t_command *command);
 
-char		*get_env_value(char *key, char **env);
+char		*get_env_value(const char *key);
 
 #endif

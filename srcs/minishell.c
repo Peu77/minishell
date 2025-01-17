@@ -6,19 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 18:44:57 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:07:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:51:23 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 21:58:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +70,7 @@ void	minishell_interactive(void)
 	user_prompt = NULL;
 	command = NULL;
 	main_signals();
-	while (1)
+	while (!get_shell()->should_exit)
 	{
 		if (!get_user_prompt(&user_prompt))
 			break ;

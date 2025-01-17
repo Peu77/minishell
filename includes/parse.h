@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 20:33:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 23:08:18 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define PARSE_H
 # include "libft.h"
 # include <stdbool.h>
-
-# define MAX_VAR_LEN 256
 
 typedef enum e_token_type
 {
@@ -138,4 +136,6 @@ bool					parse_redirects_for_parenteses(t_list **tokens,
 							t_ast_node *parentheses_node);
 
 t_ast_node				*parse_command(t_list **tokens);
+
+bool handle_tilde_expansion(int* i, t_list** result_chars);
 #endif

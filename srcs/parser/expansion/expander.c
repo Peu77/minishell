@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 18:09:03 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/16 21:16:03 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
 	(*i)++;
 	while (str[*i] && str[*i] != '\"')
 	{
-		if (str[*i] == '$' && ft_isalnum(str[*i + 1]))
+		if (str[*i] == '$' && (ft_isalnum(str[*i + 1]) || str[*i + 1] == '?'))
 		{
 			(*i)++;
 			if (!handle_dollar_sign(str, i, result_chars))
@@ -92,11 +92,13 @@ static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 		*i += wildcard_len;
 		return (true);
 	}
-	if (str[*i] == '$' && ft_isalnum(str[*i + 1]))
+	if (str[*i] == '$' && (ft_isalnum(str[*i + 1]) || str[*i + 1] == '?'))
 	{
 		(*i)++;
 		return (handle_dollar_sign(str, i, result_chars));
 	}
+	if(str[*i] == '~' && !handle_tilde_expansion(i, result_chars))
+		return (false);
 	str_cpy = ft_substr(str, *i, 1);
 	if (!str_cpy)
 		return (pe(ERROR_MALLOC), false);

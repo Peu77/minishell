@@ -66,5 +66,5 @@ bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 	sub_str = ft_substr(str, start, end - start);
 	if (!sub_str)
 		return (pe("malloc failed"), false);
-	return (add_value_as_node(result_chars, get_env_value(sub_str, get_shell()->env), i, end));
+	return (add_value_as_node(result_chars, get_env_value(sub_str), i, end));
 }

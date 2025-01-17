@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFT_DIR = libft
 LIBREADLINE = -lreadline
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -47,6 +47,7 @@ SRC =  srcs/main.c \
 	   srcs/monitor/parenthesis_monitor.c \
 	   srcs/env/env_utils.c \
 	   srcs/env/env_utils2.c \
+	   srcs/env/env_utils3.c \
 	   srcs/signal/signal.c \
 	   srcs/minishell.c \
 

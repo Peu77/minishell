@@ -3,89 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:11:31 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 19:00:52 by ftapponn         ###   ########.fr       */
+/*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/16 22:37:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-int	variable_exists(const char *key_value_pair)
-{
-	char	*equal_sign;
-	char	**environ;
-	size_t	name_len;
-	size_t	i;
-
-	environ = initialise_env(NULL);
-	equal_sign = ft_strchr(key_value_pair, '=');
-	if (!equal_sign)
-		return (0);
-	name_len = equal_sign - key_value_pair;
-	i = 0;
-	while (environ && environ[i])
-	{
-		if (ft_strncmp(environ[i], key_value_pair, name_len) == 0
-			&& environ[i][name_len] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	add_to_environ(const char *key_value_pair)
-{
-	char	**new_environ;
-	size_t	env_count;
-	size_t	i;
-
-	environ = initialise_env(NULL);
-	if (variable_exists(key_value_pair))
-		return (0);
-	env_count = 0;
-	while (environ && environ[env_count])
-		env_count++;
-	new_environ = malloc(sizeof(char *) * (env_count + 2));
-	if (!new_environ)
-		return (pec(ERROR_MALLOC));
-	i = -1;
-	while (++i < env_count)
-		new_environ[i] = environ[i];
-	new_environ[env_count] = ft_strdup(key_value_pair);
-	if (!new_environ[env_count])
-	{
-		free(new_environ);
-		return (pec(ERROR_MALLOC));
-	}
-	new_environ[env_count + 1] = NULL;
-	initialise_env(new_environ);
-	return (0);
-}
+#include <minishell.h>
 
 int	ft_export(t_command *command)
 {
-	char	*arg;
-	char	*pair;
+	char	**args;
 	char	*equal_sign;
+	char	key[MAX_VAR_LEN];
+	char	value[MAX_VAR_LEN];
+	int i;
 
-	arg = command->argument;
-	if (!command || !command->argument)
+	if (!command->argument)
 		return (ft_env(command));
-	pair = ft_strtok(arg, ' ');
-	while (pair)
+	args = ft_split(command->argument, ' ');
+	i = 0;
+
+	while (args[i])
 	{
-		equal_sign = ft_strchr(pair, '=');
-		if (!equal_sign || equal_sign == pair || !is_valid_identifier(pair))
-		{
-			if (!is_valid_identifier(pair))
-				return (print_error(ERROR_EXPORT));
-			return (0);
-		}
-		if (add_to_environ(pair) == 1)
-			return (1);
-		pair = ft_strtok(NULL, ' ');
+		equal_sign = ft_strchr(args[i], '=');
+		if (!equal_sign || equal_sign == args[i] || !is_valid_identifier(args[i]))
+			return (print_error(ERROR_EXPORT));
+		split_env_pairstr(args[i], key, value);
+		if (!set_env_value(key, value))
+			return (free_string_array(args), 1);
+		i++;
 	}
+	free_string_array(args);
 	return (0);
 }
