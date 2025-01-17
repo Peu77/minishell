@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 09:44:28 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:27:43 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 
 #include "../../includes/minishell.h"
 
+static void	execute_child_process(char *path, char **arguments, char **env_cpy)
+{
+	main_signals();
+	if (execve(path, arguments, env_cpy) == -1)
+		exit(pec(ERROR_EXECVE));
+}
+
 int	execution_command(char **arguments, char *path)
 {
 	pid_t	pid;
@@ -39,11 +46,7 @@ int	execution_command(char **arguments, char *path)
 		return (pec(ERROR_FORK));
 	reset_signals();
 	if (pid == 0)
-	{
-		main_signals();
-		if (execve(path, arguments, env_cpy) == -1)
-			exit(pec(ERROR_EXECVE));
-	}
+		execute_child_process(path, arguments, env_cpy);
 	else
 	{
 		waitpid(pid, &status, 0);
