@@ -137,5 +137,5 @@ bool					parse_redirects_for_parenteses(t_list **tokens,
 
 t_ast_node				*parse_command(t_list **tokens);
 
-bool handle_tilde_expansion(int* i, t_list** result_chars);
+bool					handle_tilde_expansion(int *i, t_list **result_chars);
 #endif

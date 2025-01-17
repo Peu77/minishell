@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 16:18:46 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
@@ -16,16 +28,16 @@
 # include "libft.h"
 # include "parse.h"
 # include <errno.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
 
-# define MAX_VAR_LEN 4096 * 32
+# define MAX_VAR_LEN 131072
 
 # define RED "\033[1;31m"
 # define RESET "\033[0m"
@@ -83,7 +95,7 @@ typedef struct s_env_entry
 typedef struct s_shell
 {
 	char	*path;
-	t_list*	env;
+	t_list	*env;
 	int		exit_status;
 	bool	should_exit;
 	int		shell_exit_code;
@@ -91,12 +103,12 @@ typedef struct s_shell
 
 typedef struct s_parenthesis_fd
 {
-	int fd_backup_stdout;
-	int fd_backup_stdin;
-}t_parenthesis_fd;
+	int		fd_backup_stdout;
+	int		fd_backup_stdin;
+}			t_parenthesis_fd;
 
 // main
-void		print_env_list();
+void		print_env_list(void);
 
 // minishell
 void		minishell_non_interactive_argument(char *line);
@@ -129,16 +141,15 @@ int			print_error(const char *message);
 t_shell		*get_shell(void);
 
 // env utils
-char		*ft_strtok(char *str, const char delim);
 void		print_env_list(void);
 int			is_valid_identifier(const char *str);
-bool initialise_env(char **env);
-bool set_env_value(const char *key,const char *value);
-bool add_env_entry(const char* key, const char* value);
-void free_env_entry(void* content);
-char** copy_env_to_string_array();
-t_env_entry* get_env_entry(const char* key);
-bool add_env_pairstr(const char* pair_str);
+bool		initialise_env(char **env);
+bool		set_env_value(const char *key, const char *value);
+bool		add_env_entry(const char *key, const char *value);
+void		free_env_entry(void *content);
+char		**copy_env_to_string_array(void);
+t_env_entry	*get_env_entry(const char *key);
+bool		add_env_pairstr(const char *pair_str);
 
 // prompt
 int			get_user_prompt(char **result);
@@ -159,11 +170,13 @@ int			prepare_execution_command(t_command *command);
 int			execution_command(char **arguments, char *path);
 
 // redirection
-void		redirection_monitor(t_command *command, t_parenthesis_fd *parenthesis_fd);
+void		redirection_monitor(t_command *command,
+				t_parenthesis_fd *parenthesis_fd);
 void		redirection_output(t_redirect *redirect);
 void		redirection_input(t_redirect *redirect);
 void		redirection_append(t_redirect *redirect);
-void		redirection_heredoc(const char *delimiter, t_command *command, t_parenthesis_fd *parenthesis_fd);
+void		redirection_heredoc(const char *delimiter, t_command *command,
+				t_parenthesis_fd *parenthesis_fd);
 
 // signal
 void		sighandler(int sig);
@@ -181,8 +194,8 @@ void		update_path(void);
 void		free_command(t_command **command);
 void		free_string_array(char **str_list);
 void		free_env_list(void);
-void free_string_array_at_index(char **str_list, int index);
-void split_env_pairstr(const char* pair_str, char* key, char* value);
+void		free_string_array_at_index(char **str_list, int index);
+void		split_env_pairstr(const char *pair_str, char *key, char *value);
 
 // parser
 void		print_ast_node(t_ast_node *node, int depth);
