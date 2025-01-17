@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 19:49:59 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:00 by ftapponn          #+#    #+#             */
@@ -47,4 +59,27 @@ long	ft_atol(const char *str)
 		str++;
 	}
 	return (result * sign);
+}
+
+char	*join_str_array(char **list, int size)
+{
+	char	*result;
+	size_t	len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (i < size)
+		len += ft_strlen(list[i++]) + 1;
+	result = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!result)
+		return (pev(ERROR_MALLOC), NULL);
+	i = 0;
+	while (i < size)
+	{
+		ft_strlcat(result, list[i], len + 1);
+		if (i++ < size - 1)
+			ft_strlcat(result, " ", len + 1);
+	}
+	return (result);
 }

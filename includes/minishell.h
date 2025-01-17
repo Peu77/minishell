@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 19:04:22 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 19:38:36 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_parenthesis_fd
 void		print_env_list(void);
 
 // minishell
-void		minishell_non_interactive_argument(char *line);
+int		minishell_non_interactive_argument(char **args, int argc);
 void		minishell_non_interactive(void);
 void		minishell_interactive(void);
 
@@ -175,6 +175,7 @@ void		heredoc_sighandler(int sig);
 long		ft_atol(const char *str);
 char		*ft_strndup(const char *src, size_t len);
 void		update_path(void);
+char*		join_str_array(char** list, int size);
 
 // clean
 void		free_command(t_command **command);

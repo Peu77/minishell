@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 21:58:01 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 19:39:10 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,19 @@ void	minishell_non_interactive(void)
 	}
 }
 
-void	minishell_non_interactive_argument(char *line)
+int	minishell_non_interactive_argument(char **args, int argc)
 {
 	t_command	*command;
 	t_ast_node	*node;
+	char		*line;
 
+	line = join_str_array(args, argc);
+	if (line == NULL)
+		return (EXIT_FAILURE);
 	node = parse(line);
 	command = NULL;
-	if (line == NULL)
-		return (pev("No input provided for non-interactive mode.\n"));
 	if (node == NULL)
-		return (pev("parse error\n"));
-	tree_monitor(node, command);
-	free_ast_node(node);
+		return (pev("parse error\n"), free(line), EXIT_FAILURE);
+	return (tree_monitor(node, command), free_ast_node(node), free(line),
+		EXIT_SUCCESS);
 }
