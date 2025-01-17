@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:50:49 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 19:04:22 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_shell
 	t_list	*env;
 	int		exit_status;
 	bool	should_exit;
-	int		shell_exit_code;
 }			t_shell;
 
 typedef struct s_parenthesis_fd
@@ -175,7 +174,6 @@ void		heredoc_sighandler(int sig);
 // utils
 long		ft_atol(const char *str);
 char		*ft_strndup(const char *src, size_t len);
-int			*update_exit_status(void);
 void		update_path(void);
 
 // clean

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:56:26 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 13:50:51 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:03:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ int	execution_monitor(t_command *command)
 				ft_strlen(list_builtin[i]) + 1) == 0)
 		{
 			result = execute_builtin(command, i);
-			*update_exit_status() = result;
+			get_shell()->exit_status = result;
 			return (result);
 		}
 	}
 	result = prepare_execution_command(command);
 	if (command->saved_stdout)
 		restore_standard_fds(command);
-	*update_exit_status() = result;
+	get_shell()->exit_status = result;
 	return (free_command(&command), result);
 }

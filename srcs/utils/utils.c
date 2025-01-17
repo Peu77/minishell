@@ -48,13 +48,3 @@ long	ft_atol(const char *str)
 	}
 	return (result * sign);
 }
-
-int	*update_exit_status(void)
-{
-	static int	status = 0;
-	t_shell		*shell;
-
-	shell = get_shell();
-	shell->exit_status = status;
-	return (&status);
-}

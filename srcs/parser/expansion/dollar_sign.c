@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/15 17:47:44 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 19:04:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	handle_question_mark(int *i, t_list **result_chars)
 	char	*value;
 	t_list	*new_node;
 
-	value = ft_itoa(*update_exit_status());
+	value = ft_itoa(get_shell()->exit_status);
 	if (!value)
 		return (pe("malloc failed"), false);
 	new_node = ft_lstnew(value);

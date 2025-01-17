@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 21:25:16 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 19:01:39 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	ft_exit(t_command *command)
 
 	if (command->argument == NULL)
 	{
-		get_shell()->shell_exit_code = EXIT_SUCCESS;
+		get_shell()->exit_status = EXIT_SUCCESS;
 		get_shell()->should_exit = true;
 		return (0);
 	}
 	if (validate_exit_arguments(command->argument, &cmd) != 0)
 		return (-1);
-	get_shell()->shell_exit_code = ft_atol(cmd[0]) % 255;
+	get_shell()->exit_status = ft_atol(cmd[0]) % 255;
 	free_string_array(cmd);
 	get_shell()->should_exit = true;
 	return (0);
