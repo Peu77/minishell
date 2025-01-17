@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:15:06 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:17:45 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 16:39:15 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**copy_env_to_string_array(void)
 	int			i;
 	char		*tmp;
 
+	(void)entry;
 	env = malloc(sizeof(char *) * (ft_lstsize(get_shell()->env) + 1));
 	if (!env)
 		return (NULL);
