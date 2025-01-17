@@ -16,11 +16,11 @@
 # include "libft.h"
 # include "parse.h"
 # include <errno.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
@@ -98,7 +98,7 @@ typedef struct s_parenthesis_fd
 void		print_env_list(void);
 
 // minishell
-int		minishell_non_interactive_argument(char **args, int argc);
+int			minishell_non_interactive_argument(char **args, int argc);
 void		minishell_non_interactive(void);
 void		minishell_interactive(void);
 
@@ -175,7 +175,7 @@ void		heredoc_sighandler(int sig);
 long		ft_atol(const char *str);
 char		*ft_strndup(const char *src, size_t len);
 void		update_path(void);
-char*		join_str_array(char** list, int size);
+char		*join_str_array(char **list, int size);
 
 // clean
 void		free_command(t_command **command);
