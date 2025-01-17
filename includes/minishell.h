@@ -6,19 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:35:50 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:12:19 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/17 13:44:25 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:50:49 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +15,8 @@
 
 # include "libft.h"
 # include "parse.h"
-# include <stdio.h>
 # include <errno.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>

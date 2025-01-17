@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 13:54:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:19:51 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,9 @@ int	remove_variable_from_env(const char *key)
 		if (ft_strncmp(entry->key, key, key_len) == 0)
 		{
 			if (current == get_shell()->env)
-			{
 				get_shell()->env = current->next;
-			}
 			else
-			{
 				previous->next = current->next;
-			}
 			free_env_entry(entry);
 			free(current);
 			return (true);
