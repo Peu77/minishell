@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 20:26:15 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:44:28 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	execution_command(char **arguments, char *path)
 	reset_signals();
 	if (pid == 0)
 	{
+		main_signals();
 		if (execve(path, arguments, env_cpy) == -1)
 			exit(pec(ERROR_EXECVE));
 	}
