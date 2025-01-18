@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:09:22 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 23:48:49 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,6 @@ char	*ft_unescape_string(char *str);
 char	**split_quotes(char const *str);
 
 char* filter_and_get_redirects(const char* input, t_list** redirects);
+
+bool is_escaped(const char *str, int i);
 #endif

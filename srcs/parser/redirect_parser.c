@@ -6,24 +6,13 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:07:29 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 23:48:53 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <parse.h>
 
-static bool is_escaped(const char *str, int i)
-{
-	size_t backslashes;
-
-	backslashes = 0;
-	while (i >= 0 && str[i - 1] == '\\')
-	{
-		backslashes++;
-		i--;
-	}
-	return (backslashes % 2);
-}
 
 static size_t get_redirect_len(const char *str)
 {
@@ -71,7 +60,6 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 		return (pe("parse error near `\\n'"), false);
 	redirect->file = ft_substr(str, *i, filename_len);
 	ft_unescape_string(redirect->file);
-	printf("file: %s\n", redirect->file);
 	if (redirect->file == NULL)
 		return (false);
 	*i += filename_len;
