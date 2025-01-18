@@ -25,8 +25,14 @@ static bool	handle_token_string(t_token *token, t_list **tokens)
 	return (true);
 }
 
-bool	parse_redirects_for_parenteses(t_list **tokens,
-		t_ast_node *parentheses_node)
+/**
+ * future: set token_string value to parentheses node and before execute expandit and filter redirects from it
+ * @param tokens
+ * @param parentheses_node
+ * @return
+ */
+bool parse_redirects_for_parenteses(t_list **tokens,
+                                    t_ast_node *parentheses_node)
 {
 	t_token		*token;
 	t_redirect	*redirect;
