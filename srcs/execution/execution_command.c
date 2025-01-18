@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:52:10 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 17:07:22 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	command_not_found(const char *path)
+{
+	char	*message;
+
+	message = ": command not found\n";
+	while (*path)
+	{
+		write(STDERR_FILENO, path, 1);
+		path++;
+	}
+	write(STDERR_FILENO, message, 19);
+	exit(127);
+}
 
 int	execution_command(char **arguments, char *path)
 {
@@ -41,7 +55,7 @@ int	execution_command(char **arguments, char *path)
 	{
 		main_signals();
 		if (execve(path, arguments, env_cpy) == -1)
-			exit(pec(ERROR_EXECVE));
+			command_not_found(path);
 		exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &status, 0);
