@@ -6,32 +6,11 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 18:04:04 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:58:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*strlst_to_str(t_list *lst)
-{
-	char	*result;
-	int		cpy_offset;
-
-	cpy_offset = 0;
-	result = malloc(*get_char_count() + 1);
-	if (!result)
-		return (pe(ERROR_MALLOC), NULL);
-	result[*get_char_count()] = '\0';
-	while (lst)
-	{
-		ft_strlcpy(result + cpy_offset, lst->content, ft_strlen(lst->content)
-			+ 1);
-		cpy_offset += ft_strlen(lst->content);
-		lst = lst->next;
-	}
-	*get_char_count() = 0;
-	return (result);
-}
 
 static bool	handle_single_quotes(const char *str, int *i, t_list **result_chars)
 {
@@ -84,15 +63,6 @@ static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
 
 static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 {
-	const int	wildcard_len = get_wildcard_len(str + *i);
-
-	if (wildcard_len > 0)
-	{
-		if (!expand_wildcard(str + *i, wildcard_len, result_chars))
-			return (false);
-		*i += wildcard_len;
-		return (true);
-	}
 	if (str[*i] == '$' && (ft_isalnum(str[*i + 1]) || str[*i + 1] == '?'))
 	{
 		(*i)++;
@@ -103,7 +73,7 @@ static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 	return (add_char_to_result(str, i, result_chars));
 }
 
-bool	interpret_command_string(t_ast_node *node)
+bool	expand_string(t_ast_node *node)
 {
 	char	*str;
 	int		i;
@@ -131,6 +101,18 @@ bool	interpret_command_string(t_ast_node *node)
 	node->value = strlst_to_str(result_chars);
 	return (ft_lstclear(&result_chars, free), node->value != NULL);
 }
+
+/*
+const int	wildcard_len = get_wildcard_len(str + *i);
+
+	if (wildcard_len > 0)
+	{
+		if (!expand_wildcard(str + *i, wildcard_len, result_chars))
+			return (false);
+		*i += wildcard_len;
+		return (true);
+	}
+ */
 
 /*
 int	main(void) {
