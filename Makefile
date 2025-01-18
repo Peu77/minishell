@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = libft
 LIBREADLINE = -lreadline
 LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -I./includes -I/opt/homebrew/opt/readline/include
+INCLUDES = -I./includes
 SRC =  srcs/main.c \
 	   srcs/prompt/user_prompt.c \
 	   srcs/error/error.c \
@@ -47,7 +47,7 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE) -L/opt/homebrew/opt/readline/lib
+	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
