@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 00:01:14 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:01 by ftapponn          #+#    #+#             */
@@ -13,30 +25,45 @@
 #include "../../includes/minishell.h"
 #include <unistd.h>
 
-int	ft_echo(t_command *command, bool is_n)
+static bool is_n_flag(char *str)
 {
-	char	*arg;
+	int i;
 
-	arg = command->argument;
-	while (arg && ft_strncmp(arg, "-n", 2) == 0 && (arg[2] == ' '
-			|| arg[2] == '\0'))
-	{
-		arg += 2;
-		while (*arg == ' ')
-			arg++;
-		is_n = true;
-	}
-	if (!arg || *arg == '\0')
+	if (!str || str[0] != '-' || str[1] != 'n')
+		return (false);
+	i = 2;
+	while (str[i] == 'n')
+		i++;
+	return (str[i] == '\0');
+}
+
+int ft_echo(t_command *command, bool is_n)
+{
+	int i;
+	bool first_word;
+
+	if (!command->argv || !command->argv[1])
 	{
 		if (!is_n)
-			ft_putstr_fd("\n", STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		return (0);
 	}
-	else
+	i = 1;
+	while (command->argv[i] && is_n_flag(command->argv[i]))
 	{
-		ft_putstr_fd(arg, STDOUT_FILENO);
-		if (is_n)
-			ft_putstr_fd("\033[90m%\033[0m", STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		is_n = true;
+		i++;
 	}
+	first_word = true;
+	while (command->argv[i])
+	{
+		if (!first_word)
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		ft_putstr_fd(command->argv[i], STDOUT_FILENO);
+		first_word = false;
+		i++;
+	}
+	if (!is_n)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
