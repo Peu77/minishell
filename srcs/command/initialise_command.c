@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   initialise_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/18 23:24:08 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialise_command.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:10:33 by ftapponn          #+#    #+#             */
@@ -58,32 +70,23 @@ static void	put_redirection(t_list *redirection, t_command **command)
 	(*command)->saved_stdout = 0;
 }
 
-int	transform_node_to_command(char *value, t_command **command,
+int	transform_node_to_command(char** argv, t_command **command,
 		t_list *redirection)
 {
-	char	**arg;
-
 	*command = malloc(sizeof(t_command));
 	if (!(*command))
 		return (pe(ERROR_MALLOC));
 	ft_memset(*command, 0, sizeof(t_command));
 	if (!(*command))
 		return (pe(ERROR_MALLOC));
-	arg = ft_split(value, ' ');
-	if (!arg)
-		return (pe(ERROR_SPLIT));
-	if (!arg[0])
-		return (free_string_array(arg), false);
-	(*command)->command_name = ft_strdup(arg[0]);
-	if (!arg[1] || !ft_strlen(arg[1]))
-		(*command)->argument = NULL;
-	else
-	{
-		(*command)->argument = ft_strdup(value + ft_strlen(arg[0]) + 1);
-	}
+	if (!argv[0])
+		return (free_string_array(argv), false);
+	(*command)->command_name = ft_strdup(argv[0]);
+	if (!(*command)->command_name)
+		return (pe(ERROR_MALLOC));
+	(*command)->argv = argv;
 	get_path(command);
 	if (redirection)
 		put_redirection(redirection, command);
-	free_string_array(arg);
 	return (1);
 }

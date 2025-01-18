@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 20:40:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 21:13:07 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,6 @@ static bool	handle_token(const char *input, size_t *i, t_list **tokens,
 {
 	const t_token_type	type = get_token_type(input, *i, false);
 
-	if (is_redirect_token(type))
-	{
-		if (!parse_redirect_to_token(tokens, input, type, i))
-			return (false);
-		return (true);
-	}
 	if (type != TOKEN_STRING)
 	{
 		if (!add_token(tokens, type, NULL) || type == TOKEN_END)

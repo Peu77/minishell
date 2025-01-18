@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/05 14:24:30 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 23:28:14 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	free_ast_node(void *content)
 	{
 		ft_lstclear(&node->redirects, free_redirect);
 	}
-	free(node->value);
 	free(node);
 }
 

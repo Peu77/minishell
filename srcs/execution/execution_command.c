@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 18:04:55 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/18 23:36:32 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,14 @@ int	build_command_string(t_command *command, char **output_str)
 int	prepare_execution_command(t_command *command)
 {
 	char	*str;
-	char	**arguments;
 	int		result;
 
 	if (build_command_string(command, &str) != 0)
 		return (pec(ERROR_MALLOC));
-	arguments = ft_split(str, ' ');
+
 	free(str);
-	if (!arguments)
+	if (!command->argv)
 		return (pec(ERROR_SPLIT));
-	result = execution_command(arguments, command->path);
-	free_string_array(arguments);
+	result = execution_command(command->argv, command->path);
 	return (result);
 }

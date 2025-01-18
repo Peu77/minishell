@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 13:54:40 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/18 23:38:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,24 @@
 
 int	ft_export(t_command *command)
 {
-	char	**args;
 	char	*equal_sign;
 	char	key[MAX_VAR_LEN];
 	char	value[MAX_VAR_LEN];
 	int		i;
 
-	if (!command->argument)
+	if (!command->argv[1])
 		return (ft_env(command));
-	args = ft_split(command->argument, ' ');
-	i = 0;
-	while (args[i])
+	i = 1;
+	while (command->argv[i])
 	{
-		equal_sign = ft_strchr(args[i], '=');
-		if (!equal_sign || equal_sign == args[i]
-			|| !is_valid_identifier(args[i]))
+		equal_sign = ft_strchr(command->argv[i], '=');
+		if (!equal_sign || equal_sign == command->argv[i]
+			|| !is_valid_identifier(command->argv[i]))
 			return (print_error(ERROR_EXPORT));
-		split_env_pairstr(args[i], key, value);
+		split_env_pairstr(command->argv[i], key, value);
 		if (!set_env_value(key, value))
-			return (free_string_array(args), 1);
+			return (1);
 		i++;
 	}
-	free_string_array(args);
 	return (0);
 }
