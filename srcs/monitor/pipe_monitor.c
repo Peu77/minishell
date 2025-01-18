@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/16 20:13:21 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/18 17:21:26 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	pipe_monitor(t_ast_node *node)
 		pipe_right_process(node, &pipe_data);
 	close(pipe_data.pipe_fds[0]);
 	close(pipe_data.pipe_fds[1]);
+	waitpid(pipe_data.left_pid, NULL, 0);
 	waitpid(pipe_data.right_pid, &pipe_data.right_status, 0);
 	if (WIFEXITED(pipe_data.right_status))
 		pipe_data.right_result = WEXITSTATUS(pipe_data.right_status);
