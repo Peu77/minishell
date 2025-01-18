@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 20:11:21 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:39:00 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_list_data
 
 t_ast_node				*parse(char *input);
 
-bool					lex_tokens(char *input, t_list **tokens);
+bool					lex_tokens(const char *input, t_list **tokens);
 
 t_list					*parse_redirects_tokens_to_tree(t_list **redirects,
 							t_list *tokens);
@@ -127,7 +127,7 @@ bool					parse_redirect_to_token(t_list **tokens,
 
 t_token_type			is_redirect(const char *str);
 
-t_token_type			get_token_type(const char *str, bool in_quote);
+t_token_type			get_token_type(const char *str, size_t i, bool in_quote);
 
 bool					add_token(t_list **tokens, t_token_type type,
 							char *value);
