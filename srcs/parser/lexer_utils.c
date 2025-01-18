@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:58:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 16:59:19 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:38:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ t_token_type	is_redirect(const char *str)
 	return (TOKEN_NONE);
 }
 
-t_token_type	get_token_type(const char *str, bool in_quote)
+t_token_type	get_token_type(const char *str, size_t i, bool in_quote)
 {
-	const t_token_type	redirect = is_redirect(str);
-
 	if (in_quote)
+		return (TOKEN_STRING);
+	if(i != 0 && str[i - 1] == '\\')
 		return (TOKEN_STRING);
 	if (ft_strncmp(str, "&&", 2) == 0)
 		return (TOKEN_AND);
@@ -44,8 +44,6 @@ t_token_type	get_token_type(const char *str, bool in_quote)
 		return (TOKEN_PIPE);
 	if (*str == ';')
 		return (TOKEN_SEMICOLON);
-	if (redirect != TOKEN_NONE)
-		return (redirect);
 	if (*str == '(')
 		return (TOKEN_PARENTHESES_OPEN);
 	if (*str == ')')

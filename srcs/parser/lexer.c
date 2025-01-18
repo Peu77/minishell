@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 17:13:26 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:40:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	lex_string_token(const char *input, size_t *i, t_list **tokens,
 	while (input[*i + string_i])
 	{
 		quote_logic(&start_quote, in_quote, input, (int)*i + string_i);
-		if (get_token_type(input + *i + string_i, *in_quote) != TOKEN_STRING)
+		if (get_token_type(input, *i + string_i, *in_quote) != TOKEN_STRING)
 			break ;
 		string_i++;
 	}
@@ -59,7 +59,7 @@ static bool	lex_string_token(const char *input, size_t *i, t_list **tokens,
 static bool	handle_token(const char *input, size_t *i, t_list **tokens,
 		bool *in_quote)
 {
-	const t_token_type	type = get_token_type(input + *i, false);
+	const t_token_type	type = get_token_type(input, *i, false);
 
 	if (is_redirect_token(type))
 	{
@@ -77,7 +77,7 @@ static bool	handle_token(const char *input, size_t *i, t_list **tokens,
 	return (lex_string_token(input, i, tokens, in_quote));
 }
 
-bool	lex_tokens(char *input, t_list **tokens)
+bool	lex_tokens(const char *input, t_list **tokens)
 {
 	const size_t	len = ft_strlen(input);
 	size_t			i;
