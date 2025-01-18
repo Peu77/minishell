@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 21:13:07 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 00:03:25 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	quote_logic(char *start_quote, bool *in_quote, const char *input,
 		*in_quote = false;
 	if (*start_quote == input[pos] && *in_quote)
 		*start_quote = 0;
-	else if ((input[pos] == '\'' || input[pos] == '\"') && *start_quote == 0)
+	else if ((input[pos] == '\'' || input[pos] == '\"') && *start_quote == 0 && !is_escaped(input, pos))
 	{
 		*in_quote = true;
 		*start_quote = input[pos];
