@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 17:14:38 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/18 18:04:04 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static bool	handle_single_quotes(const char *str, int *i, t_list **result_chars)
 	size_t	len;
 
 	len = 0;
-	(*i)++;
-	while (str[*i + len] && str[*i + len] != '\'')
+
+	while (str[*i + len + 1] && str[*i + len] != '\'')
 		len++;
-	str_cpy = ft_substr(str, *i, len);
+	str_cpy = ft_substr(str, *i, len + 1);
 	if (!str_cpy)
 		return (pe(ERROR_MALLOC), false);
 	new_node = ft_lstnew(str_cpy);
@@ -60,6 +60,7 @@ static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
 	t_list	*new_node;
 
 	(*i)++;
+	ft_lstadd_back(result_chars, ft_lstnew(ft_strdup("\"")));
 	while (str[*i] && str[*i] != '\"')
 	{
 		if (str[*i] == '$' && (ft_isalnum(str[*i + 1]) || str[*i + 1] == '?'))
@@ -76,6 +77,7 @@ static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
 		ft_lstadd_back(result_chars, new_node);
 		(*i)++;
 	}
+	ft_lstadd_back(result_chars, ft_lstnew(ft_strdup("\"")));
 	(*i)++;
 	return (true);
 }
