@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 17:20:49 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/18 23:10:20 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_command_test
 	t_list	*redirect;
 	int		saved_stdout;
 	int		saved_stdin;
+	char**  argv;
 }			t_command;
 
 typedef struct s_env_entry
@@ -114,7 +115,7 @@ int			parentheses_monitor(t_ast_node *node, t_command *command);
 void		get_command_from_node(t_command **command);
 void		print_command(t_command *command);
 int			concatenate_arguments(char **arg, char **result);
-int			transform_node_to_command(char *value, t_command **command,
+int			transform_node_to_command(char **argv, t_command **command,
 				t_list *redirection);
 int			get_path(t_command **command);
 int			get_redirection(t_command **command, t_list *redirection);
