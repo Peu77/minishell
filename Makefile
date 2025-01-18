@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 LIBFT_DIR = libft
 LIBREADLINE = -lreadline
 LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -I./includes
+INCLUDES = -I./includes -I/opt/homebrew/opt/readline/include
 SRC =  srcs/main.c \
 	   srcs/prompt/user_prompt.c \
 	   srcs/error/error.c \
@@ -27,7 +27,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/parser.c \
 	   srcs/parser/parser2.c \
 	   srcs/parser/parser_utils.c \
-	   srcs/parser/redirect_lexer.c \
+	   srcs/parser/redirect_parser.c \
 	   srcs/parser/redirects.c \
 	   srcs/parser/lexer.c \
 	   srcs/parser/lexer_utils.c \
@@ -41,6 +41,9 @@ SRC =  srcs/main.c \
 	   srcs/parser/expansion/env_utils.c \
 	   srcs/parser/expansion/dollar_sign.c \
 	   srcs/parser/expansion/spliter.c \
+	   srcs/parser/expansion/redirects_filter.c \
+	   srcs/parser/expansion/str_builder.c \
+	   srcs/parser/expansion/str_escape.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/and_or_monitor.c \
@@ -53,13 +56,14 @@ SRC =  srcs/main.c \
 	   srcs/minishell.c \
 
 
+
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE)
+	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE) -L/opt/homebrew/opt/readline/lib
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
