@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:17 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:51:47 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:49:13 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	save_file_descriptors(t_command **command)
 	}
 }
 
-void	redirection_monitor(t_command *command)
+void	redirection_monitor(t_command *command,
+		t_parenthesis_fd *parenthesis_fd)
 {
 	t_list		*redirect_list;
 	t_redirect	*redirect;
@@ -45,7 +46,7 @@ void	redirection_monitor(t_command *command)
 		else if (redirect->type == TOKEN_REDIRECT_INPUT)
 			redirection_input(redirect);
 		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-			redirection_heredoc(redirect->file);
+			redirection_heredoc(redirect->file, command, parenthesis_fd);
 		else
 		{
 			pev("Unknown redirection type encountered");

@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIBFT_DIR = libft
 LIBREADLINE = -lreadline
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -25,18 +25,29 @@ SRC =  srcs/main.c \
 	   srcs/builtin/env.c \
 	   srcs/builtin/clear.c \
 	   srcs/parser/parser.c \
+	   srcs/parser/parser2.c \
+	   srcs/parser/parser_utils.c \
+	   srcs/parser/redirect_lexer.c \
 	   srcs/parser/redirects.c \
 	   srcs/parser/lexer.c \
+	   srcs/parser/lexer_utils.c \
 	   srcs/parser/ast_utils.c \
 	   srcs/parser/token_utils.c \
 	   srcs/parser/debug.c \
-	   srcs/parser/str_interpreter.c \
+	   srcs/parser/expansion/expander.c \
+	   srcs/parser/expansion/expander_utils.c \
+	   srcs/parser/expansion/wildcard.c \
+	   srcs/parser/expansion/wildcard_utils.c \
+	   srcs/parser/expansion/env_utils.c \
+	   srcs/parser/expansion/dollar_sign.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/and_or_monitor.c \
 	   srcs/monitor/command_monitor.c \
 	   srcs/monitor/parenthesis_monitor.c \
 	   srcs/env/env_utils.c \
+	   srcs/env/env_utils2.c \
+	   srcs/env/env_utils3.c \
 	   srcs/signal/signal.c \
 	   srcs/minishell.c \
 

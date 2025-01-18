@@ -5,35 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 18:39:38 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/13 11:44:43 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:07:46 by ftapponn          #+#    #+#             */
-/*   Updated: 2024/12/17 14:55:04 by ftapponn         ###   ########.fr       */
+/*   Created: 2025/01/13 13:38:33 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 13:49:36 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_command_split(char **command_split)
+void	free_string_array(char **str_list)
 {
 	int	i;
 
 	i = -1;
-	if (!command_split)
+	if (!str_list)
 		return ;
-	while (command_split[++i])
-		free(command_split[i]);
-	free(command_split);
+	while (str_list[++i])
+		free(str_list[i]);
+	if (*str_list)
+		free(str_list);
+}
+
+void	free_string_array_at_index(char **str_list, int index)
+{
+	while (index >= 0)
+	{
+		free(str_list[index]);
+		index--;
+	}
+	free(str_list);
 }
 
 static void	free_command_strings(t_command *command)

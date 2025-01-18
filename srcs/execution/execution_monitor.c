@@ -3,10 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execution_monitor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/13 18:56:26 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 19:03:43 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_monitor.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:33 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 11:41:48 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:33:17 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +95,20 @@ int	execution_monitor(t_command *command)
 	i = -1;
 	result = 0;
 	if (command->redirect)
-		redirection_monitor(command);
+		redirection_monitor(command, NULL);
 	while (++i < NUM_BUILTINS)
 	{
 		if (ft_strncmp(command->command_name, list_builtin[i],
 				ft_strlen(list_builtin[i]) + 1) == 0)
 		{
 			result = execute_builtin(command, i);
-			*update_exit_status() = result;
-			printf("Exit status is %d \n", *update_exit_status());
+			get_shell()->exit_status = result;
 			return (result);
 		}
 	}
 	result = prepare_execution_command(command);
 	if (command->saved_stdout)
 		restore_standard_fds(command);
-	*update_exit_status() = result;
-	printf("Exit status is %d \n", *update_exit_status());
+	get_shell()->exit_status = result;
 	return (free_command(&command), result);
 }

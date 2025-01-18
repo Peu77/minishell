@@ -3,74 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:48:23 by ftapponn         ###   ########.fr       */
+/*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 16:14:48 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
+/*   Updated: 2025/01/14 18:46:15 by ftapponn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	print_env_list(char **env)
+#include <limits.h>
+#include <minishell.h>
+
+void	print_env_list(void)
 {
-	while (*env)
+	t_list		*current;
+	t_env_entry	*entry;
+
+	current = get_shell()->env;
+	while (current)
 	{
-		printf("%s\n", *env);
-		env++;
+		entry = current->content;
+		printf("%s=%s\n", entry->key, entry->value);
+		current = current->next;
 	}
 }
 
-char	**initialise_env(char **env)
+bool	initialise_env(char **env)
 {
-	static char	**environ = NULL;
+	int	i;
 
-	if (env)
-		environ = env;
-	return environ;
-}
-
-static char	*initialize_stock(char *str, char **stock, int *i)
-{
-	if (str != NULL)
+	i = 0;
+	while (env[i])
 	{
-		if (*stock)
-			free(*stock);
-		*stock = ft_strdup(str);
-		*i = 0;
-		if (!*stock)
-			return (NULL);
-	}
-	return (*stock);
-}
-
-char	*ft_strtok(char *str, const char delim)
-{
-	static char	*stock = NULL;
-	static int	i = 0;
-	char		*ptr;
-	int			flg;
-
-	if (initialize_stock(str, &stock, &i) == NULL)
-		return (NULL);
-	flg = 0;
-	ptr = NULL;
-	while (stock[i] != '\0')
-	{
-		if (flg == 0 && stock[i] != delim)
-		{
-			flg = 1;
-			ptr = &stock[i];
-		}
-		else if (flg == 1 && stock[i] == delim)
-		{
-			stock[i] = '\0';
-			i++;
-			break ;
-		}
+		if (!add_env_pairstr(env[i]))
+			return (false);
 		i++;
 	}
-	return (ptr);
+	return (true);
 }
 
 int	is_valid_identifier(const char *str)

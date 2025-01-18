@@ -3,10 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execution_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 16:52:10 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_command.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 12:30:45 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:18:54 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +28,26 @@ int	execution_command(char **arguments, char *path)
 {
 	pid_t	pid;
 	int		status;
-	int		exit_status;
-	char **env;
+	char	**env_cpy;
 
-	env = initialise_env(NULL);
+	env_cpy = copy_env_to_string_array();
+	if (!env_cpy)
+		return (pec(ERROR_MALLOC), 1);
 	pid = fork();
 	if (pid == -1)
 		return (pec(ERROR_FORK));
-
 	reset_signals();
 	if (pid == 0)
 	{
-		reset_signals();
-		if (!path)
-			exit(print_error(ERROR_FOUND_COMMAND));
-		if (execve(path, arguments, env) == -1)
-			exit(pec(ERROR_EXECVE));
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
 		main_signals();
-		exit_status = WEXITSTATUS(status);
-		return (exit_status);
+		if (execve(path, arguments, env_cpy) == -1)
+			exit(pec(ERROR_EXECVE));
+		exit(EXIT_SUCCESS);
 	}
-	return (1);
+	waitpid(pid, &status, 0);
+	free_string_array(env_cpy);
+	main_signals();
+	return (WEXITSTATUS(status));
 }
 
 int	build_command_string(t_command *command, char **output_str)
@@ -79,6 +86,6 @@ int	prepare_execution_command(t_command *command)
 	if (!arguments)
 		return (pec(ERROR_SPLIT));
 	result = execution_command(arguments, command->path);
-	free_command_split(arguments);
+	free_string_array(arguments);
 	return (result);
 }

@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/17 19:49:59 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:00 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/11 17:25:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:21:59 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	remove_newline(char *buffer)
-{
-	size_t	len;
-
-	len = ft_strlen(buffer);
-	if (len > 0 && buffer[len - 1] == '\n')
-		buffer[len - 1] = '\0';
-}
 
 char	*ft_strndup(const char *src, size_t len)
 {
@@ -58,9 +61,25 @@ long	ft_atol(const char *str)
 	return (result * sign);
 }
 
-int	*update_exit_status()
+char	*join_str_array(char **list, int size)
 {
-	static int	status = 0;
+	char	*result;
+	size_t	len;
+	int		i;
 
-	return &status;
+	len = 0;
+	i = 0;
+	while (i < size)
+		len += ft_strlen(list[i++]) + 1;
+	result = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!result)
+		return (pev(ERROR_MALLOC), NULL);
+	i = 0;
+	while (i < size)
+	{
+		ft_strlcat(result, list[i], len + 1);
+		if (i++ < size - 1)
+			ft_strlcat(result, " ", len + 1);
+	}
+	return (result);
 }
