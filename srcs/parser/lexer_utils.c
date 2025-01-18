@@ -19,6 +19,8 @@ t_token_type	is_redirect(const char *str)
 	i = 0;
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
+	if(str[i] == '\\')
+		return TOKEN_NONE;
 	if (ft_strncmp(str + i, "<<", 2) == 0)
 		return (TOKEN_REDIRECT_INPUT_APPEND);
 	if (ft_strncmp(str + i, ">>", 2) == 0)
