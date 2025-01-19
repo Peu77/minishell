@@ -6,18 +6,15 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:58:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:43:08 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:26:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <gcollector.h>
 #include <parse.h>
 
-t_token_type	is_redirect(const char *str)
+t_token_type	is_redirect(const char *str, size_t i)
 {
-	int	i;
-
-	i = 0;
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
 	if(str[i] == '\\')
