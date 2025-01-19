@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 22:28:10 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:37:26 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,22 @@ int	command_monitor(t_ast_node *node, t_command *command)
 	char* tmp;
 	int i;
 	char** argv;
+	int redirect_exit_code;
 
 	 i = 0;
+	redirect_exit_code = 0;
 	tmp = expand_string(node->value);
 	gc_free_ptr(node->value);
 	node->value = tmp;
 	tmp = expand_wildcards(node->value);
 	gc_free_ptr(node->value);
 	node->value = tmp;
-	tmp = filter_and_get_redirects(node->value, &node->redirects);
+	tmp = filter_and_get_redirects(node->value, &node->redirects, &redirect_exit_code);
 	gc_free_ptr(node->value);
+	if(redirect_exit_code != 0) {
+		get_shell()->exit_status = redirect_exit_code;
+		return (redirect_exit_code);
+	}
 	node->value = tmp;
 	argv = split_quotes(node->value);
 	gc_free_ptr(node->value);
