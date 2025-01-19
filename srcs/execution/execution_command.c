@@ -61,8 +61,6 @@ int	execution_command(char **arguments, char *path)
 			command_not_found(path);
 		exit(EXIT_SUCCESS);
 	}
-	else
-	{
 		waitpid(pid, &status, 0);
 		free_string_array(env_cpy);
 		main_signals();
@@ -73,7 +71,6 @@ int	execution_command(char **arguments, char *path)
 				return (130);
 			return (128 + sig_num);
 		}
-	}
 	return (WEXITSTATUS(status));
 }
 
