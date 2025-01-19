@@ -64,7 +64,7 @@ static void increase_shlvl(void)
 	shlvl_str = ft_itoa(shlvl + 1);
 	if (!shlvl_str)
 		return ;
-	free(entry->value);
+	gc_free_ptr(entry->value);
 	entry->value = shlvl_str;
 }
 

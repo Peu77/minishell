@@ -19,8 +19,8 @@ void	free_redirect(void *content)
 	t_redirect	*redirect;
 
 	redirect = content;
-	free(redirect->file);
-	free(redirect);
+	gc_free_ptr(redirect->file);
+	gc_free_ptr(redirect);
 }
 
 bool	is_redirect_token(t_token_type type)
@@ -35,7 +35,7 @@ t_redirect	*create_redirect(int fd_left, int fd_right, t_token_type type,
 {
 	t_redirect	*redirect;
 
-	redirect = malloc(sizeof(t_redirect));
+	redirect = gc_malloc(sizeof(t_redirect));
 	if (!redirect)
 		return (NULL);
 	redirect->fd_left = fd_left;

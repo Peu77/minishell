@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell_destroy.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:14:53 by eebert           ###   ########.fr       */
+/*   Created: 2025/01/19 19:08:16 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 19:13:49 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <libft.h>
+#include <minishell.h>
+#include <stdlib.h>
+#include <readline/readline.h>
 
-int	main(int argc, char **argv, char **env)
-{
-	if (env && !initialise_env(env))
-		 destroy_minishell(EXIT_FAILURE);
-	if (argc >= 2)
-		minishell_non_interactive_argument(argv + 1, argc - 1);
-	else if (isatty(STDIN_FILENO))
-		minishell_interactive();
-	else
-		minishell_non_interactive();
-	destroy_minishell(get_shell()->exit_status);
+void		destroy_minishell(int status) {
+    gc_list_clear(&get_shell()->env, free_env_entry);
+    rl_clear_history();
+    gc_free();
+    exit(status);
 }

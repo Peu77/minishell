@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 00:05:02 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:58:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_redirect	*copy_redirect_node(t_redirect *original)
 {
 	t_redirect	*new_redirect;
 
-	new_redirect = (t_redirect *)malloc(sizeof(t_redirect));
+	new_redirect = (t_redirect *)gc_malloc(sizeof(t_redirect));
 	if (!new_redirect)
 		return (NULL);
 	new_redirect->fd_left = original->fd_left;
@@ -40,10 +40,10 @@ t_redirect	*copy_redirect_node(t_redirect *original)
 	new_redirect->type = original->type;
 	if (original->file)
 	{
-		new_redirect->file = ft_strdup(original->file);
+		new_redirect->file = gc_add(ft_strdup(original->file));
 		if (!new_redirect->file)
 		{
-			free(new_redirect);
+			gc_free_ptr(new_redirect);
 			return (NULL);
 		}
 	}
@@ -61,7 +61,7 @@ static void	put_redirection(t_list *redirection, t_command **command)
 int	transform_node_to_command(char** argv, t_command **command,
 		t_list *redirection)
 {
-	*command = malloc(sizeof(t_command));
+	*command = gc_malloc(sizeof(t_command));
 	if (!(*command))
 		return (pe(ERROR_MALLOC));
 	ft_memset(*command, 0, sizeof(t_command));
@@ -69,7 +69,7 @@ int	transform_node_to_command(char** argv, t_command **command,
 		return (pe(ERROR_MALLOC));
 	if (!argv[0])
 		return (free_string_array(argv), false);
-	(*command)->command_name = ft_strdup(argv[0]);
+	(*command)->command_name = gc_add(ft_strdup(argv[0]));
 	if (!(*command)->command_name)
 		return (pe(ERROR_MALLOC));
 	(*command)->argv = argv;

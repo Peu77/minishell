@@ -22,7 +22,7 @@ static bool	handle_question_mark(int *i, t_list **result_chars)
 		return (pe("malloc failed"), false);
 	new_node = ft_lstnew(value);
 	if (!new_node)
-		return (free(value), ft_lstclear(result_chars, free),
+		return (gc_free_ptr(value), gc_list_clear(result_chars, gc_free_ptr),
 			pe("malloc failed"), false);
 	ft_lstadd_back(result_chars, new_node);
 	*i += 1;
@@ -37,14 +37,14 @@ static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 
 	value_copy = NULL;
 	if (value)
-		value_copy = ft_strdup(value);
+		value_copy = gc_add(ft_strdup(value));
 	else
-		value_copy = ft_strdup("");
+		value_copy = gc_add(ft_strdup(""));
 	if (!value_copy)
 		return (pe(ERROR_MALLOC), false);
 	new_node = ft_lstnew(value_copy);
 	if (!new_node)
-		return (free(value_copy), pe(ERROR_MALLOC), false);
+		return (gc_free_ptr(value_copy), pe(ERROR_MALLOC), false);
 	ft_lstadd_back(result_chars, new_node);
 	*get_char_count() += ft_strlen(new_node->content);
 	*i = end;

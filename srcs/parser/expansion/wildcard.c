@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:34:00 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:59:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ static bool	match_files(const char *pattern, t_list_data files,
 			&& !((*(char *)(*files.list)->content) == '.' && *pattern != '.'))
 		{
 			if (files.count > 1)
-				tmp_str = ft_strjoin((*files.list)->content, " ");
+				tmp_str = gc_add(ft_strjoin((*files.list)->content, " "));
 			else
-				tmp_str = ft_strdup((*files.list)->content);
+				tmp_str = gc_add(ft_strdup((*files.list)->content));
 			if (!tmp_str)
-				return (pe("malloc failed"), false);
+				return (pe("gc_malloc failed"), false);
 			new_node = ft_lstnew(tmp_str);
 			if (!new_node)
-				return (pe("malloc failed"), free(tmp_str), false);
+				return (pe("gc_malloc failed"), gc_free_ptr(tmp_str), false);
 			ft_lstadd_back(matches, new_node);
 			*get_char_count() += ft_strlen(tmp_str);
 			(*matches_count)++;
@@ -76,22 +76,22 @@ bool	expand_wildcard(const char *old_pattern, size_t pattern_len,
 	files = NULL;
 	file_count = 0;
 	if (!get_files_in_dir(".", &files, &file_count))
-		return (ft_lstclear(&files, free), false);
+		return (gc_list_clear(&files, gc_free_ptr), false);
 	expanded_pattern = expand_env_vars(old_pattern, pattern_len);
 	if (!expanded_pattern)
 		return (-1);
 	matches = 0;
 	if (!match_files(expanded_pattern, (t_list_data){&files, file_count}, list,
 		&matches))
-		return (ft_lstclear(&files, free), false);
+		return (gc_list_clear(&files, gc_free_ptr), false);
 	if (matches == 0)
 	{
 		ft_lstadd_back(list, ft_lstnew(expanded_pattern));
 		*get_char_count() += ft_strlen(expanded_pattern);
 	}
 	else
-		free(expanded_pattern);
-	return (ft_lstclear(&files, free), true);
+		gc_free_ptr(expanded_pattern);
+	return (gc_list_clear(&files, gc_free_ptr), true);
 }
 
 int	get_wildcard_len(const char *str)
@@ -134,7 +134,7 @@ char* expand_wildcards(const char *str)
 				continue;
 			}
 		if (!add_str_to_result(str, &i, &list, 1))
-			return (ft_lstclear(&list, free), NULL);
+			return (gc_list_clear(&list, gc_free_ptr), NULL);
 	}
 	return (strlst_to_str(list));
 }
@@ -153,7 +153,7 @@ int	main(void) {
 
 		tmp = tmp->next;
 	}
-	ft_lstclear(&list, free);
+	gc_list_clear(&list, free);
 
 	return (0);
 }

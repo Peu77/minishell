@@ -18,15 +18,15 @@ int	ft_pwd(t_command *command)
 
 	if (command->argument)
 		return (print_error(ERROR_PWD));
-	buffer = malloc(MAX_PATH);
+	buffer = gc_malloc(MAX_PATH);
 	if (buffer == NULL)
 		return (0);
 	if (getcwd(buffer, MAX_PATH) == NULL)
 	{
-		free(buffer);
+		gc_free_ptr(buffer);
 		return (pec("error with getting path"));
 	}
 	printf("%s \n", buffer);
-	free(buffer);
+	gc_free_ptr(buffer);
 	return (0);
 }

@@ -105,7 +105,7 @@ int	main(void) {
 	node.redirects = NULL;
 	interpret_command_string(&node);
 	printf("result: %s\n", node.value);
-	free(node.value);
+	gc_free_ptr(node.value);
 	return (0);
 }
 */

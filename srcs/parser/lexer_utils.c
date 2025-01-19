@@ -6,10 +6,11 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:58:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:51:55 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:43:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <gcollector.h>
 #include <parse.h>
 
 t_token_type	is_redirect(const char *str)
@@ -61,11 +62,7 @@ bool	add_token(t_list **tokens, t_token_type type, char *value)
 	t_list	*new_node;
 
 	new_token = create_token(type, value, NULL);
-	if (!new_token)
-		return (false);
-	new_node = ft_lstnew(new_token);
-	if (!new_node)
-		return (free(new_token), false);
+	new_node = gc_add(ft_lstnew(new_token));
 	ft_lstadd_back(tokens, new_node);
 	return (true);
 }

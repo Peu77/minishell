@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:19:14 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:56:00 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ static void	command_not_found(char *path)
 	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
 	if (errno == EACCES || errno == EISDIR)
-		exit(126);
-	exit(127);
+		destroy_minishell(126);
+	destroy_minishell(127);
 }
 
 int	execution_command(t_command* command)
 {
-  t_shell *shell = get_shell();
-    if (shell->heredoc_failed == 1)
-    {
-        shell->heredoc_failed = 0;
-        return (130);
-    }
+	t_shell *shell = get_shell();
+	if (shell->heredoc_failed == 1)
+	{
+		shell->heredoc_failed = 0;
+		return (130);
+	}
 	pid_t	pid;
 	int		sig_num;
 	int		status;
@@ -101,19 +101,19 @@ int	build_command_string(t_command *command, char **output_str)
 	char	*temp;
 	char	*new_str;
 
-	*output_str = ft_strdup(command->command_name);
+	*output_str = gc_add(ft_strdup(command->command_name));
 	if (!(*output_str))
 		return (pec(ERROR_MALLOC));
 	if (command->argument != NULL && *command->argument != '\0')
 	{
-		temp = ft_strjoin(*output_str, " ");
+		temp = gc_add(ft_strjoin(*output_str, " "));
 		if (!temp)
 			return (free(*output_str), pec(ERROR_MALLOC));
-		new_str = ft_strjoin(temp, command->argument);
-		free(temp);
+		new_str = gc_add(ft_strjoin(temp, command->argument));
+		gc_free_ptr(temp);
 		if (!new_str)
 			return (free(*output_str), pec(ERROR_MALLOC));
-		free(*output_str);
+		gc_free_ptr(*output_str);
 		*output_str = new_str;
 	}
 	return (0);
@@ -126,7 +126,7 @@ int	prepare_execution_command(t_command *command)
 
 	if (build_command_string(command, &str) != 0)
 		return (pec(ERROR_MALLOC));
-	free(str);
+	gc_free_ptr(str);
 	if (!command->argv)
 		return (pec(ERROR_SPLIT));
 	result = execution_command(command);

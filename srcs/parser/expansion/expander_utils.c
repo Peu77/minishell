@@ -21,7 +21,7 @@ bool	handle_tilde_expansion(int *i, t_list **result_chars)
 	home = get_env_value("HOME");
 	if (!home)
 		return (true);
-	str_cpy = ft_strdup(home);
+	str_cpy = gc_add(ft_strdup(home));
 	if (!str_cpy)
 		return (pe(ERROR_MALLOC), false);
 	new_node = ft_lstnew(str_cpy);

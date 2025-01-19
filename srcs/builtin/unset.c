@@ -43,7 +43,7 @@ int	remove_variable_from_env(const char *key)
 			else
 				previous->next = current->next;
 			free_env_entry(entry);
-			free(current);
+			gc_free_ptr(current);
 			return (true);
 		}
 		previous = current;

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:54:42 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:40:21 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:58:59 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <parse.h>
 #include <stdbool.h>
+#include <gcollector.h>
 
 static bool is_quote(char c)
 {
@@ -109,7 +110,7 @@ static char *extract_word(char const *str, size_t len)
     bool   in_quotes;
     char   quote_type;
 
-    word = malloc(sizeof(char) * (len + 1));
+    word = gc_malloc(sizeof(char) * (len + 1));
     if (!word)
         return (NULL);
     i = 0;
@@ -152,7 +153,7 @@ char **split_quotes(char const *str)
     if (!str)
         return (NULL);
     word_count = count_words(str);
-    result = malloc(sizeof(char *) * (word_count + 1));
+    result = gc_malloc(sizeof(char *) * (word_count + 1));
     if (!result)
         return (NULL);
     i = 0;
@@ -165,8 +166,8 @@ char **split_quotes(char const *str)
         if (!result[i])
         {
             while (i > 0)
-                free(result[--i]);
-            free(result);
+                gc_free_ptr(result[--i]);
+            gc_free_ptr(result);
             return (NULL);
         }
         str += word_len;

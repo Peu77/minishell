@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 19:39:10 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 20:09:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
 {
 	if (node == NULL)
 	{
-		free(user_prompt);
+		gc_free_ptr(user_prompt);
 		return (1);
 	}
 	return (0);
@@ -74,12 +74,13 @@ void	minishell_interactive(void)
 	{
 		if (!get_user_prompt(&user_prompt))
 			break ;
+		gc_add(user_prompt);
 		node = parse(user_prompt);
 		if (handle_parse_errors(user_prompt, node))
 			continue ;
 		tree_monitor(node, command);
 		free_ast_node(node);
-		free(user_prompt);
+		gc_free_ptr(user_prompt);
 	}
 }
 
@@ -96,7 +97,7 @@ void	minishell_non_interactive(void)
 			break ;
 		if (*line == '\0')
 		{
-			free(line);
+			gc_free_ptr(line);
 			continue ;
 		}
 		command = NULL;
@@ -105,7 +106,7 @@ void	minishell_non_interactive(void)
 			continue ;
 		tree_monitor(node, command);
 		free_ast_node(node);
-		free(line);
+		gc_free_ptr(line);
 	}
 }
 
@@ -122,6 +123,6 @@ int	minishell_non_interactive_argument(char **args, int argc)
 	command = NULL;
 	if (node == NULL)
 		return (pev("parse error\n"), free(line), EXIT_FAILURE);
-	return (tree_monitor(node, command), free_ast_node(node), free(line),
+	return (tree_monitor(node, command), free_ast_node(node), gc_free_ptr(line),
 		EXIT_SUCCESS);
 }

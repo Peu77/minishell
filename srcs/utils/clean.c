@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:35:40 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:54:25 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,36 @@ void	free_string_array(char **str_list)
 	if (!str_list)
 		return ;
 	while (str_list[++i])
-		free(str_list[i]);
+		gc_free_ptr(str_list[i]);
 	if (*str_list)
-		free(str_list);
+		gc_free_ptr(str_list);
 }
 
 void	free_string_array_at_index(char **str_list, int index)
 {
 	while (index >= 0)
 	{
-		free(str_list[index]);
+		gc_free_ptr(str_list[index]);
 		index--;
 	}
-	free(str_list);
+	gc_free_ptr(str_list);
 }
 
 static void	free_command_strings(t_command *command)
 {
 	if (command->path)
 	{
-		free(command->path);
+		gc_free_ptr(command->path);
 		command->path = NULL;
 	}
 	if (command->command_name)
 	{
-		free(command->command_name);
+		gc_free_ptr(command->command_name);
 		command->command_name = NULL;
 	}
 	if (command->argument)
 	{
-		free(command->argument);
+		gc_free_ptr(command->argument);
 		command->argument = NULL;
 	}
 }
@@ -76,10 +76,10 @@ void	free_command(t_command **command)
 	free_command_strings(*command);
 	if ((*command)->redirect)
 	{
-		ft_lstclear(&(*command)->redirect, free_redirect);
+		gc_list_clear(&(*command)->redirect, free_redirect);
 		(*command)->redirect = NULL;
 	}
 	close_command_fds(*command);
-	free(*command);
+	gc_free_ptr(*command);
 	*command = NULL;
 }

@@ -21,7 +21,7 @@ static bool	handle_token_string(t_token *token, t_list **tokens, t_list** redire
 	tmp = expand_string(token->value);
 	if(!tmp)
 		return (false);
-	free(token->value);
+	gc_free_ptr(token->value);
 	token->value = tmp;
 	tmp = filter_and_get_redirects(token->value, redirects);
 	if (!tmp)
@@ -29,9 +29,9 @@ static bool	handle_token_string(t_token *token, t_list **tokens, t_list** redire
 	ft_unescape_string(tmp);
 	trimmed = ft_strtrim(tmp, " ");
 	if (ft_strlen(trimmed) != 0)
-		return (printf("parse error near `%s'\n", trimmed), free(trimmed),
+		return (printf("parse error near `%s'\n", trimmed), gc_free_ptr(trimmed),
 			false);
-	free(trimmed);
+	gc_free_ptr(trimmed);
 	*tokens = (*tokens)->next;
 	return (true);
 }

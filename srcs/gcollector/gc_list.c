@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   gc_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:14:53 by eebert           ###   ########.fr       */
+/*   Created: 2025/01/19 19:43:27 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 19:48:20 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <gcollector.h>
 
-int	main(int argc, char **argv, char **env)
+
+void gc_list_clear(t_list **list, void (*del)(void *))
 {
-	if (env && !initialise_env(env))
-		 destroy_minishell(EXIT_FAILURE);
-	if (argc >= 2)
-		minishell_non_interactive_argument(argv + 1, argc - 1);
-	else if (isatty(STDIN_FILENO))
-		minishell_interactive();
-	else
-		minishell_non_interactive();
-	destroy_minishell(get_shell()->exit_status);
+    t_list	*tmp;
+
+    if (!list || !del)
+        return ;
+    while (*list)
+    {
+        tmp = *list;
+        *list = (*list)->next;
+        del(tmp->content);
+        gc_free_ptr(tmp);
+    }
 }
+

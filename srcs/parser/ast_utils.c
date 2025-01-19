@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:28:14 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:28:32 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	free_ast_node(void *content)
 		free_ast_node(node->right);
 	if (node->type == AST_COMMAND)
 	{
-		ft_lstclear(&node->redirects, free_redirect);
+		gc_list_clear(&node->redirects, free_redirect);
 	}
-	free(node);
+	gc_free_ptr(node);
 }
 
 t_ast_node	*create_ast_node(t_ast_type type, char *value, t_list *redirects)
 {
 	t_ast_node	*node;
 
-	node = malloc(sizeof(t_ast_node));
+	node = gc_malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->type = type;

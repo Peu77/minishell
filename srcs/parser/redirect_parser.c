@@ -52,8 +52,8 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 		return (false);
 	split = split_quotes(redirect->file);
 	if (!split)
-		return (free(redirect->file), false);
-	free(redirect->file);
+		return (gc_free_ptr(redirect->file), false);
+	gc_free_ptr(redirect->file);
 	redirect->file = split[0];
 	ft_unescape_string(redirect->file);
 	*i += filename_len;
@@ -68,7 +68,7 @@ bool	parse_redirect(t_list **redirects, const char *str,
 
 	redirect = create_redirect(-1, -1, redirect_type, NULL);
 	if (!redirect)
-		return (free(redirect), false);
+		return (gc_free_ptr(redirect), false);
 	if (ft_isdigit(str[*i]))
 	{
 		redirect->fd_left = ft_atoi(str + *i);
@@ -77,7 +77,7 @@ bool	parse_redirect(t_list **redirects, const char *str,
 	}
 	(*i) += 1 + (redirect_type >= TOKEN_REDIRECT_APPEND);
 	if (str[*i] == 0 || (str[*i] == '&' && str[*i + 1] == 0))
-		return (pe("parse error near `\\n'"), free(redirect),
+		return (pe("parse error near `\\n'"), gc_free_ptr(redirect),
 			false);
 	if (!parse_right_area(str, i, redirect))
 		return (free(redirect), false);

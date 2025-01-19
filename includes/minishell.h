@@ -5,9 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:14:20 by ftapponn         ###   ########.fr       */
-/*   Updated: 2025/01/19 18:00:12 by eebert           ###   ########.fr       */
+/*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 19:47:07 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +15,7 @@
 
 # include "libft.h"
 # include "parse.h"
+# include "gcollector.h"
 # include <errno.h>
 # include <stdio.h>
 # include <readline/history.h>
@@ -88,7 +88,7 @@ typedef struct s_shell
 	t_list	*env;
 	int		exit_status;
 	bool	should_exit;
-	int		heredoc_failed;
+	int     heredoc_failed;
 }			t_shell;
 
 typedef struct s_parenthesis_fd
@@ -103,6 +103,7 @@ typedef struct s_parenthesis_fd
 int			minishell_non_interactive_argument(char **args, int argc);
 void		minishell_non_interactive(void);
 void		minishell_interactive(void);
+void		destroy_minishell(int status);
 
 // monitor
 int			tree_monitor(t_ast_node *node, t_command *command);

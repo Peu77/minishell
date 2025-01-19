@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 20:05:55 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection_heredoc.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:25 by ftapponn          #+#    #+#             */
@@ -44,7 +56,7 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter,
 			cleanup_and_exit(temp_fd, command, parenthesis_fd);
 		if (ft_strncmp(buffer, delimiter, ft_strlen(delimiter)) == 0)
 		{
-			free(buffer);
+			gc_free_ptr(buffer);
 			break ;
 		}
 		write(temp_fd, buffer, ft_strlen(buffer));

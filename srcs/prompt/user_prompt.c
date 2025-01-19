@@ -19,7 +19,7 @@ int	get_user_prompt(char **user_prompt)
 	{
 		clear_history();
 		printf("exit\n");
-		free(*user_prompt);
+		gc_free_ptr(*user_prompt);
 		return (0);
 	}
 	add_history(*user_prompt);

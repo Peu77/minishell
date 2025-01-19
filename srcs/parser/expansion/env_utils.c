@@ -80,7 +80,7 @@ char	*expand_env_vars(const char *input, size_t len)
 
 	if (!input)
 		return (NULL);
-	result = malloc(get_env_var_len(input, len) + 1);
+	result = gc_malloc(get_env_var_len(input, len) + 1);
 	if (!result)
 		return (NULL);
 	pos = 0;

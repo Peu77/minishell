@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 19:49:59 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 20:08:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strndup(const char *src, size_t len)
 {
 	char	*dest;
 
-	dest = (char *)malloc(len + 1);
+	dest = (char *)gc_malloc(len + 1);
 	if (!dest)
 		return (NULL);
 	ft_strlcpy(dest, src, len + 1);
@@ -71,7 +71,7 @@ char	*join_str_array(char **list, int size)
 	i = 0;
 	while (i < size)
 		len += ft_strlen(list[i++]) + 1;
-	result = (char *)ft_calloc(len + 1, sizeof(char));
+	result = (char *)gc_add(ft_calloc(len + 1, sizeof(char)));
 	if (!result)
 		return (pev(ERROR_MALLOC), NULL);
 	i = 0;

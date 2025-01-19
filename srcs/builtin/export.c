@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 17:59:47 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:18:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	ft_export(t_command *command)
 			char *existing_value = get_env_value(key);
 			if (existing_value)
 			{
-				char *new_value = ft_strjoin(existing_value, value);
+				char *new_value = gc_add(ft_strjoin(existing_value, value));
 				if (!new_value)
 					return (1);
 				if (!set_env_value(key, new_value))
 					return (1);
-				free(new_value);
+				gc_free_ptr(new_value);
 			}
 			else
 			{

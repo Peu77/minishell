@@ -36,9 +36,9 @@ char	*strlst_to_str(t_list *result_chars)
 
     tmp = result_chars;
     cpy_offset = 0;
-    result = malloc(*get_char_count() + 1);
+    result = gc_malloc(*get_char_count() + 1);
     if (!result)
-        return (ft_lstclear(&result_chars, free), pe(ERROR_MALLOC), NULL);
+        return (gc_list_clear(&result_chars, gc_free_ptr), pe(ERROR_MALLOC), NULL);
     result[*get_char_count()] = '\0';
     while (result_chars)
     {
@@ -48,7 +48,7 @@ char	*strlst_to_str(t_list *result_chars)
         result_chars = result_chars->next;
     }
     *get_char_count() = 0;
-    ft_lstclear(&tmp, free);
+    gc_list_clear(&tmp, gc_free_ptr);
     return (result);
 }
 
@@ -71,7 +71,7 @@ bool add_str_to_result(const char *str, size_t *i, t_list **result_chars, size_t
         return (pe(ERROR_MALLOC), false);
     new_node = ft_lstnew(str_cpy);
     if (!new_node)
-        return (free(str_cpy), pe(ERROR_MALLOC), false);
+        return (gc_free_ptr(str_cpy), pe(ERROR_MALLOC), false);
     (*get_char_count()) += len;
     (*i) += len;
     return (ft_lstadd_back(result_chars, new_node), true);

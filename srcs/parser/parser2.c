@@ -29,14 +29,14 @@ static bool	command_token_ast_node(t_ast_node **cmd_node, t_token *token,
 	else
 	{
 		len = ft_strlen((*cmd_node)->value) + ft_strlen(token->value) + 2;
-		new_value = malloc(len);
+		new_value = gc_malloc(len);
 		if (!new_value)
 			return (free_ast_node(*cmd_node), pe(ERROR_MALLOC), false);
 		ft_strlcpy(new_value, (*cmd_node)->value, len);
 		new_value[ft_strlen((*cmd_node)->value)] = ' ';
 		ft_strlcpy(new_value + ft_strlen((*cmd_node)->value) + 1, token->value,
 			len);
-		free((*cmd_node)->value);
+		gc_free_ptr((*cmd_node)->value);
 		(*cmd_node)->value = new_value;
 	}
 	return (true);
@@ -52,7 +52,7 @@ t_ast_node	*parse_command(t_list **tokens)
 	while (*tokens && (((t_token *)(*tokens)->content)->type == TOKEN_STRING))
 	{
 		if (!command_token_ast_node(&cmd_node, (*tokens)->content, redirects))
-			return (ft_lstclear(&redirects, free_redirect), NULL);
+			return (gc_list_clear(&redirects, free_redirect), NULL);
 		*tokens = (*tokens)->next;
 	}
 	return (cmd_node);

@@ -76,7 +76,7 @@ void	free_env_entry(void *content)
 	t_env_entry	*entry;
 
 	entry = content;
-	free(entry->key);
-	free(entry->value);
-	free(entry);
+	gc_free_ptr(entry->key);
+	gc_free_ptr(entry->value);
+	gc_free_ptr(entry);
 }

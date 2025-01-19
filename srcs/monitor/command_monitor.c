@@ -23,20 +23,20 @@ int	command_monitor(t_ast_node *node, t_command *command)
 	tmp = expand_string(node->value);
 	if(!tmp)
 		return (1);
-	free(node->value);
+	gc_free_ptr(node->value);
 	node->value = tmp;
 	tmp = expand_wildcards(node->value);
 	if(!tmp)
 		return (1);
-	free(node->value);
+	gc_free_ptr(node->value);
 	node->value = tmp;
 	tmp = filter_and_get_redirects(node->value, &node->redirects);
 	if (!tmp)
 		return (1);
-	free(node->value);
+	gc_free_ptr(node->value);
 	node->value = tmp;
 	argv = split_quotes(node->value);
-	free(node->value);
+	gc_free_ptr(node->value);
 	if (!transform_node_to_command(argv, &command, node->redirects))
 		return (1);
 	while(command->argv[i])

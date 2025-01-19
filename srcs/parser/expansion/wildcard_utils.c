@@ -36,12 +36,12 @@ bool	get_files_in_dir(const char *path, t_list **list, size_t *amount)
 		if (entry == NULL)
 			break ;
 		(*amount)++;
-		file_name_cpy = ft_strdup(entry->d_name);
+		file_name_cpy = gc_add(ft_strdup(entry->d_name));
 		if (!file_name_cpy)
-			return (pe("malloc failed"), false);
+			return (pe("gc_malloc failed"), false);
 		new_node = ft_lstnew(file_name_cpy);
 		if (!new_node)
-			return (free(file_name_cpy), pe("malloc failed"), false);
+			return (gc_free_ptr(file_name_cpy), pe("malloc failed"), false);
 		ft_lstadd_back(list, new_node);
 	}
 	return (closedir(dir), true);

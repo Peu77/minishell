@@ -6,17 +6,17 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 17:35:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:57:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static char	*construct_full_path(char *path, const char *command)
 {
 	char	*full_path;
 
-	full_path = malloc(ft_strlen(path) + ft_strlen(command) + 2);
+	full_path = gc_malloc(ft_strlen(path) + ft_strlen(command) + 2);
 	if (!full_path)
 		return (pev(ERROR_MALLOC), NULL);
 	ft_strlcpy(full_path, path, ft_strlen(path) + 1);
@@ -46,7 +46,7 @@ static char	*find_command_in_path(const char *command)
 			return (free_string_array(paths), NULL);
 		if (access(full_path, F_OK) == 0)
 			return (free_string_array(paths), full_path);
-		free(full_path);
+		gc_free_ptr(full_path);
 		full_path = NULL;
 	}
 	free_string_array(paths);
@@ -57,11 +57,11 @@ int	get_path(t_command **command)
 {
 	char	*found_path;
 
-	(*command)->path = ft_strdup((*command)->command_name);
+	(*command)->path = gc_add(ft_strdup((*command)->command_name));
 	found_path = find_command_in_path((*command)->command_name);
 	if (found_path)
 	{
-		free((*command)->path);
+		gc_free_ptr((*command)->path);
 		(*command)->path = found_path;
 	}
 	return (1);
