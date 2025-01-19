@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:02:57 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:29:52 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 15:50:36 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ bool add_str_to_result(const char *str, size_t *i, t_list **result_chars, size_t
     t_list	*new_node;
 
     str_cpy = ft_substr(str, *i, len);
-    printf("add_char_to_result: %s\n", str_cpy);
     if (!str_cpy)
         return (pe(ERROR_MALLOC), false);
     new_node = ft_lstnew(str_cpy);
