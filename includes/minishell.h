@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 18:21:25 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:14:20 by ftapponn         ###   ########.fr       */
 /*   Updated: 2025/01/19 18:00:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -88,6 +88,7 @@ typedef struct s_shell
 	t_list	*env;
 	int		exit_status;
 	bool	should_exit;
+	int		heredoc_failed;
 }			t_shell;
 
 typedef struct s_parenthesis_fd

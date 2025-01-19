@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:25 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/19 18:17:23 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:15:47 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,34 @@ int	redirection_heredoc(const char *delimiter, t_command *command,
 	else
 	{
 		waitpid(pid, &status, 0);
-		main_signals();
+		printf("Debug: status = %d\n", status);
+		reset_signals();
 		if (WIFEXITED(status))
+		{
+			int exit_code = WEXITSTATUS(status);
+			if (exit_code == 130)
+			{
+				t_shell *shell = get_shell();
+				shell->exit_status = 130;
+				shell->heredoc_failed = 1;
+				return (pec("Heredoc process interrupted by SIGINT\n"));
+			}
+			else if (exit_code != 0)
+				return (pec("Heredoc process failed\n"));
+		}
+		if (WIFSIGNALED(status)) 
+		{
+			if (WTERMSIG(status) == SIGINT)
+				return (pec("Heredoc process interrupted by SIGINT\n"));
+			return (pec("Heredoc process terminated by another signal\n"));
+		}
+		else if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) != 0)
 				return (pec("Heredoc process failed\n"));
 		}
 		else
-			return (pec("Heredoc process terminated abnormally\n"));
+		return (pec("Heredoc process terminated abnormally\n"));
 	}
 	redirect_input_from_heredoc();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 18:23:19 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 19:19:14 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ static void	command_not_found(char *path)
 
 int	execution_command(t_command* command)
 {
+  t_shell *shell = get_shell();
+    if (shell->heredoc_failed == 1)
+    {
+        shell->heredoc_failed = 0;
+        return (130);
+    }
 	pid_t	pid;
 	int		sig_num;
 	int		status;
