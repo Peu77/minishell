@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 23:45:01 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:41:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 		return (handle_question_mark(i, result_chars));
 	start = *i;
 	end = *i;
-	while (str[end] && ft_isalnum(str[end]))
+	while (str[end] && (ft_isalnum(str[end]) || str[end] == '_'))
 		end++;
 	sub_str = gc_add(ft_substr(str, start, end - start));
 	return (add_value_as_node(result_chars, get_env_value(sub_str), i, end));
