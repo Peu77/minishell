@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:02:57 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:50:36 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 20:56:28 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ char	*strlst_to_str(t_list *result_chars)
     tmp = result_chars;
     cpy_offset = 0;
     result = gc_malloc(*get_char_count() + 1);
-    if (!result)
-        return (gc_list_clear(&result_chars, gc_free_ptr), pe(ERROR_MALLOC), NULL);
     result[*get_char_count()] = '\0';
     while (result_chars)
     {
@@ -66,12 +64,8 @@ bool add_str_to_result(const char *str, size_t *i, t_list **result_chars, size_t
     char	*str_cpy;
     t_list	*new_node;
 
-    str_cpy = ft_substr(str, *i, len);
-    if (!str_cpy)
-        return (pe(ERROR_MALLOC), false);
-    new_node = ft_lstnew(str_cpy);
-    if (!new_node)
-        return (gc_free_ptr(str_cpy), pe(ERROR_MALLOC), false);
+    str_cpy = gc_add(ft_substr(str, *i, len));
+    new_node = gc_add(ft_lstnew(str_cpy));
     (*get_char_count()) += len;
     (*i) += len;
     return (ft_lstadd_back(result_chars, new_node), true);

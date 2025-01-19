@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 19:04:08 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:01:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ static bool	handle_question_mark(int *i, t_list **result_chars)
 	char	*value;
 	t_list	*new_node;
 
-	value = ft_itoa(get_shell()->exit_status);
+	value = gc_add(ft_itoa(get_shell()->exit_status));
 	if (!value)
 		return (pe("malloc failed"), false);
-	new_node = ft_lstnew(value);
+	new_node = gc_add(ft_lstnew(value));
 	if (!new_node)
 		return (gc_free_ptr(value), gc_list_clear(result_chars, gc_free_ptr),
 			pe("malloc failed"), false);
 	ft_lstadd_back(result_chars, new_node);
+	*get_char_count() += ft_strlen(new_node->content);
 	*i += 1;
 	return (true);
 }
