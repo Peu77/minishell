@@ -5,6 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 18:23:19 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_command.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
 /*   Updated: 2025/01/19 17:31:02 by ftapponn         ###   ########.fr       */
 /*   Updated: 2025/01/19 17:33:01 by eebert           ###   ########.fr       */
@@ -26,6 +38,8 @@ static void	command_not_found(char *path)
 	}
 	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
+	if (errno == EACCES || errno == EISDIR)
+		exit(126);
 	exit(127);
 }
 
