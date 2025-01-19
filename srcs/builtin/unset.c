@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:19:51 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:24:34 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,27 @@ int	remove_variable_from_env(const char *key)
 
 int	ft_unset(t_command *command)
 {
-	char	**arg;
+	size_t i;
 	int		result;
 
-	if (!command->argument)
-		return (pev("unset: not enough arguments"), 1);
-	arg = ft_split(command->argument, ' ');
+	i = 0;
 	result = 0;
-	while (*arg)
+	while (command->argv[i])
 	{
-		if (!remove_variable_from_env(*arg))
-			result = -1;
-		arg++;
+		if(!is_valid_identifier(command->argv[i]))
+		{
+			write(STDERR_FILENO, RED, ft_strlen(RED));
+			write(STDERR_FILENO, "minishell: unset: `", 20);
+			write(STDERR_FILENO, command->argv[i], ft_strlen(command->argv[i]));
+			write(STDERR_FILENO, "': not a valid identifier", 26);
+			write(STDERR_FILENO, RESET, ft_strlen(RESET));
+			write(STDERR_FILENO, "\n", 1);
+			result = 1;
+		}
+		else
+			result =
+		remove_variable_from_env(command->argv[i]);
+		i++;
 	}
-	return (free_string_array(arg), result);
+	return (result);
 }

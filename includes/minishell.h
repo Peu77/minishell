@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:47:07 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:13:49 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ t_shell		*get_shell(void);
 
 // env utils
 void	print_env_list(const bool filter_empty);
-int			is_valid_identifier(const char *str);
+bool is_valid_identifier(const char *identifier);
 bool		initialise_env(char **env);
 bool		set_env_value(const char *key, const char *value);
 bool		add_env_entry(const char *key, const char *value);
