@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:24:34 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:34:45 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	ft_unset(t_command *command)
 			write(STDERR_FILENO, "\n", 1);
 			result = 1;
 		}
-		else
-			result =
+
 		remove_variable_from_env(command->argv[i]);
 		i++;
 	}
