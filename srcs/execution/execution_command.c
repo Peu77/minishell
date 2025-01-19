@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:14:35 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:23:43 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ int	execution_command(char **arguments, char *path)
 		if (WIFSIGNALED(status))
 		{
 			sig_num = WTERMSIG(status);
-			if (sig_num == SIGINT)
-				return (130);
 			return (128 + sig_num);
 		}
 	}

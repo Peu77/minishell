@@ -6,11 +6,12 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/19 16:24:58 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:18:22 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdio.h>
 
 int	pipe_left_process(t_ast_node *node, t_pipe_data *pipe_data)
 {
@@ -37,6 +38,39 @@ int	pipe_fork_error(t_pipe_data *pipe_data)
 	return (pec("Fork for right process failed"));
 }
 
+
+
+void print_node_left(t_ast_node *node) {
+    if (node) {
+        // First, check and print information about the left node
+        if (node->left) {
+            printf("Left node - value: %s, type: %d\n", node->left->value, node->left->type);
+
+            // Now, check and print the redirects for the left node
+            if (node->left->redirects) {
+                t_list *current_redirect = node->left->redirects;
+
+                // Iterate over the list of redirects
+                while (current_redirect) {
+                    // Cast the content of the current list node to t_redirect
+                    t_redirect *redirect = (t_redirect *)current_redirect->content;
+
+                    // Print the details of the current redirect
+                    printf("Redirect (left node) - fd_left: %d, fd_right: %d, file: %s, type: %d\n",
+                           redirect->fd_left, redirect->fd_right, redirect->file, redirect->type);
+
+                    // Move to the next redirect in the list
+                    current_redirect = current_redirect->next;
+                }
+            } else {
+                printf("No redirects in the left node.\n");
+            }
+
+        } else {
+            printf("No left node.\n");
+        }
+    }
+}
 int	pipe_monitor(t_ast_node *node)
 {
 	t_pipe_data	pipe_data;
@@ -49,12 +83,14 @@ int	pipe_monitor(t_ast_node *node)
 	pipe_data.left_pid = fork();
 	if (pipe_data.left_pid == -1)
 		return (pec("Fork for left process failed"));
+
+	print_node_left(node);
 	if (pipe_data.left_pid == 0)
+	{	
 		pipe_left_process(node, &pipe_data);
+	}
 	pipe_data.right_pid = fork();
-	if (pipe_data.right_pid == -1)
-		return (pipe_fork_error(&pipe_data));
-	if (pipe_data.right_pid == 0)
+	if (pipe_data.right_pid == -1) return (pipe_fork_error(&pipe_data)); if (pipe_data.right_pid == 0)
 		pipe_right_process(node, &pipe_data);
 	close(pipe_data.pipe_fds[0]);
 	close(pipe_data.pipe_fds[1]);
