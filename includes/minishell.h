@@ -6,7 +6,8 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 18:17:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:21:25 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:00:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +97,6 @@ typedef struct s_parenthesis_fd
 }			t_parenthesis_fd;
 
 // main
-void		print_env_list(void);
 
 // minishell
 int			minishell_non_interactive_argument(char **args, int argc);
@@ -129,7 +129,7 @@ int			print_error(const char *message);
 t_shell		*get_shell(void);
 
 // env utils
-void		print_env_list(void);
+void	print_env_list(const bool filter_empty);
 int			is_valid_identifier(const char *str);
 bool		initialise_env(char **env);
 bool		set_env_value(const char *key, const char *value);
@@ -155,7 +155,7 @@ int			ft_clear(void);
 // execution
 int			execution_monitor(t_command *command);
 int			prepare_execution_command(t_command *command);
-int			execution_command(char **arguments, char *path);
+int			execution_command(t_command *command);
 
 // redirection
 void		redirection_monitor(t_command *command,

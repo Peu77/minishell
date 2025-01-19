@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 18:17:41 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:21:09 by ftapponn         ###   ########.fr       */
 /*   Updated: 2025/01/19 16:58:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -20,13 +20,15 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:39 by ftapponn          #+#    #+#             */
 /*   Updated: 2025/01/13 19:18:54 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:31:02 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:33:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <unistd.h>
 
-static void	command_not_found(const char *path)
+static void	command_not_found(char *path)
 {
 	char	*message;
 
@@ -41,7 +43,7 @@ static void	command_not_found(const char *path)
 	exit(127);
 }
 
-int	execution_command(char **arguments, char *path)
+int	execution_command(t_command* command)
 {
 	pid_t	pid;
 	int		sig_num;
@@ -58,10 +60,11 @@ int	execution_command(char **arguments, char *path)
 	if (pid == 0)
 	{
 		signal_command();
-		if (execve(path, arguments, env_cpy) == -1)
-			command_not_found(path);
+		if (execve(command->path, command->argv, env_cpy) == -1)
+			command_not_found(command->path);
 		exit(EXIT_SUCCESS);
 	}
+
 		waitpid(pid, &status, 0);
 		free_string_array(env_cpy);
 		main_signals();
@@ -106,6 +109,6 @@ int	prepare_execution_command(t_command *command)
 	free(str);
 	if (!command->argv)
 		return (pec(ERROR_SPLIT));
-	result = execution_command(command->argv, command->path);
+	result = execution_command(command);
 	return (result);
 }

@@ -3,10 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_monitor.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/19 17:50:37 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:20:49 by ftapponn         ###   ########.fr       */
+/*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/19 18:00:30 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +93,9 @@ int	pipe_monitor(t_ast_node *node)
 		pipe_left_process(node, &pipe_data);
 	}
 	pipe_data.right_pid = fork();
-	if (pipe_data.right_pid == -1) return (pipe_fork_error(&pipe_data)); if (pipe_data.right_pid == 0)
+	if (pipe_data.right_pid == -1)
+		return (pipe_fork_error(&pipe_data));
+	if (pipe_data.right_pid == 0)
 		pipe_right_process(node, &pipe_data);
 	close(pipe_data.pipe_fds[0]);
 	close(pipe_data.pipe_fds[1]);

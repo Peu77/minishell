@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 14:41:24 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 17:59:47 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ int	ft_export(t_command *command)
 	int		i;
 
 	if (!command->argv[1])
-		return (ft_env(command));
+		return (print_env_list(false), 0);
 	i = 1;
 	while (command->argv[i])
 	{
-		printf("argv[%d]: %s\n", i, command->argv[i]);
 		equal_sign = ft_strchr(command->argv[i], '=');
 		plus_equal_sign = ft_strnstr(command->argv[i], "+=", ft_strlen(command->argv[i]));
-		printf("plus_equal_sign: %s\n", plus_equal_sign);
 		if (plus_equal_sign && plus_equal_sign != command->argv[i])
 		{
 			ft_strncpy(key, command->argv[i], plus_equal_sign - command->argv[i]);
