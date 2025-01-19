@@ -6,7 +6,8 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 17:23:43 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:31:02 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:58:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +36,7 @@ static void	command_not_found(const char *path)
 		write(STDERR_FILENO, path, 1);
 		path++;
 	}
-	write(STDERR_FILENO, message, 19);
+	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
 	exit(127);
 }
@@ -61,8 +62,6 @@ int	execution_command(char **arguments, char *path)
 			command_not_found(path);
 		exit(EXIT_SUCCESS);
 	}
-	else
-	{
 		waitpid(pid, &status, 0);
 		free_string_array(env_cpy);
 		main_signals();
@@ -71,7 +70,6 @@ int	execution_command(char **arguments, char *path)
 			sig_num = WTERMSIG(status);
 			return (128 + sig_num);
 		}
-	}
 	return (WEXITSTATUS(status));
 }
 
