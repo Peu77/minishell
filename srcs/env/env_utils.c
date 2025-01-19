@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:00:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:13:45 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #include <limits.h>
 #include <minishell.h>
 
-void	print_env_list(void)
+void	print_env_list(const bool filter_empty)
 {
 	t_list		*current;
 	t_env_entry	*entry;
@@ -34,7 +34,14 @@ void	print_env_list(void)
 	while (current)
 	{
 		entry = current->content;
-		printf("%s=%s\n", entry->key, entry->value);
+		if ((!entry->value || *entry->value == 0) && filter_empty) {
+			current = current->next;
+			continue;
+		}
+		ft_printf("%s", entry->key);
+		if (entry->value && *entry->value)
+			ft_printf("=%s", entry->value);
+		ft_printf("\n");
 		current = current->next;
 	}
 }
@@ -73,6 +80,7 @@ bool	initialise_env(char **env)
 		i++;
 	}
 	increase_shlvl();
+	set_env_value("OLDPWD", "");
 	return (true);
 }
 

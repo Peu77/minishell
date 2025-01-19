@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 14:41:24 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 17:59:47 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_export(t_command *command)
 	int		i;
 
 	if (!command->argv[1])
-		return (ft_env(command));
+		return (print_env_list(false), 0);
 	i = 1;
 	while (command->argv[i])
 	{
