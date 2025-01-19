@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:54:07 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:07:55 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:34:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_redirect	*create_redirect(int fd_left, int fd_right, t_token_type type,
 	t_redirect	*redirect;
 
 	redirect = gc_malloc(sizeof(t_redirect));
-	if (!redirect)
-		return (NULL);
 	redirect->fd_left = fd_left;
 	redirect->fd_right = fd_right;
 	redirect->type = type;

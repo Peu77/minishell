@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:33:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:32:28 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ bool					parse_redirect_to_token(t_list **tokens,
 							const char *str, t_token_type redirect_type,
 							size_t *i);
 
-t_token_type			is_redirect(const char *str);
+t_token_type			is_redirect(const char *str, size_t i);
 
 t_token_type			get_token_type(const char *str, size_t i, bool in_quote);
 
@@ -153,7 +153,8 @@ char	*ft_unescape_string(char *str);
 
 char	**split_quotes(char const *str);
 
-char* filter_and_get_redirects(const char* input, t_list** redirects);
+char* filter_and_get_redirects(const char* input, t_list** redirects, int* exit_code);
+
 
 bool skip_safe_quotes(const char* str, size_t* i, t_list** str_list);
 

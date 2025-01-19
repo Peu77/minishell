@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 22:15:11 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:35:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,8 @@ bool	parse_redirect(t_list **redirects, const char *str,
 		t_token_type redirect_type, size_t *i)
 {
 	t_redirect	*redirect;
-	t_list		*new_node;
 
 	redirect = create_redirect(-1, -1, redirect_type, NULL);
-	if (!redirect)
-		return (gc_free_ptr(redirect), false);
 	if (ft_isdigit(str[*i]))
 	{
 		redirect->fd_left = ft_atoi(str + *i);
@@ -82,8 +79,5 @@ bool	parse_redirect(t_list **redirects, const char *str,
 			false);
 	if (!parse_right_area(str, i, redirect))
 		return (free(redirect), false);
-	new_node = ft_lstnew(redirect);
-	if (!new_node)
-		return (free_redirect(redirect), false);
-	return (ft_lstadd_back(redirects, new_node), true);
+	return (ft_lstadd_back(redirects, gc_add(ft_lstnew(redirect))), true);
 }

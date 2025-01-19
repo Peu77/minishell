@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:38:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:54:24 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:33:06 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ static bool	handle_token_string(t_token *token, t_list **tokens, t_list** redire
 {
 	char	*trimmed;
 	char*	tmp;
+	int redirect_exit_code;
 
 	tmp = expand_string(token->value);
 	if(!tmp)
 		return (false);
 	gc_free_ptr(token->value);
 	token->value = tmp;
-	tmp = filter_and_get_redirects(token->value, redirects);
+	tmp = filter_and_get_redirects(token->value, redirects, &redirect_exit_code);
 	if (!tmp)
 		return (false);
 	ft_unescape_string(tmp);
