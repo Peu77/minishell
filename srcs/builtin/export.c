@@ -45,10 +45,8 @@ int	ft_export(t_command *command)
 	i = 1;
 	while (command->argv[i])
 	{
-		printf("argv[%d]: %s\n", i, command->argv[i]);
 		equal_sign = ft_strchr(command->argv[i], '=');
 		plus_equal_sign = ft_strnstr(command->argv[i], "+=", ft_strlen(command->argv[i]));
-		printf("plus_equal_sign: %s\n", plus_equal_sign);
 		if (plus_equal_sign && plus_equal_sign != command->argv[i])
 		{
 			ft_strncpy(key, command->argv[i], plus_equal_sign - command->argv[i]);
