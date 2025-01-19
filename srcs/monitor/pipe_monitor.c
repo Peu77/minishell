@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/18 17:21:26 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:24:58 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	pipe_monitor(t_ast_node *node)
 {
 	t_pipe_data	pipe_data;
 
+    reset_signals();
 	if (!node->left || !node->right)
 		return (pec("Invalid pipe node: missing children"));
 	if (pipe(pipe_data.pipe_fds) == -1)
@@ -59,6 +60,7 @@ int	pipe_monitor(t_ast_node *node)
 	close(pipe_data.pipe_fds[1]);
 	waitpid(pipe_data.left_pid, NULL, 0);
 	waitpid(pipe_data.right_pid, &pipe_data.right_status, 0);
+	main_signals();
 	if (WIFEXITED(pipe_data.right_status))
 		pipe_data.right_result = WEXITSTATUS(pipe_data.right_status);
 	return (pipe_data.right_result);
