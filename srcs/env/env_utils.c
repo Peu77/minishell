@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 18:13:45 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:14:04 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ bool	initialise_env(char **env)
 	return (true);
 }
 
-int	is_valid_identifier(const char *str)
-{
-	int	i;
+bool is_valid_identifier(const char *identifier) {
+	if (!identifier || *identifier == '\0')
+		return false;
 
-	i = 1;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
+	if (!ft_isalpha(identifier[0]) && identifier[0] != '_')
+		return false;
+
+	for (size_t i = 1; identifier[i] != '\0'; i++) {
+		if (!ft_isalnum(identifier[i]) && identifier[i] != '_')
+			return false;
 	}
-	return (1);
+	return true;
 }

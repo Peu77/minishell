@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 23:09:27 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:17:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static char* ft_strncpy(char *dest, const char *src, size_t n)
 	}
 	return (dest);
 }
-
-
 
 int	ft_export(t_command *command)
 {
@@ -60,6 +58,17 @@ int	ft_export(t_command *command)
 				i++;
 				continue;
 			}
+			if(!is_valid_identifier(key)) {
+				write(STDERR_FILENO, RED, ft_strlen(RED));
+				write(STDERR_FILENO, "minishell: export: `", 20);
+				write(STDERR_FILENO, key, ft_strlen(key));
+				write(STDERR_FILENO, "': not a valid identifier", 26);
+				write(STDERR_FILENO, RESET, ft_strlen(RESET));
+				write(STDERR_FILENO, "\n", 1);
+				result = 1;
+				i++;
+				continue;
+			}
 			ft_strncpy(value, plus_equal_sign + 2, MAX_VAR_LEN);
 			char *existing_value = get_env_value(key);
 			if (existing_value)
@@ -83,6 +92,17 @@ int	ft_export(t_command *command)
 			key[equal_sign - command->argv[i]] = '\0';
 			if(key[0] == '\0') {
 				pe("minishell: export: `=': not a valid identifier");
+				result = 1;
+				i++;
+				continue;
+			}
+			if(!is_valid_identifier(key)) {
+				write(STDERR_FILENO, RED, ft_strlen(RED));
+				write(STDERR_FILENO, "minishell: export: `", 20);
+				write(STDERR_FILENO, key, ft_strlen(key));
+				write(STDERR_FILENO, "': not a valid identifier", 26);
+				write(STDERR_FILENO, RESET, ft_strlen(RESET));
+				write(STDERR_FILENO, "\n", 1);
 				result = 1;
 				i++;
 				continue;
