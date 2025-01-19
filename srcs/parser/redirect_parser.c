@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 13:05:36 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:15:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 
 static size_t get_redirect_len(const char *str)
 {
+	const size_t str_len = ft_strlen(str);
 	size_t len;
 
 	len = 0;
-	while(str[len]){
+	while(len < str_len){
 		if(skip_quotes(str, &len))
 			continue;
 		if(ft_isspace(str[len]) && (len != 0 && str[len -1] != '\\'))

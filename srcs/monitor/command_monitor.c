@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:38:30 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:28:10 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,12 @@ int	command_monitor(t_ast_node *node, t_command *command)
 
 	 i = 0;
 	tmp = expand_string(node->value);
-	if(!tmp)
-		return (1);
 	gc_free_ptr(node->value);
 	node->value = tmp;
 	tmp = expand_wildcards(node->value);
-	if(!tmp)
-		return (1);
 	gc_free_ptr(node->value);
 	node->value = tmp;
 	tmp = filter_and_get_redirects(node->value, &node->redirects);
-	if (!tmp)
-		return (1);
 	gc_free_ptr(node->value);
 	node->value = tmp;
 	argv = split_quotes(node->value);
