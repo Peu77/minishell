@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 13:15:16 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 15:08:48 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,27 @@ static bool	handle_single_quotes(const char *str, int *i, t_list **result_chars)
 
 	len = 0;
 
+	if(str[*i] == 0)
+		return false;
 	while (str[*i + len + 1] && (str[*i + len] != '\'' || is_escaped(str, *i + len)))
 		len++;
 	str_cpy = ft_substr(str, *i, len + 1);
 	if (!str_cpy)
 		return (pe(ERROR_MALLOC), false);
 	new_node = ft_lstnew(str_cpy);
-	(*get_char_count()) += (int)len;
+	(*get_char_count()) += (int)len + 1;
 	*i += len + 1;
 	if (!new_node)
 		return (pe(ERROR_MALLOC), false);
 	ft_lstadd_back(result_chars, new_node);
-	return (true);
+	return (str[*i] != '\0');
 }
 
 static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
 {
 	t_list	*new_node;
 
-	(*i)++;
-	ft_lstadd_back(result_chars, ft_lstnew(ft_strdup("\"")));
+	add_char_to_result("\"", (size_t*)i, result_chars);
 	while (str[*i] && (str[*i] != '\"' || is_escaped(str, *i)))
 	{
 		if (str[*i] == '$' && (ft_isalnum(str[*i + 1]) || str[*i + 1] == '?'))
@@ -56,13 +57,14 @@ static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
 		ft_lstadd_back(result_chars, new_node);
 		(*i)++;
 	}
-	ft_lstadd_back(result_chars, ft_lstnew(ft_strdup("\"")));
-	(*i)++;
-	return (true);
+	add_char_to_result("\"", (size_t*)i, result_chars);
+	return (str[*i] != '\0');
 }
 
 static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 {
+	if(str[*i] == 0)
+		return false;
 	if (str[*i] == '$' && !is_escaped(str, *i) && (ft_isalnum(str[*i + 1]) || str[*i + 1] == '?'))
 	{
 		(*i)++;
@@ -89,11 +91,11 @@ char*			expand_string(const char* str)
 		if ((str[i] == '\'' && !is_escaped(str, i) && !handle_single_quotes(str, &i, &result_chars))
 			|| (str[i] == '\"' && !is_escaped(str, i) && !handle_double_quotes(str, &i,
 					&result_chars)))
-			return (ft_lstclear(&result_chars, free), NULL);
+			break;
 		if ((str[i] == '\'' || str[i] == '\"') && !is_escaped(str, i))
 			continue ;
 		if (!handle_non_quotes(str, &i, &result_chars))
-			return (ft_lstclear(&result_chars, free), NULL);
+			break;
 	}
 	return (strlst_to_str(result_chars));
 }
