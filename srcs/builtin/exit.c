@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 22:59:58 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:27:06 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_exit(t_command *command)
 		return (0);
 	}
 	if (validate_exit_arguments(command->argv) != 0)
-		return (-1);
+		return (1);
 	get_shell()->should_exit = true;
 	return (ft_atoi(command->argv[1]) % 256);
 }
