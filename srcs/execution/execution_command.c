@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:14:35 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:58:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	command_not_found(const char *path)
 		write(STDERR_FILENO, path, 1);
 		path++;
 	}
-	write(STDERR_FILENO, message, 19);
+	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
 	exit(127);
 }
