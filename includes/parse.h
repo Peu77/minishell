@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:48:49 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:34:22 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void					print_ast_node(t_ast_node *node, int depth);
 
 void					print_ast_type(const t_ast_type type);
 
-bool					expand_string(t_ast_node *node);
+char*					expand_string(const char* str);
 
 int						get_wildcard_len(const char *str);
 
@@ -147,7 +147,7 @@ bool					is_empty_string_token(t_token *token);
 bool	parse_redirect(t_list **redirects, const char *str,
 		t_token_type redirect_type, size_t *i);
 
-char	*strlst_to_str(const t_list *result_chars);
+char	*strlst_to_str(t_list *result_chars);
 
 char	*ft_unescape_string(char *str);
 

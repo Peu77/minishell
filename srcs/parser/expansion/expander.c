@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 00:21:37 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:26:50 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,15 @@ static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 	return (add_char_to_result(str, i, result_chars));
 }
 
-bool	expand_string(t_ast_node *node)
+char*			expand_string(const char* str)
 {
-	char	*str;
 	int		i;
 	t_list	*result_chars;
 
 	result_chars = NULL;
 	i = 0;
-	str = node->value;
 	if (!str)
-		return (true);
+		return (NULL);
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	while (str[i])
@@ -91,15 +89,13 @@ bool	expand_string(t_ast_node *node)
 		if ((str[i] == '\'' && !is_escaped(str, i) && !handle_single_quotes(str, &i, &result_chars))
 			|| (str[i] == '\"' && !is_escaped(str, i) && !handle_double_quotes(str, &i,
 					&result_chars)))
-			return (ft_lstclear(&result_chars, free), false);
+			return (ft_lstclear(&result_chars, free), NULL);
 		if ((str[i] == '\'' || str[i] == '\"') && !is_escaped(str, i))
 			continue ;
 		if (!handle_non_quotes(str, &i, &result_chars))
-			return (ft_lstclear(&result_chars, free), false);
+			return (ft_lstclear(&result_chars, free), NULL);
 	}
-	free(node->value);
-	node->value = strlst_to_str(result_chars);
-	return (ft_lstclear(&result_chars, free), node->value != NULL);
+	return (strlst_to_str(result_chars));
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:48:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:49:35 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static size_t get_redirect_len(const char *str)
 static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 {
 	size_t	filename_len;
+	char** split;
 
 	if (str[*i] == '&')
 	{
@@ -59,9 +60,14 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 	if (filename_len == 0)
 		return (pe("parse error near `\\n'"), false);
 	redirect->file = ft_substr(str, *i, filename_len);
-	ft_unescape_string(redirect->file);
-	if (redirect->file == NULL)
+	if (!redirect->file)
 		return (false);
+	split = split_quotes(redirect->file);
+	if (!split)
+		return (free(redirect->file), false);
+	free(redirect->file);
+	redirect->file = split[0];
+	ft_unescape_string(redirect->file);
 	*i += filename_len;
 	return (true);
 }

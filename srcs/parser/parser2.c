@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:28:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 20:49:50 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:07:47 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,14 @@ t_ast_node	*parse_command(t_list **tokens)
 {
 	t_ast_node	*cmd_node;
 	t_list		*redirects;
-	t_list		*last_valid_token_node;
 
 	cmd_node = NULL;
 	redirects = NULL;
-	last_valid_token_node = parse_redirects_tokens_to_tree(&redirects, *tokens);
-	if (last_valid_token_node == NULL)
-		return (ft_lstclear(&redirects, free_redirect), NULL);
-	while (*tokens && (((t_token *)(*tokens)->content)->type == TOKEN_STRING
-		|| is_redirect_token(((t_token *)(*tokens)->content)->type)))
+	while (*tokens && (((t_token *)(*tokens)->content)->type == TOKEN_STRING))
 	{
-		if (((t_token *)(*tokens)->content)->type != TOKEN_STRING)
-		{
-			*tokens = (*tokens)->next;
-			continue ;
-		}
 		if (!command_token_ast_node(&cmd_node, (*tokens)->content, redirects))
 			return (ft_lstclear(&redirects, free_redirect), NULL);
 		*tokens = (*tokens)->next;
 	}
-	if (!cmd_node && redirects)
-		return (ft_lstclear(&redirects, free_redirect), NULL);
-	*tokens = last_valid_token_node;
 	return (cmd_node);
 }

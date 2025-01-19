@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:02:57 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 21:51:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:34:40 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t	*get_char_count(void)
  * @param result_chars list of strings
  * @return new string
  */
-char	*strlst_to_str(const t_list *result_chars)
+char	*strlst_to_str(t_list *result_chars)
 {
     char	*result;
     int		cpy_offset;
@@ -46,6 +46,7 @@ char	*strlst_to_str(const t_list *result_chars)
         result_chars = result_chars->next;
     }
     *get_char_count() = 0;
+    ft_lstclear(&result_chars, free);
     return (result);
 }
 

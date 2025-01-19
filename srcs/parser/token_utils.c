@@ -18,8 +18,6 @@ void	free_token(void *content)
 
 	token = content;
 	free(token->value);
-	if (is_redirect_token(token->type) && token->data)
-		free_redirect(token->data);
 	free(token);
 }
 

@@ -6,17 +6,28 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:38:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 20:10:44 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:54:24 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static bool	handle_token_string(t_token *token, t_list **tokens)
+// TODO: expand and parse redirects
+static bool	handle_token_string(t_token *token, t_list **tokens, t_list** redirects)
 {
 	char	*trimmed;
+	char*	tmp;
 
-	trimmed = ft_strtrim(token->value, " ");
+	tmp = expand_string(token->value);
+	if(!tmp)
+		return (false);
+	free(token->value);
+	token->value = tmp;
+	tmp = filter_and_get_redirects(token->value, redirects);
+	if (!tmp)
+		return (false);
+	ft_unescape_string(tmp);
+	trimmed = ft_strtrim(tmp, " ");
 	if (ft_strlen(trimmed) != 0)
 		return (printf("parse error near `%s'\n", trimmed), free(trimmed),
 			false);
@@ -34,27 +45,10 @@ static bool	handle_token_string(t_token *token, t_list **tokens)
 bool parse_redirects_for_parenteses(t_list **tokens,
                                     t_ast_node *parentheses_node)
 {
-	t_token		*token;
-	t_redirect	*redirect;
-	t_list		*new_node;
-
-	while (*tokens && (is_redirect_token(((t_token *)(*tokens)->content)->type)
-		|| ((t_token *)(*tokens)->content)->type == TOKEN_STRING))
+	while (*tokens && ((t_token *)(*tokens)->content)->type == TOKEN_STRING)
 	{
-		token = (*tokens)->content;
-		redirect = token->data;
-		if (((t_token *)(*tokens)->content)->type == TOKEN_STRING)
-		{
-			if (!handle_token_string((*tokens)->content, tokens))
+			if (!handle_token_string((*tokens)->content, tokens, &parentheses_node->redirects))
 				return (NULL);
-			continue ;
-		}
-		new_node = ft_lstnew(redirect);
-		token->data = NULL;
-		if (!new_node)
-			return (free_redirect(redirect), NULL);
-		ft_lstadd_back(&parentheses_node->redirects, new_node);
-		*tokens = (*tokens)->next;
 	}
 	return (true);
 }
