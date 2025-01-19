@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:15:06 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:58:25 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:05:18 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,9 @@ bool	add_env_entry(const char *key, const char *value)
 	t_list		*new_node;
 
 	entry = gc_malloc(sizeof(t_env_entry));
-	if (!entry)
-		return (pec(ERROR_MALLOC), false);
-	new_node = ft_lstnew(entry);
-	if (!new_node)
-		return (free(entry), pec(ERROR_MALLOC), false);
+	new_node = gc_add(ft_lstnew(entry));
 	entry->key = gc_add(ft_strdup(key));
 	entry->value = gc_add(ft_strdup(value));
-	if (!entry->key || !entry->value)
-		return (pec(ERROR_MALLOC), free_env_entry(entry), false);
 	return (ft_lstadd_back(&get_shell()->env, new_node), true);
 }
 

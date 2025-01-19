@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:01:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:04:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ static bool	handle_question_mark(int *i, t_list **result_chars)
 	t_list	*new_node;
 
 	value = gc_add(ft_itoa(get_shell()->exit_status));
-	if (!value)
-		return (pe("malloc failed"), false);
 	new_node = gc_add(ft_lstnew(value));
-	if (!new_node)
-		return (gc_free_ptr(value), gc_list_clear(result_chars, gc_free_ptr),
-			pe("malloc failed"), false);
 	ft_lstadd_back(result_chars, new_node);
 	*get_char_count() += ft_strlen(new_node->content);
 	*i += 1;
@@ -41,11 +36,7 @@ static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 		value_copy = gc_add(ft_strdup(value));
 	else
 		value_copy = gc_add(ft_strdup(""));
-	if (!value_copy)
-		return (pe(ERROR_MALLOC), false);
-	new_node = ft_lstnew(value_copy);
-	if (!new_node)
-		return (gc_free_ptr(value_copy), pe(ERROR_MALLOC), false);
+	new_node = gc_add(ft_lstnew(value_copy));
 	ft_lstadd_back(result_chars, new_node);
 	*get_char_count() += ft_strlen(new_node->content);
 	*i = end;
@@ -64,7 +55,7 @@ bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 	end = *i;
 	while (str[end] && ft_isalnum(str[end]))
 		end++;
-	sub_str = ft_substr(str, start, end - start);
+	sub_str = gc_add(ft_substr(str, start, end - start));
 	if (!sub_str)
 		return (pe("malloc failed"), false);
 	return (add_value_as_node(result_chars, get_env_value(sub_str), i, end));

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:26:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:15:40 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static bool	lex_string_token(const char *input, size_t *i, t_list **tokens,
 		*in_quote = false;
 	if (string_i > 0)
 	{
-		if (!add_token(tokens, TOKEN_STRING, ft_substr(input, *i, string_i)))
+		if (!add_token(tokens, TOKEN_STRING, gc_add(ft_substr(input, *i, string_i))))
 			return (false);
 		*i += string_i;
 	}

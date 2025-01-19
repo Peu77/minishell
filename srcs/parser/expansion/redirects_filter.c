@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:00:01 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:34:25 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:16:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char* filter_and_get_redirects(const char* input, t_list** redirects) {
             str_len++;
         }
         if (str_len > 0) {
-            ft_lstadd_back(&str_list, ft_lstnew(ft_substr(input, i, str_len)));
+            ft_lstadd_back(&str_list, gc_add(ft_lstnew(gc_add(ft_substr(input, i, str_len)))));
             *get_char_count() += str_len;
 
             i += str_len;

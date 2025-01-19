@@ -47,7 +47,7 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 	filename_len = get_redirect_len(str + *i);
 	if (filename_len == 0)
 		return (pe("parse error near `\\n'"), false);
-	redirect->file = ft_substr(str, *i, filename_len);
+	redirect->file = gc_add(ft_substr(str, *i, filename_len));
 	if (!redirect->file)
 		return (false);
 	split = split_quotes(redirect->file);

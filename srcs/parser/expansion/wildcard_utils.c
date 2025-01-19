@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:38:14 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/14 14:05:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:04:17 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ bool	get_files_in_dir(const char *path, t_list **list, size_t *amount)
 			break ;
 		(*amount)++;
 		file_name_cpy = gc_add(ft_strdup(entry->d_name));
-		if (!file_name_cpy)
-			return (pe("gc_malloc failed"), false);
-		new_node = ft_lstnew(file_name_cpy);
+		new_node = gc_add(ft_lstnew(file_name_cpy));
 		if (!new_node)
 			return (gc_free_ptr(file_name_cpy), pe("malloc failed"), false);
 		ft_lstadd_back(list, new_node);
