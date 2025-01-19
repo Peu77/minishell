@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:50:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:55:11 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:17:30 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ bool	handle_tilde_expansion(int *i, t_list **result_chars)
 	if (!home)
 		return (true);
 	str_cpy = gc_add(ft_strdup(home));
-	if (!str_cpy)
-		return (pe(ERROR_MALLOC), false);
-	new_node = ft_lstnew(str_cpy);
-	if (!new_node)
-		return (pe(ERROR_MALLOC), false);
+	new_node = gc_add(ft_lstnew(str_cpy));
 	(*get_char_count()) += ft_strlen(str_cpy);
 	(*i)++;
 	return (ft_lstadd_back(result_chars, new_node), true);
