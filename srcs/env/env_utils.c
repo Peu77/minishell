@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/17 16:14:48 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:00:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,28 @@ void	print_env_list(void)
 	}
 }
 
+static void increase_shlvl(void)
+{
+	t_env_entry	*entry;
+	char		*shlvl_str;
+	int			shlvl;
+
+	entry = get_env_entry("SHLVL");
+	if (!entry)
+	{
+		add_env_pairstr("SHLVL=1");
+		return ;
+	}
+	shlvl = ft_atoi(entry->value);
+	if (shlvl == INT_MAX)
+		return ;
+	shlvl_str = ft_itoa(shlvl + 1);
+	if (!shlvl_str)
+		return ;
+	free(entry->value);
+	entry->value = shlvl_str;
+}
+
 bool	initialise_env(char **env)
 {
 	int	i;
@@ -50,6 +72,7 @@ bool	initialise_env(char **env)
 			return (false);
 		i++;
 	}
+	increase_shlvl();
 	return (true);
 }
 
