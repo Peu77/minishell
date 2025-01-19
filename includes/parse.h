@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 14:01:13 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 15:33:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ t_ast_node				*parse_command(t_list **tokens);
 
 bool					handle_tilde_expansion(int *i, t_list **result_chars);
 
-bool					add_char_to_result(const char *str, size_t *i,
-							t_list **result_chars);
+bool					add_str_to_result(const char *str, size_t *i,
+							t_list **result_chars, size_t len);
 
 bool					is_empty_string_token(t_token *token);
 
@@ -154,6 +154,8 @@ char	*ft_unescape_string(char *str);
 char	**split_quotes(char const *str);
 
 char* filter_and_get_redirects(const char* input, t_list** redirects);
+
+bool skip_safe_quotes(const char* str, size_t* i, t_list** str_list);
 
 bool is_escaped(const char *str, size_t i);
 

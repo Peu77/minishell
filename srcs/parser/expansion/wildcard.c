@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 13:21:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 15:34:00 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char* expand_wildcards(const char *str)
 	list = NULL;
 	while (str[i])
 	{
-		if(skip_quotes(str, &i))
+		if(skip_safe_quotes(str, &i, &list))
 			continue;
 		wildcard_len = get_wildcard_len(str + i);
 		if (wildcard_len > 0)
@@ -133,7 +133,7 @@ char* expand_wildcards(const char *str)
 				i += wildcard_len;
 				continue;
 			}
-		if (!add_char_to_result(str, &i, &list))
+		if (!add_str_to_result(str, &i, &list, 1))
 			return (ft_lstclear(&list, free), NULL);
 	}
 	return (strlst_to_str(list));
