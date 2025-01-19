@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 15:32:34 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:20:28 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char*			expand_string(const char* str)
 {
 	int		i;
 	t_list	*result_chars;
+	const int	len = ft_strlen(str);
 
 	result_chars = NULL;
 	i = 0;
@@ -71,7 +72,7 @@ char*			expand_string(const char* str)
 		return (NULL);
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	while (1)
+	while (i < len)
 	{
 		if ((str[i] == '\'' && !is_escaped(str, i) && !handle_single_quotes(str, &i, &result_chars))
 			|| (str[i] == '\"' && !is_escaped(str, i) && !handle_double_quotes(str, &i,
