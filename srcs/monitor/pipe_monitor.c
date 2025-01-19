@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/19 17:18:22 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:50:37 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void print_node_left(t_ast_node *node) {
         }
     }
 }
+
 int	pipe_monitor(t_ast_node *node)
 {
 	t_pipe_data	pipe_data;
