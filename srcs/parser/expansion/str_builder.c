@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:02:57 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:34:40 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 14:01:36 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ char	*strlst_to_str(t_list *result_chars)
 {
     char	*result;
     int		cpy_offset;
+    t_list*    tmp;
 
+    tmp = result_chars;
     cpy_offset = 0;
     result = malloc(*get_char_count() + 1);
     if (!result)
-        return (pe(ERROR_MALLOC), NULL);
+        return (ft_lstclear(&result_chars, free), pe(ERROR_MALLOC), NULL);
     result[*get_char_count()] = '\0';
     while (result_chars)
     {
@@ -46,7 +48,7 @@ char	*strlst_to_str(t_list *result_chars)
         result_chars = result_chars->next;
     }
     *get_char_count() = 0;
-    ft_lstclear(&result_chars, free);
+    ft_lstclear(&tmp, free);
     return (result);
 }
 
