@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:02:57 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 14:01:36 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 15:29:52 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,28 @@ char	*strlst_to_str(t_list *result_chars)
     return (result);
 }
 
-bool	add_char_to_result(const char *str, size_t *i, t_list **result_chars)
+/**
+ * this function will add a string to the list of strings
+ * and increases the length of the str-builder
+ * @param str the string from which the substring will be created
+ * @param i the index from which the substring will start
+ * @param result_chars  the list of strings
+ * @param len the length of the substring
+ * @return
+ */
+bool add_str_to_result(const char *str, size_t *i, t_list **result_chars, size_t len)
 {
     char	*str_cpy;
     t_list	*new_node;
 
-    str_cpy = ft_substr(str, *i, 1);
+    str_cpy = ft_substr(str, *i, len);
+    printf("add_char_to_result: %s\n", str_cpy);
     if (!str_cpy)
         return (pe(ERROR_MALLOC), false);
     new_node = ft_lstnew(str_cpy);
     if (!new_node)
         return (free(str_cpy), pe(ERROR_MALLOC), false);
-    (*get_char_count())++;
-    (*i)++;
+    (*get_char_count()) += len;
+    (*i) += len;
     return (ft_lstadd_back(result_chars, new_node), true);
 }
