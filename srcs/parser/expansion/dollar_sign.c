@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:04:38 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:45:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,34 @@ static bool	handle_question_mark(int *i, t_list **result_chars)
 	return (true);
 }
 
+static char *escape_env_value(const char *value) {
+	size_t i;
+
+	size_t len = strlen(value);
+	size_t new_len = len;
+	i = 0;
+	while(i < len) {
+		if (value[i] == '<' || value[i] == '>') {
+			new_len++;
+		}
+		i++;
+	}
+
+	char *escaped_value = gc_malloc(new_len + 1);
+
+	size_t j = 0;
+	i = 0;
+	while(i < len) {
+		if (value[i] == '<' || value[i] == '>') {
+			escaped_value[j++] = '\\';
+		}
+		escaped_value[j++] = value[i];
+		i++;
+	}
+	escaped_value[j] = '\0';
+	return escaped_value;
+}
+
 static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 		int end)
 {
@@ -33,7 +61,7 @@ static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 
 	value_copy = NULL;
 	if (value)
-		value_copy = gc_add(ft_strdup(value));
+		value_copy = escape_env_value(value);
 	else
 		value_copy = gc_add(ft_strdup(""));
 	new_node = gc_add(ft_lstnew(value_copy));
@@ -42,6 +70,8 @@ static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 	*i = end;
 	return (true);
 }
+
+
 
 bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 {
@@ -56,7 +86,5 @@ bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 	while (str[end] && ft_isalnum(str[end]))
 		end++;
 	sub_str = gc_add(ft_substr(str, start, end - start));
-	if (!sub_str)
-		return (pe("malloc failed"), false);
 	return (add_value_as_node(result_chars, get_env_value(sub_str), i, end));
 }

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 23:35:12 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:40:17 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 		(*i)++;
 	filename_len = get_redirect_len(str + *i);
 	if (filename_len == 0)
-		return (pe("parse error near `\\n'"), false);
+		return (pe("parse error near '\\n'"), false);
 	redirect->file = gc_add(ft_substr(str, *i, filename_len));
 	if (!redirect->file)
 		return (false);
@@ -75,7 +75,7 @@ bool	parse_redirect(t_list **redirects, const char *str,
 	}
 	(*i) += 1 + (redirect_type >= TOKEN_REDIRECT_APPEND);
 	if (str[*i] == 0 || (str[*i] == '&' && str[*i + 1] == 0))
-		return (pe("parse error near `\\n'"), gc_free_ptr(redirect),
+		return (pe("parse error near '\\n'"), gc_free_ptr(redirect),
 			false);
 	if (!parse_right_area(str, i, redirect))
 		return (free(redirect), false);

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:15:40 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:40:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	lex_tokens(const char *input, t_list **tokens)
 	if (i != len || in_quote)
 	{
 		if (in_quote)
-			pe("parse error near `\\n'");
+			pe("parse error near '\\n'");
 		return (gc_list_clear(tokens, free_token), false);
 	}
 	return (true);
