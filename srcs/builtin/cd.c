@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 10:54:14 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:00:08 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	ft_cd(t_command *command)
 	getcwd(cwd, sizeof(cwd));
 	if(command->argv[2] != NULL)
 		return (pec("cd : Too much argument"));
-	if (ft_strncmp(command->argv[1], "-", 2) == 0)
+	if (ft_strncmp(command->argv[1], "-", 2) == 0 || ft_strncmp(command->argv[1], "--", 3) == 0)
 	{
 		oldpwd = get_env_value("OLDPWD");
-		if(!oldpwd)
+		if(!oldpwd || !*oldpwd)
 			return (pec("OLDPWD not set"));
 		if (chdir(oldpwd) != 0)
 			return (pec(ERROR_PATH));
