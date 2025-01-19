@@ -6,18 +6,18 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 22:56:08 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 00:31:02 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:20:44 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-bool is_escaped(const char *str, int i)
+bool is_escaped(const char *str, size_t i)
 {
     size_t backslashes;
 
     backslashes = 0;
-    while (i >= 0 && str[i - 1] == '\\')
+    while (i > 0 && str[i - 1] == '\\')
     {
         backslashes++;
         i--;

@@ -50,7 +50,7 @@ char	*strlst_to_str(t_list *result_chars)
     return (result);
 }
 
-bool	add_char_to_result(const char *str, int *i, t_list **result_chars)
+bool	add_char_to_result(const char *str, size_t *i, t_list **result_chars)
 {
     char	*str_cpy;
     t_list	*new_node;

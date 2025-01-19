@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:26:50 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:15:16 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 	}
 	if (str[*i] == '~' && !is_escaped(str, *i) && !handle_tilde_expansion(i, result_chars))
 		return (false);
-	return (add_char_to_result(str, i, result_chars));
+	return (add_char_to_result(str, (size_t*)i, result_chars));
 }
 
 char*			expand_string(const char* str)

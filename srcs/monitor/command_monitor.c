@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 11:45:35 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:23:16 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	command_monitor(t_ast_node *node, t_command *command)
 
 	 i = 0;
 	tmp = expand_string(node->value);
+	if(!tmp)
+		return (1);
+	free(node->value);
+	node->value = tmp;
+	tmp = expand_wildcars(node->value);
 	if(!tmp)
 		return (1);
 	free(node->value);

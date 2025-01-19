@@ -44,6 +44,7 @@ SRC =  srcs/main.c \
 	   srcs/parser/expansion/redirects_filter.c \
 	   srcs/parser/expansion/str_builder.c \
 	   srcs/parser/expansion/str_escape.c \
+	   srcs/parser/expansion/quote_utils.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/and_or_monitor.c \

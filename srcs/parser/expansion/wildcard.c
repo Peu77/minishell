@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/15 17:46:50 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:21:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 #include <parse.h>
 #include <stdbool.h>
 
-static bool	is_match(const char *pattern, int pattern_len, const char *str)
+static bool	is_match(const char *pattern, size_t pattern_len, const char *str, const size_t pattern_i)
 {
 	if (pattern_len == 0)
 	{
 		return (*str == '\0');
 	}
-	if (*pattern == '*')
+	if (*pattern == '*' && !is_escaped(pattern, pattern_i))
 	{
-		if (is_match(pattern + 1, pattern_len - 1, str))
+		if (is_match(pattern + 1, pattern_len - 1, str, pattern_i + 1))
 			return (true);
-		if (*str && is_match(pattern, pattern_len, str + 1))
+		if (*str && is_match(pattern, pattern_len, str + 1, pattern_i))
 			return (true);
 	}
-	if (*str && (*pattern == *str || *pattern == '?'))
+	if (*str && (*pattern == *str || (*pattern == '?' && !is_escaped(pattern, pattern_i))))
 	{
-		return (is_match(pattern + 1, pattern_len - 1, str + 1));
+		return (is_match(pattern + 1, pattern_len - 1, str + 1, pattern_i));
 	}
 	return (false);
 }
@@ -43,7 +43,7 @@ static bool	match_files(const char *pattern, t_list_data files,
 
 	while (*files.list)
 	{
-		if (is_match(pattern, ft_strlen(pattern), (*files.list)->content)
+		if (is_match(pattern, ft_strlen(pattern), (*files.list)->content, 0)
 			&& !((*(char *)(*files.list)->content) == '.' && *pattern != '.'))
 		{
 			if (files.count > 1)
@@ -110,6 +110,33 @@ int	get_wildcard_len(const char *str)
 	if (!found_wildcard)
 		return (0);
 	return (i);
+}
+
+char* expand_wildcars(const char *str)
+{
+	size_t		i;
+	int		wildcard_len;
+	*get_char_count() = 0;
+	t_list	*list;
+
+	i = 0;
+	list = NULL;
+	while (str[i])
+	{
+		if(skip_quotes(str, &i))
+			continue;
+		wildcard_len = get_wildcard_len(str + i);
+		if (wildcard_len > 0)
+			{
+				if (!expand_wildcard(str + i, wildcard_len, &list))
+					return (false);
+				i += wildcard_len;
+				continue;
+			}
+		if (!add_char_to_result(str, &i, &list))
+			return (ft_lstclear(&list, free), NULL);
+	}
+	return (strlst_to_str(list));
 }
 
 /*
