@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:54:42 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:59:45 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 15:40:21 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,51 @@ static bool matches_quote(char c, char quote_type)
     return (c == quote_type);
 }
 
-static size_t   count_words(char const *str)
+static size_t count_words(char const *str)
 {
     size_t count;
-    bool   in_word;
     bool   in_quotes;
     char   quote_type;
     int    i;
 
     count = 0;
-    in_word = false;
     in_quotes = false;
     quote_type = 0;
     i = 0;
     while (str[i])
     {
-        if (is_quote(str[i]) && !in_quotes && !is_escaped(str, i))
+        while (str[i] && ft_isspace(str[i]) && !in_quotes)
+            i++;
+        if (!str[i])
+            break;
+
+        count++;
+
+        while (str[i])
         {
-            in_quotes = true;
-            quote_type = str[i];
+            if (is_quote(str[i]) && !in_quotes && !is_escaped(str, i))
+            {
+                in_quotes = true;
+                quote_type = str[i];
+            }
+            else if (matches_quote(str[i], quote_type) && in_quotes && !is_escaped(str, i))
+            {
+                in_quotes = false;
+                quote_type = 0;
+                i++;
+                if (!str[i] || (ft_isspace(str[i]) && !in_quotes))
+                    break;
+                continue;
+            }
+            if (ft_isspace(str[i]) && !in_quotes && !is_escaped(str, i))
+                break;
+            i++;
         }
-        else if (matches_quote(str[i], quote_type) && in_quotes && !is_escaped(str, i))
-        {
-            in_quotes = false;
-            quote_type = 0;
-        }
-        else if (!ft_isspace(str[i]) && !in_word)
-        {
-            in_word = true;
-            count++;
-        }
-        else if (ft_isspace(str[i]) && in_word && !in_quotes && !is_escaped(str, i))
-            in_word = false;
-        i++;
     }
     return (count);
 }
 
-static size_t   get_word_length(char const *str)
+static size_t get_word_length(char const *str)
 {
     size_t len;
     bool   in_quotes;
@@ -80,8 +87,12 @@ static size_t   get_word_length(char const *str)
         }
         else if (matches_quote(str[len], quote_type) && in_quotes && !is_escaped(str, len))
         {
+            len++;
             in_quotes = false;
             quote_type = 0;
+            if (!str[len] || (ft_isspace(str[len]) && !in_quotes))
+                break;
+            continue;
         }
         if (ft_isspace(str[len]) && !in_quotes && !is_escaped(str, len))
             break;
@@ -109,15 +120,16 @@ static char *extract_word(char const *str, size_t len)
     {
         if (is_quote(str[i]) && !in_quotes && !is_escaped(str, i))
         {
-            in_quotes = true;
             quote_type = str[i];
+            in_quotes = true;
         }
         else if (matches_quote(str[i], quote_type) && in_quotes && !is_escaped(str, i))
         {
-            in_quotes = false;
             quote_type = 0;
+            in_quotes = false;
         }
-        else if (str[i] == '\\' && i + 1 < len && (is_quote(str[i + 1]) || ft_isspace(str[i + 1])))
+        else if (str[i] == '\\' && i + 1 < len &&
+                (is_quote(str[i + 1]) || ft_isspace(str[i + 1]) || str[i + 1] == '\\'))
         {
             i++;
             word[j++] = str[i];
@@ -130,7 +142,7 @@ static char *extract_word(char const *str, size_t len)
     return (word);
 }
 
-char    **split_quotes(char const *str)
+char **split_quotes(char const *str)
 {
     char   **result;
     size_t word_count;
