@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:36:32 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 11:14:35 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	command_not_found(const char *path)
 int	execution_command(char **arguments, char *path)
 {
 	pid_t	pid;
+	int		sig_num;
 	int		status;
 	char	**env_cpy;
 
@@ -50,19 +51,29 @@ int	execution_command(char **arguments, char *path)
 	if (!env_cpy)
 		return (pec(ERROR_MALLOC), 1);
 	pid = fork();
+	reset_signals();
 	if (pid == -1)
 		return (pec(ERROR_FORK));
-	reset_signals();
 	if (pid == 0)
 	{
-		main_signals();
+		signal_command();
 		if (execve(path, arguments, env_cpy) == -1)
 			command_not_found(path);
 		exit(EXIT_SUCCESS);
 	}
-	waitpid(pid, &status, 0);
-	free_string_array(env_cpy);
-	main_signals();
+	else
+	{
+		waitpid(pid, &status, 0);
+		free_string_array(env_cpy);
+		main_signals();
+		if (WIFSIGNALED(status))
+		{
+			sig_num = WTERMSIG(status);
+			if (sig_num == SIGINT)
+				return (130);
+			return (128 + sig_num);
+		}
+	}
 	return (WEXITSTATUS(status));
 }
 
@@ -96,7 +107,6 @@ int	prepare_execution_command(t_command *command)
 
 	if (build_command_string(command, &str) != 0)
 		return (pec(ERROR_MALLOC));
-
 	free(str);
 	if (!command->argv)
 		return (pec(ERROR_SPLIT));

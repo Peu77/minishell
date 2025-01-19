@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 10:33:15 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 10:54:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void		sighandler(int sig);
 void		main_signals(void);
 void		reset_signals(void);
 void		heredoc_sighandler(int sig);
+void 		signal_command(void);
 
 // utils
 long		ft_atol(const char *str);

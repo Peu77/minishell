@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:10 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/13 12:29:33 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:04:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,18 @@ void	main_signals(void)
 void	reset_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN); 
+}
+
+void sigint_command(int sig)
+{
+	(void)sig;
+    exit(130);
+}
+
+void signal_command(void)
+{
+    signal(SIGINT, sigint_command);
 }
 
 void	heredoc_sighandler(int sig)
