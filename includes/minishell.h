@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/18 23:10:20 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 10:33:15 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void		redirection_monitor(t_command *command,
 void		redirection_output(t_redirect *redirect);
 void		redirection_input(t_redirect *redirect);
 void		redirection_append(t_redirect *redirect);
-void		redirection_heredoc(const char *delimiter, t_command *command,
+int		redirection_heredoc(const char *delimiter, t_command *command,
 				t_parenthesis_fd *parenthesis_fd);
 
 // signal
