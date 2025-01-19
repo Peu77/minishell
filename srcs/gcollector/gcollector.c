@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:32:53 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:53:29 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 21:15:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void *gc_add(void *ptr)
 {
     t_list *new_node;
 
+    if(!ptr)
+        destroy_minishell(EXIT_FAILURE);
     new_node = ft_lstnew(ptr);
-    if (!new_node || !ptr)
+    if (!new_node)
         destroy_minishell(EXIT_FAILURE);
     ft_lstadd_back(get_gc_head(), new_node);
     return (ptr);
