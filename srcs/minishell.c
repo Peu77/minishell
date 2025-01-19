@@ -122,7 +122,7 @@ int	minishell_non_interactive_argument(char **args, int argc)
 	node = parse(line);
 	command = NULL;
 	if (node == NULL)
-		return (pev("parse error\n"), free(line), EXIT_FAILURE);
+		return (pev("parse error\n"), gc_free_ptr(line), EXIT_FAILURE);
 	return (tree_monitor(node, command), free_ast_node(node), gc_free_ptr(line),
 		EXIT_SUCCESS);
 }
