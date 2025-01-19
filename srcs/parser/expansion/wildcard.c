@@ -112,7 +112,7 @@ int	get_wildcard_len(const char *str)
 	return (i);
 }
 
-char* expand_wildcars(const char *str)
+char* expand_wildcards(const char *str)
 {
 	size_t		i;
 	int		wildcard_len;

@@ -25,7 +25,7 @@ int	command_monitor(t_ast_node *node, t_command *command)
 		return (1);
 	free(node->value);
 	node->value = tmp;
-	tmp = expand_wildcars(node->value);
+	tmp = expand_wildcards(node->value);
 	if(!tmp)
 		return (1);
 	free(node->value);

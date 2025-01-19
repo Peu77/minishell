@@ -159,5 +159,5 @@ bool is_escaped(const char *str, size_t i);
 
 bool skip_quotes(const char *str, size_t *i);
 
-char* expand_wildcars(const char *str);
+char* expand_wildcards(const char *str);
 #endif
