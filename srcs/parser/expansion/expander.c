@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:20:28 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 22:35:53 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static bool	handle_non_quotes(const char *str, int *i, t_list **result_chars)
 		(*i)++;
 		return (handle_dollar_sign(str, i, result_chars));
 	}
-	if (str[*i] == '~' && !is_escaped(str, *i) && !handle_tilde_expansion(i, result_chars))
+	if (str[*i] == '~' && !is_escaped(str, *i) && !((*i > 0 && str[*i -1] == '~') || str[*i + 1] == '~') && !handle_tilde_expansion(i, result_chars))
 		return (false);
 	return (add_str_to_result(str, (size_t*)i, result_chars, 1));
 }
