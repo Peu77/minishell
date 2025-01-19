@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:10 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/19 16:26:26 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:10:46 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void signal_command(void)
 void	heredoc_sighandler(int sig)
 {
 	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	printf("\nheredoc> ");
+	unlink("heredoc_temp.txt");
+	exit(130);
 }

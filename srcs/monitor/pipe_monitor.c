@@ -5,6 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
+/*   Updated: 2025/01/19 18:20:49 by ftapponn         ###   ########.fr       */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
 /*   Updated: 2025/01/19 18:00:30 by eebert           ###   ########.fr       */
 /*                                                                            */
@@ -71,6 +73,7 @@ void print_node_left(t_ast_node *node) {
         }
     }
 }
+
 int	pipe_monitor(t_ast_node *node)
 {
 	t_pipe_data	pipe_data;
