@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:18:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:09:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int	ft_export(t_command *command)
 	char	key[MAX_VAR_LEN];
 	char	value[MAX_VAR_LEN];
 	int		i;
+	int result;
+
+	result = 0;
 
 	if (!command->argv[1])
 		return (print_env_list(false), 0);
@@ -51,6 +54,12 @@ int	ft_export(t_command *command)
 		{
 			ft_strncpy(key, command->argv[i], plus_equal_sign - command->argv[i]);
 			key[plus_equal_sign - command->argv[i]] = '\0';
+			if(key[0] == '\0') {
+				pe("minishell: export: `+=': not a valid identifier");
+				result = 1;
+				i++;
+				continue;
+			}
 			ft_strncpy(value, plus_equal_sign + 2, MAX_VAR_LEN);
 			char *existing_value = get_env_value(key);
 			if (existing_value)
@@ -72,6 +81,12 @@ int	ft_export(t_command *command)
 		{
 			ft_strncpy(key, command->argv[i], equal_sign - command->argv[i]);
 			key[equal_sign - command->argv[i]] = '\0';
+			if(key[0] == '\0') {
+				pe("minishell: export: `=': not a valid identifier");
+				result = 1;
+				i++;
+				continue;
+			}
 			ft_strncpy(value, equal_sign + 1, MAX_VAR_LEN);
 			if (!set_env_value(key, value))
 				return (1);
@@ -85,5 +100,5 @@ int	ft_export(t_command *command)
 		}
 		i++;
 	}
-	return (0);
+	return (result);
 }
