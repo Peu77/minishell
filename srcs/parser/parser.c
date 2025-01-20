@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 14:53:41 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:12:54 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_ast_node	*parse_logical(t_list **tokens)
 			logical_type = AST_AND;
 		else if (current->type == TOKEN_OR)
 			logical_type = AST_OR;
+		else if(current->type == TOKEN_SEMICOLON)
+			logical_type = AST_SEMICOLON;
 		else
 			break ;
 		*tokens = (*tokens)->next;

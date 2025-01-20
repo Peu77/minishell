@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 12:13:42 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:16:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int			and_monitor(t_ast_node *node, t_command *command);
 int			or_monitor(t_ast_node *node, t_command *command);
 int			command_monitor(t_ast_node *node, t_command *command);
 int			parentheses_monitor(t_ast_node *node, t_command *command);
+int			semicolon_monitor(t_ast_node *node, t_command *command);
 
 // command
 void		get_command_from_node(t_command **command);

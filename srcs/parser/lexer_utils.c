@@ -6,12 +6,13 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:58:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 23:26:11 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:08:26 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <gcollector.h>
 #include <parse.h>
+#include <stdio.h>
 
 t_token_type	is_redirect(const char *str, size_t i)
 {
@@ -48,6 +49,8 @@ t_token_type	get_token_type(const char *str, size_t i, bool in_quote)
 		return (TOKEN_PARENTHESES_OPEN);
 	if (str[i] == ')')
 		return (TOKEN_PARENTHESES_CLOSE);
+	if (str[i] == ';')
+		return (TOKEN_SEMICOLON);
 	if (str[i] == '\0')
 		return (TOKEN_END);
 	return (TOKEN_STRING);

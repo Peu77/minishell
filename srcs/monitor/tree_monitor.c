@@ -22,6 +22,8 @@ int	tree_monitor(t_ast_node *node, t_command *command)
 		return (and_monitor(node, command));
 	if (node->type == AST_OR)
 		return (or_monitor(node, command));
+	if(node->type == AST_SEMICOLON)
+		return (semicolon_monitor(node, command));
 	if (node->type == AST_PARENTHESES)
 		return (parentheses_monitor(node, command));
 	if (node->type == AST_COMMAND)
