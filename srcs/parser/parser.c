@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 16:12:54 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 22:00:57 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ t_ast_node	*parse_pipe(t_list **tokens)
 	{
 		pipe_node = create_ast_node(AST_PIPE, NULL, NULL);
 		*tokens = (*tokens)->next;
+		if(!left) {
+			get_shell()->exit_status = 2;
+			return (pec("Invalid pipe node: missing children"), NULL);
+		}
 		pipe_node->left = left;
 		pipe_node->right = parse_primary(tokens);
 		left = pipe_node;
