@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 15:39:02 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 22:16:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	build_command_string(t_command *command, char **output_str)
 	{
 		temp = gc_add(ft_strjoin(*output_str, " "));
 		if (!temp)
-			return (free(*output_str), pec(ERROR_MALLOC));
+			return (gc_free_ptr(*output_str), pec(ERROR_MALLOC));
 		new_str = gc_add(ft_strjoin(temp, command->argument));
 		gc_free_ptr(temp);
 		if (!new_str)
-			return (free(*output_str), pec(ERROR_MALLOC));
+			return (gc_free_ptr(*output_str), pec(ERROR_MALLOC));
 		gc_free_ptr(*output_str);
 		*output_str = new_str;
 	}

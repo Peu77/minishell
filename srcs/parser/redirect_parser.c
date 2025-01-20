@@ -80,6 +80,6 @@ bool	parse_redirect(t_list **redirects, const char *str,
 		return (gc_free_ptr(redirect),
 			false);
 	if (!parse_right_area(str, i, redirect))
-		return (free(redirect), false);
+		return (gc_free_ptr(redirect), false);
 	return (ft_lstadd_back(redirects, gc_add(ft_lstnew(redirect))), true);
 }
