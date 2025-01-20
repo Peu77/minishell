@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:08:16 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:08:58 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:35:14 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 void		destroy_minishell(int status) {
     gc_list_clear(&get_shell()->env, free_env_entry);
     rl_clear_history();
+    gc_close_fds();
     gc_free();
     exit(status);
 }

@@ -1,68 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gcollector.c                                       :+:      :+:    :+:   */
+/*   gc_files.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 18:32:53 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:15:01 by eebert           ###   ########.fr       */
+/*   Created: 2025/01/20 14:25:26 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/20 14:34:15 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static t_list** get_gc_head(void)
+static t_list** get_gc_head_files(void)
 {
     static t_list *gc_head = NULL;
 
     return (&gc_head);
 }
 
-void gc_free(void)
-{
-    ft_lstclear(get_gc_head(), free);
-    *get_gc_head() = NULL;
+void gc_close_fds() {
+    t_list* current = *get_gc_head_files();
+    t_list* next;
+
+    while (current) {
+        next = current->next;
+        close(*((int*)current->content));
+        free(current->content);
+        free(current);
+        current = next;
+    }
 }
 
-void *gc_malloc(size_t size)
-{
-    void *ptr;
-
-    ptr = malloc(size);
-    if (!ptr)
-        destroy_minishell(EXIT_FAILURE);
-    return (gc_add(ptr));
-}
-
-void *gc_add(void *ptr)
+int gc_add_fd(int fd)
 {
     t_list *new_node;
 
-    if(!ptr)
+    int* fd_ptr = malloc(sizeof(int));
+    if(!fd_ptr)
         destroy_minishell(EXIT_FAILURE);
-    new_node = ft_lstnew(ptr);
+    *fd_ptr = fd;
+    new_node = ft_lstnew(fd_ptr);
     if (!new_node)
-        destroy_minishell(EXIT_FAILURE);
-    ft_lstadd_back(get_gc_head(), new_node);
-    return (ptr);
+         destroy_minishell(EXIT_FAILURE);
+    ft_lstadd_back(get_gc_head_files(), new_node);
+    return (0);
 }
 
-void gc_free_ptr(void* addr)
-{
+void gc_close_fd(int fd) {
     t_list *current;
     t_list *previous;
 
-    current = *get_gc_head();
+    current = *get_gc_head_files();
     previous = NULL;
     while (current)
     {
-        if (current->content == addr)
+        if (*((int*)current->content) == fd)
         {
             if (previous)
                 previous->next = current->next;
             else
-                *get_gc_head() = current->next;
+                *get_gc_head_files() = current->next;
+            close(fd);
             free(current->content);
             free(current);
             return;
@@ -70,6 +69,5 @@ void gc_free_ptr(void* addr)
         previous = current;
         current = current->next;
     }
-    free(addr);
+    close(fd);
 }
-

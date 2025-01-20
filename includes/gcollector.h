@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:31:02 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:51:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:34:55 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,11 @@ void gc_free(void);
 void gc_free_ptr(void* addr);
 
 void gc_list_clear(t_list **list, void (*del)(void *));
+
+void gc_close_fds();
+
+int gc_add_fd(int fd);
+
+void gc_close_fd(int fd);
 
 #endif
