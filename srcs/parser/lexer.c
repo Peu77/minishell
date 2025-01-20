@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 23:40:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 14:53:36 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,26 @@ static bool	handle_token(const char *input, size_t *i, t_list **tokens,
 	return (lex_string_token(input, i, tokens, in_quote));
 }
 
+bool check_parentheses_count(t_list** tokens) {
+	int open;
+	int close;
+	t_list* tmp;
+
+	tmp = *tokens;
+
+	open = 0;
+	close = 0;
+	while (tmp) {
+		if (((t_token*)(tmp)->content)->type == TOKEN_PARENTHESES_OPEN)
+			open++;
+		if (((t_token*)(tmp)->content)->type == TOKEN_PARENTHESES_CLOSE)
+			close++;
+		tmp = tmp->next;
+	}
+
+	return open == close;
+}
+
 bool	lex_tokens(const char *input, t_list **tokens)
 {
 	const size_t	len = ft_strlen(input);
@@ -82,7 +102,7 @@ bool	lex_tokens(const char *input, t_list **tokens)
 	while (i < len)
 	{
 		if (!handle_token(input, &i, tokens, &in_quote))
-			break ;
+			break;
 	}
 	if (i != len || in_quote)
 	{
@@ -90,5 +110,7 @@ bool	lex_tokens(const char *input, t_list **tokens)
 			pe("parse error near '\\n'");
 		return (gc_list_clear(tokens, free_token), false);
 	}
+	if(!check_parentheses_count(tokens))
+		return (pe("parse error, the parentheses don't match"), gc_list_clear(tokens, free_token), false);
 	return (true);
 }
