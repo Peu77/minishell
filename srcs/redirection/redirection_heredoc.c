@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 20:05:55 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 12:17:47 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter,
 	while (1)
 	{
 		buffer = readline("heredoc> ");
-		if (buffer == NULL)  // Ctrl+D pressed
+		if (buffer == NULL)
 		{
-			// Send the content collected so far to the command and break
-			write(temp_fd, "\n", 1);  // Optionally send a newline before exit
+			write(temp_fd, "\n", 1);
 			break ;
 		}
 		if (ft_strncmp(buffer, delimiter, ft_strlen(delimiter)) == 0)
@@ -143,7 +142,6 @@ int	redirection_heredoc(const char *delimiter, t_command *command,
 	else
 	{
 		waitpid(pid, &status, 0);
-		printf("Debug: status = %d\n", status);
 		reset_signals();
 		if (WIFEXITED(status))
 		{
@@ -158,19 +156,6 @@ int	redirection_heredoc(const char *delimiter, t_command *command,
 			else if (exit_code != 0)
 				return (pec("Heredoc process failed\n"));
 		}
-		if (WIFSIGNALED(status)) 
-		{
-			if (WTERMSIG(status) == SIGINT)
-				return (pec("Heredoc process interrupted by SIGINT\n"));
-			return (pec("Heredoc process terminated by another signal\n"));
-		}
-		else if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status) != 0)
-				return (pec("Heredoc process failed\n"));
-		}
-		else
-		return (pec("Heredoc process terminated abnormally\n"));
 	}
 	redirect_input_from_heredoc();
 	return (0);
