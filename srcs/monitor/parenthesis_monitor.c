@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:33:08 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/20 21:05:55 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 22:23:17 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	restore_parentheses_fd(t_parenthesis_fd *parenthesis_fd)
 {
 	dup2(parenthesis_fd->fd_backup_stdout, STDOUT_FILENO);
 	dup2(parenthesis_fd->fd_backup_stdin, STDIN_FILENO);
-	close(parenthesis_fd->fd_backup_stdout);
-	close(parenthesis_fd->fd_backup_stdin);
+	gc_close_fd(close(parenthesis_fd->fd_backup_stdout));
+	gc_close_fd(close(parenthesis_fd->fd_backup_stdin));
 }
 
 void	redirect_parentheses_monitor(t_list *redirects)
