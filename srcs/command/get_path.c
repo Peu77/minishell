@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:06:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 22:07:56 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	get_path(t_command **command)
 {
 	char	*found_path;
 
-	if(ft_strncmp((*command)->command_name, "./", 2) == 0 || (*command)->command_name[0] == 0)
+	if(ft_strncmp((*command)->command_name, "./", 2) == 0 || (*command)->command_name[0] == 0 || ft_strchr((*command)->command_name, '/') != NULL)
 	{
 		(*command)->path = gc_add(ft_strdup((*command)->command_name));
 		return (1);
