@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 15:44:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:28:57 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	pipe_monitor(t_ast_node *node)
 	if (pipe_data.left_pid == -1)
 		return (pec("Fork for left process failed"));
 
-	print_node_left(node);
+	//print_node_left(node);
 	if (pipe_data.left_pid == 0)
 	{	
 		pipe_left_process(node, &pipe_data);
