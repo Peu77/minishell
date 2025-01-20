@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 20:08:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 12:10:53 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,35 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
+void	command_not_found(char *path)
+{
+	char	*message;
+
+	message = ": command not found";
+	while (*path)
+	{
+		write(STDERR_FILENO, path, 1);
+		path++;
+	}
+	write(STDERR_FILENO, message, ft_strlen(message));
+	write(STDERR_FILENO, "\n", 1);
+	if (errno == EACCES || errno == EISDIR)
+		destroy_minishell(126);
+	destroy_minishell(127);
+}
+
+int check_t_shell()
+{
+	t_shell *shell = get_shell();
+	if (shell->heredoc_failed == 1)
+	{
+		shell->heredoc_failed = 0;
+		return (130);
+	}
+	return (0);
+}
 
 char	*ft_strndup(const char *src, size_t len)
 {

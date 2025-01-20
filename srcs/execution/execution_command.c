@@ -6,43 +6,22 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:48:28 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 12:14:16 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <unistd.h>
 
-static void	command_not_found(char *path)
-{
-	char	*message;
-
-	message = ": command not found";
-	while (*path)
-	{
-		write(STDERR_FILENO, path, 1);
-		path++;
-	}
-	write(STDERR_FILENO, message, ft_strlen(message));
-	write(STDERR_FILENO, "\n", 1);
-	if (errno == EACCES || errno == EISDIR)
-		destroy_minishell(126);
-	destroy_minishell(127);
-}
-
 int	execution_command(t_command* command)
 {
-	t_shell *shell = get_shell();
-	if (shell->heredoc_failed == 1)
-	{
-		shell->heredoc_failed = 0;
-		return (130);
-	}
 	pid_t	pid;
 	int		sig_num;
 	int		status;
 	char	**env_cpy;
 
+	if(check_t_shell() != 0)
+		return (check_t_shell());
 	env_cpy = copy_env_to_string_array();
 	if (!env_cpy)
 		return (pec(ERROR_MALLOC), 1);
@@ -57,7 +36,6 @@ int	execution_command(t_command* command)
 			command_not_found(command->path);
 		exit(EXIT_SUCCESS);
 	}
-
 		waitpid(pid, &status, 0);
 		free_string_array(env_cpy);
 		main_signals();

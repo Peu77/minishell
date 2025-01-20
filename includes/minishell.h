@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:13:49 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 12:13:42 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ void		heredoc_sighandler(int sig);
 void 		signal_command(void);
 
 // utils
+int			check_t_shell(void);
+void		command_not_found(char *path);
 long		ft_atol(const char *str);
 char		*ft_strndup(const char *src, size_t len);
 void		update_path(void);
