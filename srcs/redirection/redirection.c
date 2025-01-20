@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/16 11:21:35 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:08:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 #include "../../includes/minishell.h"
 
-void	redirection_output(t_redirect *redirect)
+bool	redirection_output(t_redirect *redirect)
 {
 	int	fd;
 	int	from_fd;
@@ -39,14 +39,15 @@ void	redirection_output(t_redirect *redirect)
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
-		return ;
+		return false;
 	}
 	if (dup2(fd, from_fd) == -1)
-		pev("dup2 failed for output redirection");
+		return (close(fd), pe("dup2 failed for output redirection"), false);
 	close(fd);
+	return true;
 }
 
-void	redirection_append(t_redirect *redirect)
+bool	redirection_append(t_redirect *redirect)
 {
 	int	fd;
 	int	from_fd;
@@ -58,14 +59,15 @@ void	redirection_append(t_redirect *redirect)
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
-		return ;
+		return false;
 	}
 	if (dup2(fd, from_fd) == -1)
-		pev("dup2 failed for output redirection");
+		return (close(fd), pe("dup2 failed for output redirection"), false);
 	close(fd);
+	return true;
 }
 
-void	redirection_input(t_redirect *redirect)
+bool	redirection_input(t_redirect *redirect)
 {
 	int	fd;
 	int	from_fd;
@@ -77,9 +79,10 @@ void	redirection_input(t_redirect *redirect)
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
-		return ;
+		return false;
 	}
 	if (dup2(fd, from_fd) == -1)
-		pev("dup2 failed for input redirection");
+		return (close(fd), pe("dup2 failed for input redirection"), false);
 	close(fd);
+	return true;
 }

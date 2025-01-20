@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_monitor.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/20 15:06:33 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection_monitor.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:17 by ftapponn          #+#    #+#             */
@@ -28,7 +40,7 @@ static void	save_file_descriptors(t_command **command)
 	}
 }
 
-void	redirection_monitor(t_command *command,
+bool	redirection_monitor(t_command *command,
 		t_parenthesis_fd *parenthesis_fd)
 {
 	t_list		*redirect_list;
@@ -39,19 +51,29 @@ void	redirection_monitor(t_command *command,
 	while (redirect_list)
 	{
 		redirect = (t_redirect *)redirect_list->content;
-		if (redirect->type == TOKEN_REDIRECT_OUTPUT)
-			redirection_output(redirect);
-		else if (redirect->type == TOKEN_REDIRECT_APPEND)
-			redirection_append(redirect);
-		else if (redirect->type == TOKEN_REDIRECT_INPUT)
-			redirection_input(redirect);
-		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-			redirection_heredoc(redirect->file, command, parenthesis_fd);
+		if (redirect->type == TOKEN_REDIRECT_OUTPUT) {
+			if(!redirection_output(redirect))
+				return (false);
+		}
+
+		else if (redirect->type == TOKEN_REDIRECT_APPEND) {
+			if(!redirection_append(redirect))
+				return false;
+		}
+		else if (redirect->type == TOKEN_REDIRECT_INPUT) {
+			if(!redirection_input(redirect))
+				return false;
+		}
+		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND) {
+			if(redirection_heredoc(redirect->file, command, parenthesis_fd) != 0)
+				return false;
+		}
 		else
 		{
 			pev("Unknown redirection type encountered");
-			exit(EXIT_FAILURE);
+			destroy_minishell(EXIT_FAILURE);
 		}
 		redirect_list = redirect_list->next;
 	}
+	return (true);
 }

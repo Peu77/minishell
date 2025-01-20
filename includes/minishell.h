@@ -160,11 +160,11 @@ int			prepare_execution_command(t_command *command);
 int			execution_command(t_command *command);
 
 // redirection
-void		redirection_monitor(t_command *command,
+bool		redirection_monitor(t_command *command,
 				t_parenthesis_fd *parenthesis_fd);
-void		redirection_output(t_redirect *redirect);
-void		redirection_input(t_redirect *redirect);
-void		redirection_append(t_redirect *redirect);
+bool		redirection_output(t_redirect *redirect);
+bool		redirection_input(t_redirect *redirect);
+bool		redirection_append(t_redirect *redirect);
 int		redirection_heredoc(const char *delimiter, t_command *command,
 				t_parenthesis_fd *parenthesis_fd);
 
