@@ -5,6 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/20 15:44:53 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_monitor.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:09:04 by ftapponn          #+#    #+#             */
 /*   Updated: 2025/01/19 18:20:49 by ftapponn         ###   ########.fr       */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
@@ -104,5 +116,6 @@ int	pipe_monitor(t_ast_node *node)
 	main_signals();
 	if (WIFEXITED(pipe_data.right_status))
 		pipe_data.right_result = WEXITSTATUS(pipe_data.right_status);
+	get_shell()->exit_status = pipe_data.right_result;
 	return (pipe_data.right_result);
 }
