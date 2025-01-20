@@ -31,7 +31,6 @@ void	restore_standard_fds(t_command *command)
 		if (dup2(command->saved_stdout, STDOUT_FILENO) == -1)
 		{
 			pev("dup2 failed for restoring STDOUT");
-			exit(EXIT_FAILURE);
 		}
 		close(command->saved_stdout);
 	}
@@ -40,7 +39,6 @@ void	restore_standard_fds(t_command *command)
 		if (dup2(command->saved_stdin, STDIN_FILENO) == -1)
 		{
 			pev("dup2 failed for restoring STDIN");
-			exit(EXIT_FAILURE);
 		}
 		close(command->saved_stdin);
 	}

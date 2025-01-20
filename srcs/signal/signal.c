@@ -36,7 +36,7 @@ void	reset_signals(void)
 void sigint_command(int sig)
 {
 	(void)sig;
-    exit(130);
+    destroy_minishell(130);
 }
 
 void signal_command(void)
@@ -48,5 +48,5 @@ void	heredoc_sighandler(int sig)
 {
 	(void)sig;
 	unlink("heredoc_temp.txt");
-	exit(130);
+	destroy_minishell(130);
 }

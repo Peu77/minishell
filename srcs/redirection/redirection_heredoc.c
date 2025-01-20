@@ -103,11 +103,11 @@ static void	create_heredoc_file(const char *delimiter, t_command *command,
 	if (temp_fd == -1)
 	{
 		perror("Error creating heredoc file");
-		exit(1);
+		destroy_minishell(1);
 	}
 	handle_heredoc_input(temp_fd, delimiter, command, parenthesis_fd);
 	close(temp_fd);
-	exit(0);
+	destroy_minishell(0);
 }
 
 static void	redirect_input_from_heredoc(void)
@@ -120,7 +120,7 @@ static void	redirect_input_from_heredoc(void)
 	{
 		unlink("heredoc_temp.txt");
 		perror("Error opening heredoc file for reading");
-		exit(1);
+		destroy_minishell(1);
 	}
 	dup2(temp_fd, STDIN_FILENO);
 	close(temp_fd);
@@ -136,7 +136,7 @@ int	redirection_heredoc(const char *delimiter, t_command *command,
 	pid = fork();
 	reset_signals();
 	if (pid == -1)
-		exit(pec("Fork failed"));
+		destroy_minishell(pec("Fork failed"));
 	if (pid == 0)
 		create_heredoc_file(delimiter, command, parenthesis_fd);
 	else

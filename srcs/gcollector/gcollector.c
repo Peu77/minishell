@@ -27,12 +27,7 @@ void gc_free(void)
 
 void *gc_malloc(size_t size)
 {
-    void *ptr;
-
-    ptr = malloc(size);
-    if (!ptr)
-        destroy_minishell(EXIT_FAILURE);
-    return (gc_add(ptr));
+    return (gc_add(malloc(size)));
 }
 
 void *gc_add(void *ptr)

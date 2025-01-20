@@ -34,7 +34,7 @@ int	execution_command(t_command* command)
 		signal_command();
 		if (execve(command->path, command->argv, env_cpy) == -1)
 			command_not_found(command->path);
-		exit(EXIT_SUCCESS);
+		destroy_minishell(EXIT_SUCCESS);
 	}
 		waitpid(pid, &status, 0);
 		free_string_array(env_cpy);

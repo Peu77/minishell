@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 16:54:22 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:29:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@
 #include "../../includes/minishell.h"
 #include <stdio.h>
 
-int	pipe_left_process(t_ast_node *node, t_pipe_data *pipe_data)
+void	pipe_left_process(t_ast_node *node, t_pipe_data *pipe_data)
 {
 	close(pipe_data->pipe_fds[0]);
 	dup2(pipe_data->pipe_fds[1], STDOUT_FILENO);
 	close(pipe_data->pipe_fds[1]);
-	exit(tree_monitor(node->left, NULL));
+	destroy_minishell(tree_monitor(node->left, NULL));
 }
 
-int	pipe_right_process(t_ast_node *node, t_pipe_data *pipe_data)
+void	pipe_right_process(t_ast_node *node, t_pipe_data *pipe_data)
 {
 	close(pipe_data->pipe_fds[1]);
 	dup2(pipe_data->pipe_fds[0], STDIN_FILENO);
 	close(pipe_data->pipe_fds[0]);
 	pipe_data->right_result = tree_monitor(node->right, NULL);
-	exit(pipe_data->right_result);
+	destroy_minishell(pipe_data->right_result);
 }
 
 int	pipe_fork_error(t_pipe_data *pipe_data)

@@ -39,6 +39,7 @@ int	command_monitor(t_ast_node *node, t_command *command)
 	node->value = tmp;
 	argv = split_quotes(node->value);
 	gc_free_ptr(node->value);
+	node->value = NULL;
 	while(argv[i])
 	{
 		argv[i] = ft_unescape_string(argv[i]);

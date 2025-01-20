@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:28:32 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:14:42 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ void	free_ast_node(void *content)
 		free_ast_node(node->left);
 	if (node->right)
 		free_ast_node(node->right);
+	gc_free_ptr(node->value);
+	node->value = NULL;
 	if (node->type == AST_COMMAND)
 	{
 		gc_list_clear(&node->redirects, free_redirect);
+		node->redirects = NULL;
 	}
 	gc_free_ptr(node);
 }
