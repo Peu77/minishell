@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:53:21 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:51:53 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ static int	validate_exit_arguments(char** argv)
 {
 	size_t	i;
 
-	i = -1;
+	i = 0;
 	if(argv[1][0] == 0)
 		return (pe(ERROR_DIGIT_ARGUMENT), 255);
-	while ((argv)[1][++i] != '\0')
+	while ((argv)[1][i] != '\0' && (ft_isspace(argv[1][i]) || argv[1][i] == '+' || argv[1][i] == '-'))
+		i++;
+	while ((argv)[1][i] != '\0')
 	{
 		if (!ft_isdigit((argv)[1][i]))
 			return (pe(ERROR_DIGIT_ARGUMENT), 255);
+		i++;
 	}
 
 	if ((argv)[2])
