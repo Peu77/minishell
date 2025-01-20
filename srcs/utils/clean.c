@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:54:25 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:34:29 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	close_command_fds(t_command *command)
 {
 	if (command->saved_stdout > 0)
 	{
-		close(command->saved_stdout);
+		gc_close_fd(command->saved_stdout);
 		command->saved_stdout = 0;
 	}
 	if (command->saved_stdin > 0)
 	{
-		close(command->saved_stdin);
+		gc_close_fd(command->saved_stdin);
 		command->saved_stdin = 0;
 	}
 }

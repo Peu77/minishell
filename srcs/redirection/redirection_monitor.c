@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:13:34 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 21:34:19 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,18 @@
 static void	save_file_descriptors(t_command **command)
 {
 	(*command)->saved_stdout = dup(STDOUT_FILENO);
+	gc_add_fd((*command)->saved_stdout);
 	if ((*command)->saved_stdout == -1)
 	{
 		pev("dup failed for saving STDOUT");
-		exit(EXIT_FAILURE);
+		destroy_minishell(EXIT_FAILURE);
 	}
 	(*command)->saved_stdin = dup(STDIN_FILENO);
+	gc_add_fd((*command)->saved_stdin);
 	if ((*command)->saved_stdin == -1)
 	{
 		pev("dup failed for saving STDIN");
-		exit(EXIT_FAILURE);
+		destroy_minishell(EXIT_FAILURE);
 	}
 }
 
