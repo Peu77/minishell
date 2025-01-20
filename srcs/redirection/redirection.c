@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:38:18 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:44:55 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	redirection_input(t_redirect *redirect)
 	if (redirect->fd_left >= 0)
 		from_fd = redirect->fd_left;
 	if(redirect->file)
-	fd = gc_add_fd(open(redirect->file, O_RDONLY));
+		fd = gc_add_fd(open(redirect->file, O_RDONLY));
 	else
 		fd = redirect->fd_right;
 	if (fd == -1)

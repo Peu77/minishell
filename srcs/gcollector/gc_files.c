@@ -44,7 +44,7 @@ int gc_add_fd(int fd)
     if (!new_node)
          destroy_minishell(EXIT_FAILURE);
     ft_lstadd_back(get_gc_head_files(), new_node);
-    return (0);
+    return (fd);
 }
 
 void gc_close_fd(int fd) {
