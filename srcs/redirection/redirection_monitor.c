@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 15:06:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:05:17 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static void	save_file_descriptors(t_command **command)
 	}
 }
 
-bool	redirection_monitor(t_command *command,
-		t_parenthesis_fd *parenthesis_fd)
+bool	redirection_monitor(t_command *command)
 {
 	t_list		*redirect_list;
 	t_redirect	*redirect;
@@ -65,7 +64,7 @@ bool	redirection_monitor(t_command *command,
 				return false;
 		}
 		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND) {
-			if(redirection_heredoc(redirect->file, command, parenthesis_fd) != 0)
+			if(redirection_heredoc(redirect->file) != 0)
 				return false;
 		}
 		else

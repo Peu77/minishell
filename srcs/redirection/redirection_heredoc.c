@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 12:17:47 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 21:04:26 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,9 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter,
 }
 */
 
-static void	handle_heredoc_input(int temp_fd, const char *delimiter,
-		t_command *command, t_parenthesis_fd *parenthesis_fd)
+static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 {
 	char	*buffer;
-	(void)command;
-	(void)parenthesis_fd;
 
 	while (1)
 	{
@@ -92,8 +89,7 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter,
 	}
 }
 
-static void	create_heredoc_file(const char *delimiter, t_command *command,
-		t_parenthesis_fd *parenthesis_fd)
+static void	create_heredoc_file(const char *delimiter)
 {
 	int	temp_fd;
 
@@ -105,7 +101,7 @@ static void	create_heredoc_file(const char *delimiter, t_command *command,
 		perror("Error creating heredoc file");
 		exit(1);
 	}
-	handle_heredoc_input(temp_fd, delimiter, command, parenthesis_fd);
+	handle_heredoc_input(temp_fd, delimiter);
 	close(temp_fd);
 	exit(0);
 }
@@ -127,8 +123,7 @@ static void	redirect_input_from_heredoc(void)
 	unlink("heredoc_temp.txt");
 }
 
-int	redirection_heredoc(const char *delimiter, t_command *command,
-		t_parenthesis_fd *parenthesis_fd)
+int	redirection_heredoc(const char *delimiter)
 {
 	pid_t	pid;
 	int		status;
@@ -138,7 +133,7 @@ int	redirection_heredoc(const char *delimiter, t_command *command,
 	if (pid == -1)
 		exit(pec("Fork failed"));
 	if (pid == 0)
-		create_heredoc_file(delimiter, command, parenthesis_fd);
+		create_heredoc_file(delimiter);
 	else
 	{
 		waitpid(pid, &status, 0);
