@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 14:51:10 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 18:35:51 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	minishell_non_interactive_argument(char **args, int argc)
 	node = parse(line);
 	command = NULL;
 	if (node == NULL)
-		return (pev("parse error\n"), gc_free_ptr(line), EXIT_FAILURE);
+		return (gc_free_ptr(line), EXIT_FAILURE);
 	return (tree_monitor(node, command), free_ast_node(node), gc_free_ptr(line),
 		EXIT_SUCCESS);
 }

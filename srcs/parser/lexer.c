@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 16:49:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 18:41:19 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,28 @@ bool check_parentheses_count(t_list** tokens) {
 	return open == close;
 }
 
+int get_redirect_parse_error(t_list* tokens) {
+	int exit_code;
+	t_list* redirects;
+
+	while (tokens) {
+		if(((t_token*)(tokens)->content)->type == TOKEN_STRING) {
+			redirects = NULL;
+			if(!filter_and_get_redirects(((t_token*)(tokens)->content)->value, &redirects, &exit_code))
+				return (gc_list_clear(&redirects, free_redirect), exit_code);
+			gc_list_clear(&redirects, free_redirect);
+		}
+		tokens = tokens->next;
+	}
+	return 0;
+}
+
 bool	lex_tokens(const char *input, t_list **tokens)
 {
 	const size_t	len = ft_strlen(input);
 	size_t			i;
 	bool			in_quote;
+	int redirect_parse_error;
 
 	in_quote = false;
 	i = 0;
@@ -110,7 +127,16 @@ bool	lex_tokens(const char *input, t_list **tokens)
 			pe("parse error near '\\n'");
 		return (gc_list_clear(tokens, free_token), false);
 	}
-	if(!check_parentheses_count(tokens))
+	if(!check_parentheses_count(tokens)) {
+		get_shell()->exit_status = 2;
 		return (pe("parse error, the parentheses don't match"), gc_list_clear(tokens, free_token), false);
+	}
+
+	redirect_parse_error = get_redirect_parse_error(*tokens);
+	if(redirect_parse_error != 0) {
+		get_shell()->exit_status = redirect_parse_error;
+		return (pe("parse error, each redirect should have an filename"), gc_list_clear(tokens, free_token), false);
+	}
+
 	return (true);
 }

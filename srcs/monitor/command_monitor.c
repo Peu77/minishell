@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 14:48:52 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 17:07:00 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	command_monitor(t_ast_node *node, t_command *command)
 	gc_free_ptr(node->value);
 	if(redirect_exit_code != 0) {
 		get_shell()->exit_status = redirect_exit_code;
+		if(redirect_exit_code == 258)
+			pe("parse error, the parentheses don't match");
 		return (redirect_exit_code);
 	}
 	node->value = tmp;
