@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:04:26 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 21:12:39 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ static void	create_heredoc_file(const char *delimiter)
 {
 	int	temp_fd;
 
-
 	signal(SIGINT, heredoc_sighandler);
 	temp_fd = open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (temp_fd == -1)
@@ -110,7 +109,6 @@ static void	redirect_input_from_heredoc(void)
 {
 	int	temp_fd;
 
-
 	temp_fd = open("heredoc_temp.txt", O_RDONLY);
 	if (temp_fd == -1)
 	{
@@ -121,6 +119,24 @@ static void	redirect_input_from_heredoc(void)
 	dup2(temp_fd, STDIN_FILENO);
 	close(temp_fd);
 	unlink("heredoc_temp.txt");
+}
+
+static int	handle_child_status(int status)
+{
+	t_shell	*shell;
+
+	if (!WIFEXITED(status))
+		return (0);
+	if (WEXITSTATUS(status) == 130)
+	{
+		shell = get_shell();
+		shell->exit_status = 130;
+		shell->heredoc_failed = 1;
+		return (pec("Heredoc process interrupted by SIGINT\n"));
+	}
+	if (WEXITSTATUS(status) != 0)
+		return (pec("Heredoc process failed\n"));
+	return (0);
 }
 
 int	redirection_heredoc(const char *delimiter)
@@ -134,24 +150,10 @@ int	redirection_heredoc(const char *delimiter)
 		exit(pec("Fork failed"));
 	if (pid == 0)
 		create_heredoc_file(delimiter);
-	else
-	{
-		waitpid(pid, &status, 0);
-		reset_signals();
-		if (WIFEXITED(status))
-		{
-			int exit_code = WEXITSTATUS(status);
-			if (exit_code == 130)
-			{
-				t_shell *shell = get_shell();
-				shell->exit_status = 130;
-				shell->heredoc_failed = 1;
-				return (pec("Heredoc process interrupted by SIGINT\n"));
-			}
-			else if (exit_code != 0)
-				return (pec("Heredoc process failed\n"));
-		}
-	}
+	waitpid(pid, &status, 0);
+	reset_signals();
+	if (handle_child_status(status) != 0)
+		return (1);
 	redirect_input_from_heredoc();
 	return (0);
 }

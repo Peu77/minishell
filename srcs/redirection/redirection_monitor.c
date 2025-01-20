@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:05:17 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/20 21:13:34 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,25 @@ bool	redirection_monitor(t_command *command)
 	while (redirect_list)
 	{
 		redirect = (t_redirect *)redirect_list->content;
-		if (redirect->type == TOKEN_REDIRECT_OUTPUT) {
-			if(!redirection_output(redirect))
+		if (redirect->type == TOKEN_REDIRECT_OUTPUT)
+		{
+			if (!redirection_output(redirect))
 				return (false);
 		}
-
-		else if (redirect->type == TOKEN_REDIRECT_APPEND) {
-			if(!redirection_append(redirect))
-				return false;
+		else if (redirect->type == TOKEN_REDIRECT_APPEND)
+		{
+			if (!redirection_append(redirect))
+				return (false);
 		}
-		else if (redirect->type == TOKEN_REDIRECT_INPUT) {
-			if(!redirection_input(redirect))
-				return false;
+		else if (redirect->type == TOKEN_REDIRECT_INPUT)
+		{
+			if (!redirection_input(redirect))
+				return (false);
 		}
-		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND) {
-			if(redirection_heredoc(redirect->file) != 0)
-				return false;
+		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
+		{
+			if (redirection_heredoc(redirect->file) != 0)
+				return (false);
 		}
 		else
 		{
