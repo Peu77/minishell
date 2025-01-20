@@ -25,8 +25,9 @@ static bool	handle_token_string(t_token *token, t_list **tokens, t_list** redire
 	gc_free_ptr(token->value);
 	token->value = tmp;
 	tmp = filter_and_get_redirects(token->value, redirects, &redirect_exit_code);
-	if (!tmp)
+	if (!tmp) {
 		return (false);
+	}
 	ft_unescape_string(tmp);
 	trimmed = ft_strtrim(tmp, " ");
 	if (ft_strlen(trimmed) != 0)

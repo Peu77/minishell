@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 16:28:57 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 16:54:22 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ int	pipe_monitor(t_ast_node *node)
 	t_pipe_data	pipe_data;
 
     reset_signals();
-	if (!node->left || !node->right)
+	if (!node->left || !node->right) {
+		get_shell()->exit_status = 2;
 		return (pec("Invalid pipe node: missing children"));
+	}
 	if (pipe(pipe_data.pipe_fds) == -1)
 		return (pec("Pipe creation failed"));
 	pipe_data.left_pid = fork();
