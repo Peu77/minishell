@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:00:01 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 16:47:17 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 20:56:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char* filter_and_get_redirects(const char* input, t_list** redirects, int* exit_
     t_list* str_list;
     const size_t input_len = ft_strlen(input);
 
+    *exit_code = 0;
     *get_char_count() = 0;
     str_list = NULL;
     i = 0;

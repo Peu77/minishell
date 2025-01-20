@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 16:34:29 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 18:41:19 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 20:56:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,17 @@ bool check_parentheses_count(t_list** tokens) {
 int get_redirect_parse_error(t_list* tokens) {
 	int exit_code;
 	t_list* redirects;
+	char* tmp;
 
 	while (tokens) {
 		if(((t_token*)(tokens)->content)->type == TOKEN_STRING) {
 			redirects = NULL;
-			if(!filter_and_get_redirects(((t_token*)(tokens)->content)->value, &redirects, &exit_code))
-				return (gc_list_clear(&redirects, free_redirect), exit_code);
+			tmp = filter_and_get_redirects(((t_token*)(tokens)->content)->value, &redirects, &exit_code);
 			gc_list_clear(&redirects, free_redirect);
+			gc_free_ptr(tmp);
+
+			if(exit_code != 0)
+				return exit_code;
 		}
 		tokens = tokens->next;
 	}
