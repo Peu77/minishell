@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 15:08:11 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:38:18 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	redirection_output(t_redirect *redirect)
 	if (redirect->fd_left >= 0)
 		from_fd = redirect->fd_left;
 	if (redirect->file)
-		fd = open(redirect->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = gc_add_fd(open(redirect->file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 	else
 		fd = redirect->fd_right;
 	if (fd == -1)
@@ -42,8 +42,8 @@ bool	redirection_output(t_redirect *redirect)
 		return false;
 	}
 	if (dup2(fd, from_fd) == -1)
-		return (close(fd), pe("dup2 failed for output redirection"), false);
-	close(fd);
+		return (gc_close_fd(fd), pe("dup2 failed for output redirection"), false);
+	gc_close_fd(fd);
 	return true;
 }
 
@@ -55,15 +55,18 @@ bool	redirection_append(t_redirect *redirect)
 	from_fd = STDOUT_FILENO;
 	if (redirect->fd_left >= 0)
 		from_fd = redirect->fd_left;
-	fd = open(redirect->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if(redirect->file)
+	fd = gc_add_fd(open(redirect->file, O_WRONLY | O_CREAT | O_APPEND, 0644));
+	else
+		fd = redirect->fd_right;
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
 		return false;
 	}
 	if (dup2(fd, from_fd) == -1)
-		return (close(fd), pe("dup2 failed for output redirection"), false);
-	close(fd);
+		return (gc_close_fd(fd), pe("dup2 failed for output redirection"), false);
+	gc_close_fd(fd);
 	return true;
 }
 
@@ -75,14 +78,17 @@ bool	redirection_input(t_redirect *redirect)
 	from_fd = STDIN_FILENO;
 	if (redirect->fd_left >= 0)
 		from_fd = redirect->fd_left;
-	fd = open(redirect->file, O_RDONLY);
+	if(redirect->file)
+	fd = gc_add_fd(open(redirect->file, O_RDONLY));
+	else
+		fd = redirect->fd_right;
 	if (fd == -1)
 	{
 		pev(ERROR_OPEN_FILE);
 		return false;
 	}
 	if (dup2(fd, from_fd) == -1)
-		return (close(fd), pe("dup2 failed for input redirection"), false);
-	close(fd);
+		return (gc_close_fd(fd), pe("dup2 failed for input redirection"), false);
+	gc_close_fd(fd);
 	return true;
 }
