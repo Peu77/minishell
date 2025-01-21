@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:34:45 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 13:27:33 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int	remove_variable_from_env(const char *key)
 
 int	ft_unset(t_command *command)
 {
-	size_t i;
+	size_t	i;
 	int		result;
 
 	i = 0;
 	result = 0;
 	while (command->argv[i])
 	{
-		if(!is_valid_identifier(command->argv[i]))
+		if (!is_valid_identifier(command->argv[i]))
 		{
 			write(STDERR_FILENO, RED, ft_strlen(RED));
 			write(STDERR_FILENO, "minishell: unset: `", 20);
@@ -71,7 +71,6 @@ int	ft_unset(t_command *command)
 			write(STDERR_FILENO, "\n", 1);
 			result = 1;
 		}
-
 		remove_variable_from_env(command->argv[i]);
 		i++;
 	}
