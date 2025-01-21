@@ -6,18 +6,18 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 13:49:30 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:26:49 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "gcollector.h"
 # include "libft.h"
 # include "parse.h"
-# include "gcollector.h"
-# include <errno.h>
 # include <stdio.h>
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -73,7 +73,7 @@ typedef struct s_command_test
 	t_list	*redirect;
 	int		saved_stdout;
 	int		saved_stdin;
-	char**  argv;
+	char	**argv;
 }			t_command;
 
 typedef struct s_env_entry
@@ -88,7 +88,7 @@ typedef struct s_shell
 	t_list	*env;
 	int		exit_status;
 	bool	should_exit;
-	int     heredoc_failed;
+	int		heredoc_failed;
 }			t_shell;
 
 typedef struct s_parenthesis_fd
@@ -132,8 +132,8 @@ int			print_error(const char *message);
 t_shell		*get_shell(void);
 
 // env utils
-void	print_env_list(const bool filter_empty);
-bool is_valid_identifier(const char *identifier);
+void		print_env_list(const bool filter_empty);
+bool		is_valid_identifier(const char *identifier);
 bool		initialise_env(char **env);
 bool		set_env_value(const char *key, const char *value);
 bool		add_env_entry(const char *key, const char *value);
@@ -165,7 +165,7 @@ bool		redirection_monitor(t_command *command);
 bool		redirection_output(t_redirect *redirect);
 bool		redirection_input(t_redirect *redirect);
 bool		redirection_append(t_redirect *redirect);
-bool			redirection_heredoc(const char *delimiter);
+bool		redirection_heredoc(const char *delimiter);
 
 // signal
 void		sighandler(int sig);
