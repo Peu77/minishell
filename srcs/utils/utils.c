@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 13:41:40 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:45:23 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_t_shell(void)
 	if (shell->heredoc_failed == 1)
 	{
 		shell->heredoc_failed = 0;
+		shell->exit_status=130;
 		return (130);
 	}
 	return (0);
