@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:11:42 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/12 19:51:01 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:04:48 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_pwd(t_command *command)
 {
 	char	*buffer;
 
-	if (command->argument)
+	if (command->argv[1])
 		return (print_error(ERROR_PWD));
 	buffer = gc_malloc(MAX_PATH);
 	if (buffer == NULL)
