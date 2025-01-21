@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:53:37 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 16:38:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 17:27:49 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	put_redirection(t_list *redirection, t_command **command)
 	(*command)->saved_stdout = 0;
 }
 
-int	transform_node_to_command(char** argv, t_command **command,
+int	transform_node_to_command(char **argv, t_command **command,
 		t_list *redirection)
 {
 	*command = gc_malloc(sizeof(t_command));
 	ft_memset(*command, 0, sizeof(t_command));
-	if(!argv[0] && ft_lstsize(redirection) > 0)
+	if (!argv[0] && ft_lstsize(redirection) > 0)
 		argv[0] = gc_add(ft_strdup("cat"));
 	if (!argv[0])
 		return (free_string_array(argv), false);
