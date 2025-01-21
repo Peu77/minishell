@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 13:49:06 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:23:45 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,15 @@ static int	handle_child_status(int status)
 {
 	t_shell	*shell;
 
-	if (!WIFEXITED(status))
-		return (0);
 	if (WEXITSTATUS(status) == 130)
 	{
 		shell = get_shell();
 		shell->exit_status = 130;
 		shell->heredoc_failed = 1;
-		return (pec("Heredoc process interrupted by SIGINT\n"));
+		return pec(("Heredoc process interrupted by SIGINT\n"));
 	}
-	if (WEXITSTATUS(status) != 0)
-		return (pec("Heredoc process failed\n"));
+	else if (WEXITSTATUS(status) != 0)
+		pev("Heredoc process interrupted\n");
 	return (0);
 }
 
@@ -111,8 +109,8 @@ bool	redirection_heredoc(const char *delimiter)
 		create_heredoc_file(delimiter);
 	waitpid(pid, &status, 0);
 	reset_signals();
-	if (handle_child_status(status) != 0)
-		return (false);
+	if(handle_child_status(status))
+		return (true);
 	redirect_input_from_heredoc();
 	return (true);
 }
