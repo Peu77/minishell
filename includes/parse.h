@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 23:32:28 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 17:29:07 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void					print_ast_node(t_ast_node *node, int depth);
 
 void					print_ast_type(const t_ast_type type);
 
-char*					expand_string(const char* str);
+char					*expand_string(const char *str);
 
 int						get_wildcard_len(const char *str);
 
@@ -116,7 +116,7 @@ char					*expand_env_vars(const char *input, size_t len);
 bool					get_files_in_dir(const char *path, t_list **list,
 							size_t *amount);
 
-size_t						*get_char_count(void);
+size_t					*get_char_count(void);
 
 bool					handle_dollar_sign(const char *str, int *i,
 							t_list **result_chars);
@@ -127,7 +127,8 @@ bool					parse_redirect_to_token(t_list **tokens,
 
 t_token_type			is_redirect(const char *str, size_t i);
 
-t_token_type			get_token_type(const char *str, size_t i, bool in_quote);
+t_token_type			get_token_type(const char *str, size_t i,
+							bool in_quote);
 
 bool					add_token(t_list **tokens, t_token_type type,
 							char *value);
@@ -144,23 +145,24 @@ bool					add_str_to_result(const char *str, size_t *i,
 
 bool					is_empty_string_token(t_token *token);
 
-bool	parse_redirect(t_list **redirects, const char *str,
-		t_token_type redirect_type, size_t *i);
+bool					parse_redirect(t_list **redirects, const char *str,
+							t_token_type redirect_type, size_t *i);
 
-char	*strlst_to_str(t_list *result_chars);
+char					*strlst_to_str(t_list *result_chars);
 
-char	*ft_unescape_string(char *str);
+char					*ft_unescape_string(char *str);
 
-char	**split_quotes(char const *str);
+char					**split_quotes(char const *str);
 
-char* filter_and_get_redirects(const char* input, t_list** redirects, int* exit_code);
+char					*filter_and_get_redirects(const char *input,
+							t_list **redirects, int *exit_code);
 
+bool					skip_safe_quotes(const char *str, size_t *i,
+							t_list **str_list);
 
-bool skip_safe_quotes(const char* str, size_t* i, t_list** str_list);
+bool					is_escaped(const char *str, size_t i);
 
-bool is_escaped(const char *str, size_t i);
+bool					skip_quotes(const char *str, size_t *i);
 
-bool skip_quotes(const char *str, size_t *i);
-
-char* expand_wildcards(const char *str);
+char					*expand_wildcards(const char *str);
 #endif
