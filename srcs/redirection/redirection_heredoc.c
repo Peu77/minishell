@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 13:21:21 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:49:06 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static int	handle_child_status(int status)
 	return (0);
 }
 
-int	redirection_heredoc(const char *delimiter)
+bool	redirection_heredoc(const char *delimiter)
 {
 	pid_t	pid;
 	int		status;
@@ -112,7 +112,7 @@ int	redirection_heredoc(const char *delimiter)
 	waitpid(pid, &status, 0);
 	reset_signals();
 	if (handle_child_status(status) != 0)
-		return (1);
+		return (false);
 	redirect_input_from_heredoc();
-	return (0);
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 12:10:53 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:41:40 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	command_not_found(char *path)
 {
@@ -42,9 +41,11 @@ void	command_not_found(char *path)
 	destroy_minishell(127);
 }
 
-int check_t_shell()
+int	check_t_shell(void)
 {
-	t_shell *shell = get_shell();
+	t_shell	*shell;
+
+	shell = get_shell();
 	if (shell->heredoc_failed == 1)
 	{
 		shell->heredoc_failed = 0;
