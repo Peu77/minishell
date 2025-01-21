@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 22:29:02 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:35:06 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,46 +52,50 @@ int	pipe_fork_error(t_pipe_data *pipe_data)
 	return (pec("Fork for right process failed"));
 }
 
+/*
+void	print_node_left(t_ast_node *node) {
+	if (node) {
+		// First, check and print information about the left node
+		if (node->left) {
+			printf("Left node - value: %s, type: %d\n", node->left->value,
+				node->left->type);
 
+			// Now, check and print the redirects for the left node
+			if (node->left->redirects) {
+				t_list *current_redirect = node->left->redirects;
 
-void print_node_left(t_ast_node *node) {
-    if (node) {
-        // First, check and print information about the left node
-        if (node->left) {
-            printf("Left node - value: %s, type: %d\n", node->left->value, node->left->type);
+				// Iterate over the list of redirects
+				while (current_redirect) {
+					// Cast the content of the current list node to t_redirect
+					t_redirect *redirect = (t_redirect *)current_redirect->content;
 
-            // Now, check and print the redirects for the left node
-            if (node->left->redirects) {
-                t_list *current_redirect = node->left->redirects;
+					// Print the details of the current redirect
+					printf("Redirect (left node) - fd_left: %d, fd_right: %d,
+						file: %s, type: %d\n",
+							redirect->fd_left, redirect->fd_right,
+								redirect->file, redirect->type);
 
-                // Iterate over the list of redirects
-                while (current_redirect) {
-                    // Cast the content of the current list node to t_redirect
-                    t_redirect *redirect = (t_redirect *)current_redirect->content;
+					// Move to the next redirect in the list
+					current_redirect = current_redirect->next;
+				}
+			} else {
+				printf("No redirects in the left node.\n");
+			}
 
-                    // Print the details of the current redirect
-                    printf("Redirect (left node) - fd_left: %d, fd_right: %d, file: %s, type: %d\n",
-                           redirect->fd_left, redirect->fd_right, redirect->file, redirect->type);
-
-                    // Move to the next redirect in the list
-                    current_redirect = current_redirect->next;
-                }
-            } else {
-                printf("No redirects in the left node.\n");
-            }
-
-        } else {
-            printf("No left node.\n");
-        }
-    }
+		} else {
+			printf("No left node.\n");
+		}
+	}
 }
+*/
 
 int	pipe_monitor(t_ast_node *node)
 {
 	t_pipe_data	pipe_data;
 
-    reset_signals();
-	if (!node->left || !node->right) {
+	reset_signals();
+	if (!node->left || !node->right)
+	{
 		get_shell()->exit_status = 2;
 		return (pec("Invalid pipe node: missing children"));
 	}
@@ -100,10 +104,9 @@ int	pipe_monitor(t_ast_node *node)
 	pipe_data.left_pid = fork();
 	if (pipe_data.left_pid == -1)
 		return (pec("Fork for left process failed"));
-
-	//print_node_left(node);
+	// print_node_left(node);
 	if (pipe_data.left_pid == 0)
-	{	
+	{
 		pipe_left_process(node, &pipe_data);
 	}
 	pipe_data.right_pid = fork();

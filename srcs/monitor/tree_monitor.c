@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:25:23 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 15:43:37 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 13:34:39 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	tree_monitor(t_ast_node *node, t_command *command)
 		return (and_monitor(node, command));
 	if (node->type == AST_OR)
 		return (or_monitor(node, command));
-	if(node->type == AST_SEMICOLON)
+	if (node->type == AST_SEMICOLON)
 		return (semicolon_monitor(node, command));
 	if (node->type == AST_PARENTHESES)
 		return (parentheses_monitor(node, command));

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:34:50 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 19:14:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 13:34:15 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	if (env && !initialise_env(env))
-		 destroy_minishell(EXIT_FAILURE);
+		destroy_minishell(EXIT_FAILURE);
 	if (argc >= 2)
 		minishell_non_interactive_argument(argv + 1, argc - 1);
 	else if (isatty(STDIN_FILENO))
