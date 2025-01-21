@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 15:11:49 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:35:28 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,42 +42,40 @@ static void	save_file_descriptors(t_command **command)
 	}
 }
 
-bool	redirection_monitor(t_command *command)
+static bool	handle_redirect(t_redirect *redirect)
 {
-	t_list		*redirect_list;
+	if (redirect->type == TOKEN_REDIRECT_OUTPUT)
+		return (redirection_output(redirect));
+	else if (redirect->type == TOKEN_REDIRECT_APPEND)
+		return (redirection_append(redirect));
+	else if (redirect->type == TOKEN_REDIRECT_INPUT)
+		return (redirection_input(redirect));
+	else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
+		return (redirection_heredoc(redirect->file));
+	else
+	{
+		pev("Unknown redirection type encountered");
+		destroy_minishell(EXIT_FAILURE);
+	}
+	return (false);
+}
+
+static bool	process_redirect_list(t_list *redirect_list)
+{
 	t_redirect	*redirect;
 
-	save_file_descriptors(&command);
-	redirect_list = command->redirect;
 	while (redirect_list)
 	{
 		redirect = (t_redirect *)redirect_list->content;
-		if (redirect->type == TOKEN_REDIRECT_OUTPUT)
-		{
-			if (!redirection_output(redirect))
-				return (false);
-		}
-		else if (redirect->type == TOKEN_REDIRECT_APPEND)
-		{
-			if (!redirection_append(redirect))
-				return (false);
-		}
-		else if (redirect->type == TOKEN_REDIRECT_INPUT)
-		{
-			if (!redirection_input(redirect))
-				return (false);
-		}
-		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-		{
-			if (!redirection_heredoc(redirect->file))
-				return (false);
-		}
-		else
-		{
-			pev("Unknown redirection type encountered");
-			destroy_minishell(EXIT_FAILURE);
-		}
+		if (!handle_redirect(redirect))
+			return (false);
 		redirect_list = redirect_list->next;
 	}
 	return (true);
+}
+
+bool	redirection_monitor(t_command *command)
+{
+	save_file_descriptors(&command);
+	return (process_redirect_list(command->redirect));
 }
