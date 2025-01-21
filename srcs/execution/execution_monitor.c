@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:56:26 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 16:24:36 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:36:58 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,16 @@ int	execute_builtin(t_command *command, int builtin_index)
 	return (result);
 }
 
+static int	handle_redirection(t_command *cmd)
+{
+	if (cmd->redirect && !redirection_monitor(cmd))
+	{
+		get_shell()->exit_status = 1;
+		return (0);
+	}
+	return (1);
+}
+
 int	execution_monitor(t_command *command)
 {
 	char	*list_builtin[NUM_BUILTINS];
@@ -78,14 +88,9 @@ int	execution_monitor(t_command *command)
 	int		result;
 
 	initialise_builtin(list_builtin);
+	if (!handle_redirection(command))
+		return (1);
 	i = -1;
-	result = 0;
-	if (command->redirect)
-		if (!redirection_monitor(command))
-		{
-			get_shell()->exit_status = 1;
-			return (1);
-		}
 	while (++i < NUM_BUILTINS)
 	{
 		if (ft_strncmp(command->command_name, list_builtin[i],
