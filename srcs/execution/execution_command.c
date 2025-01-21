@@ -6,21 +6,20 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 13:25:58 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:24:27 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <unistd.h>
 
-int	execution_command(t_command* command)
+int	execution_command(t_command *command)
 {
 	pid_t	pid;
 	int		sig_num;
 	int		status;
 	char	**env_cpy;
 
-	if(check_t_shell() != 0)
+	if (check_t_shell() != 0)
 		return (check_t_shell());
 	env_cpy = copy_env_to_string_array();
 	if (!env_cpy)
@@ -31,19 +30,19 @@ int	execution_command(t_command* command)
 		return (pec(ERROR_FORK));
 	if (pid == 0)
 	{
-		signal(SIGINT,sigint_command);
+		signal(SIGINT, sigint_command);
 		if (execve(command->path, command->argv, env_cpy) == -1)
 			command_not_found(command->path);
 		destroy_minishell(EXIT_SUCCESS);
 	}
-		waitpid(pid, &status, 0);
-		free_string_array(env_cpy);
-		main_signals();
-		if (WIFSIGNALED(status))
-		{
-			sig_num = WTERMSIG(status);
-			return (128 + sig_num);
-		}
+	waitpid(pid, &status, 0);
+	free_string_array(env_cpy);
+	main_signals();
+	if (WIFSIGNALED(status))
+	{
+		sig_num = WTERMSIG(status);
+		return (128 + sig_num);
+	}
 	return (WEXITSTATUS(status));
 }
 

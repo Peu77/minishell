@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:14:04 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 16:23:52 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	print_env_list(const bool filter_empty)
 	while (current)
 	{
 		entry = current->content;
-		if ((!entry->value || *entry->value == 0) && filter_empty) {
+		if ((!entry->value || *entry->value == 0) && filter_empty)
+		{
 			current = current->next;
-			continue;
+			continue ;
 		}
 		ft_printf("%s", entry->key);
 		if (entry->value && *entry->value)
@@ -46,7 +47,7 @@ void	print_env_list(const bool filter_empty)
 	}
 }
 
-static void increase_shlvl(void)
+static void	increase_shlvl(void)
 {
 	t_env_entry	*entry;
 	char		*shlvl_str;
@@ -84,16 +85,16 @@ bool	initialise_env(char **env)
 	return (true);
 }
 
-bool is_valid_identifier(const char *identifier) {
+bool	is_valid_identifier(const char *identifier)
+{
 	if (!identifier || *identifier == '\0')
-		return false;
-
+		return (false);
 	if (!ft_isalpha(identifier[0]) && identifier[0] != '_')
-		return false;
-
-	for (size_t i = 1; identifier[i] != '\0'; i++) {
+		return (false);
+	for (size_t i = 1; identifier[i] != '\0'; i++)
+	{
 		if (!ft_isalnum(identifier[i]) && identifier[i] != '_')
-			return false;
+			return (false);
 	}
-	return true;
+	return (true);
 }

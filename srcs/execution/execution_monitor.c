@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:56:26 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:07:58 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:24:36 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ int	execution_monitor(t_command *command)
 	i = -1;
 	result = 0;
 	if (command->redirect)
-		if(!redirection_monitor(command)) {
+		if (!redirection_monitor(command))
+		{
 			get_shell()->exit_status = 1;
-			return 1;
+			return (1);
 		}
 	while (++i < NUM_BUILTINS)
 	{
