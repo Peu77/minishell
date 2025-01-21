@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:06:58 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:25:55 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void		sighandler(int sig);
 void		main_signals(void);
 void		reset_signals(void);
 void		heredoc_sighandler(int sig);
-void 		signal_command(void);
+void		sigint_command(int sig);
 
 // utils
 int			check_t_shell(void);

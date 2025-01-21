@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 22:16:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 13:25:58 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	execution_command(t_command* command)
 		return (pec(ERROR_FORK));
 	if (pid == 0)
 	{
-		signal_command();
+		signal(SIGINT,sigint_command);
 		if (execve(command->path, command->argv, env_cpy) == -1)
 			command_not_found(command->path);
 		destroy_minishell(EXIT_SUCCESS);
