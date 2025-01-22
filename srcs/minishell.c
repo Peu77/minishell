@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 18:48:26 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:58:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	minishell_non_interactive(void)
 
 	while (1)
 	{
-		line = get_next_line(fileno(stdin));
+		line = readline(NULL);
 		if (line == NULL)
 			break ;
 		if (*line == '\0')
