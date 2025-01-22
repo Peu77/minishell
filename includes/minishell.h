@@ -6,17 +6,17 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 13:12:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:49:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include "gcollector.h"
 # include "libft.h"
 # include "parse.h"
-# include <stdio.h>
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -195,6 +195,6 @@ void		print_command_test(t_command *command);
 
 char		*get_env_value(const char *key);
 
-char	*ft_strncpy(char *dest, const char *src, size_t n);
+char		*ft_strncpy(char *dest, const char *src, size_t n);
 
 #endif

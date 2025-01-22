@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:15:06 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 21:05:18 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:46:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	**copy_env_to_string_array(void)
 		tmp = gc_add(ft_strjoin(((t_env_entry *)current->content)->key, "="));
 		if (!tmp)
 			return (free_string_array_at_index(env, i), NULL);
-		env[i] = gc_add(ft_strjoin(tmp, ((t_env_entry *)current->content)->value));
+		env[i] = gc_add(ft_strjoin(tmp, ((t_env_entry *)
+						current->content)->value));
 		gc_free_ptr(tmp);
 		if (!env[i])
 			return (free_string_array_at_index(env, i), NULL);

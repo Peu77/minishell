@@ -184,9 +184,9 @@ bool					skip_quotes(const char *str, size_t *i);
 
 char					*expand_wildcards(const char *str);
 
-bool get_lexer_results(t_list **tokens, bool in_quote);
+bool					get_lexer_results(t_list **tokens, bool in_quote);
 
-char	*extract_word(char const *str, size_t len);
+char					*extract_word(char const *str, size_t len);
 
-size_t	count_words(char const *str);
+size_t					count_words(char const *str);
 #endif

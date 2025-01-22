@@ -27,7 +27,7 @@
 static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 {
 	char	*buffer;
-	char* tmp;
+	char	*tmp;
 
 	while (1)
 	{
