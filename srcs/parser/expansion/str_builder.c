@@ -17,9 +17,9 @@
  */
 size_t	*get_char_count(void)
 {
-    static size_t	char_count = 0;
+	static size_t	char_count = 0;
 
-    return (&char_count);
+	return (&char_count);
 }
 
 /**
@@ -30,24 +30,24 @@ size_t	*get_char_count(void)
  */
 char	*strlst_to_str(t_list *result_chars)
 {
-    char	*result;
-    int		cpy_offset;
-    t_list*    tmp;
+	char	*result;
+	int		cpy_offset;
+	t_list	*tmp;
 
-    tmp = result_chars;
-    cpy_offset = 0;
-    result = gc_malloc(*get_char_count() + 1);
-    result[*get_char_count()] = '\0';
-    while (result_chars)
-    {
-        ft_strlcpy(result + cpy_offset, result_chars->content, ft_strlen(result_chars->content)
-            + 1);
-        cpy_offset += ft_strlen(result_chars->content);
-        result_chars = result_chars->next;
-    }
-    *get_char_count() = 0;
-    gc_list_clear(&tmp, gc_free_ptr);
-    return (result);
+	tmp = result_chars;
+	cpy_offset = 0;
+	result = gc_malloc(*get_char_count() + 1);
+	result[*get_char_count()] = '\0';
+	while (result_chars)
+	{
+		ft_strlcpy(result + cpy_offset, result_chars->content,
+			ft_strlen(result_chars->content) + 1);
+		cpy_offset += ft_strlen(result_chars->content);
+		result_chars = result_chars->next;
+	}
+	*get_char_count() = 0;
+	gc_list_clear(&tmp, gc_free_ptr);
+	return (result);
 }
 
 /**
@@ -59,14 +59,15 @@ char	*strlst_to_str(t_list *result_chars)
  * @param len the length of the substring
  * @return
  */
-bool add_str_to_result(const char *str, size_t *i, t_list **result_chars, size_t len)
+bool	add_str_to_result(const char *str, size_t *i, t_list **result_chars,
+		size_t len)
 {
-    char	*str_cpy;
-    t_list	*new_node;
+	char	*str_cpy;
+	t_list	*new_node;
 
-    str_cpy = gc_add(ft_substr(str, *i, len));
-    new_node = gc_add(ft_lstnew(str_cpy));
-    (*get_char_count()) += len;
-    (*i) += len;
-    return (ft_lstadd_back(result_chars, new_node), true);
+	str_cpy = gc_add(ft_substr(str, *i, len));
+	new_node = gc_add(ft_lstnew(str_cpy));
+	(*get_char_count()) += len;
+	(*i) += len;
+	return (ft_lstadd_back(result_chars, new_node), true);
 }
