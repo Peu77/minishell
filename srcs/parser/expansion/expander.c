@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:00:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 22:35:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/21 20:29:55 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static bool	handle_single_quotes(const char *str, int *i, t_list **result_chars)
 
 	if(str[*i] == 0)
 		return false;
-	while (str[*i + len + 1] && (str[*i + len] != '\'' || is_escaped(str, *i + len)))
+	while (str[*i + len + 1] && (str[*i + len + 1] != '\'' || is_escaped(str, *i + len + 1)))
 		len++;
-	return (add_str_to_result(str, (size_t*)i, result_chars, len + 1) &&str[*i] != '\0');
+
+	return (add_str_to_result(str, (size_t*)i, result_chars, len + 2) &&str[*i] != '\0');
 }
 
 static bool	handle_double_quotes(const char *str, int *i, t_list **result_chars)
