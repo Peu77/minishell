@@ -42,4 +42,3 @@ t_redirect	*create_redirect(int fd_left, int fd_right, t_token_type type,
 	redirect->file = file;
 	return (redirect);
 }
-

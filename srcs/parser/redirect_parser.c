@@ -6,36 +6,36 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:06:47 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 18:38:34 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/22 13:48:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <parse.h>
 
-
-static size_t get_redirect_len(const char *str)
+static size_t	get_redirect_len(const char *str)
 {
-	const size_t str_len = ft_strlen(str);
-	size_t len;
+	const size_t	str_len = ft_strlen(str);
+	size_t			len;
 
 	len = 0;
-	while(len < str_len){
-		if(skip_quotes(str, &len))
-			continue;
-		if(ft_isspace(str[len]) && (len != 0 && str[len -1] != '\\'))
-			break;
-		if((str[len] == '<' || str[len] == '>') && !is_escaped(str, len))
-			break;
+	while (len < str_len)
+	{
+		if (skip_quotes(str, &len))
+			continue ;
+		if (ft_isspace(str[len]) && (len != 0 && str[len - 1] != '\\'))
+			break ;
+		if ((str[len] == '<' || str[len] == '>') && !is_escaped(str, len))
+			break ;
 		len++;
 	}
-	return len;
+	return (len);
 }
 
 static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 {
 	size_t	filename_len;
-	char** split;
+	char	**split;
 
 	if (str[*i] == '&')
 	{
@@ -51,8 +51,6 @@ static bool	parse_right_area(const char *str, size_t *i, t_redirect *redirect)
 	if (filename_len == 0)
 		return (false);
 	redirect->file = gc_add(ft_substr(str, *i, filename_len));
-	if (!redirect->file)
-		return (false);
 	split = split_quotes(redirect->file);
 	if (!split)
 		return (gc_free_ptr(redirect->file), false);
@@ -77,8 +75,7 @@ bool	parse_redirect(t_list **redirects, const char *str,
 	}
 	(*i) += 1 + (redirect_type >= TOKEN_REDIRECT_APPEND);
 	if (str[*i] == 0 || (str[*i] == '&' && str[*i + 1] == 0))
-		return (gc_free_ptr(redirect),
-			false);
+		return (gc_free_ptr(redirect), false);
 	if (!parse_right_area(str, i, redirect))
 		return (gc_free_ptr(redirect), false);
 	return (ft_lstadd_back(redirects, gc_add(ft_lstnew(redirect))), true);
