@@ -27,7 +27,8 @@ t_ast_node	*parse_pipe(t_list **tokens)
 	{
 		pipe_node = create_ast_node(AST_PIPE, NULL, NULL);
 		*tokens = (*tokens)->next;
-		if(!left) {
+		if (!left)
+		{
 			get_shell()->exit_status = 2;
 			return (pec("Invalid pipe node: missing children"), NULL);
 		}
@@ -53,7 +54,7 @@ t_ast_node	*parse_logical(t_list **tokens)
 			logical_type = AST_AND;
 		else if (current->type == TOKEN_OR)
 			logical_type = AST_OR;
-		else if(current->type == TOKEN_SEMICOLON)
+		else if (current->type == TOKEN_SEMICOLON)
 			logical_type = AST_SEMICOLON;
 		else
 			break ;
