@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 17:29:07 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:11:36 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,24 @@ typedef struct s_list_data
 	t_list				**list;
 	size_t				count;
 }						t_list_data;
+
+typedef struct s_split_extractor
+{
+	size_t				*i;
+	size_t				*j;
+	bool				*in_quotes;
+	char				*quote_type;
+}						t_split_extractor;
+
+typedef struct s_escape_data
+{
+	char				*str;
+	int					*i;
+	int					*j;
+	bool				*in_quotes;
+	char				*quote_type;
+	int					len;
+}						t_escape_data;
 
 t_ast_node				*parse(char *input);
 
@@ -165,4 +183,10 @@ bool					is_escaped(const char *str, size_t i);
 bool					skip_quotes(const char *str, size_t *i);
 
 char					*expand_wildcards(const char *str);
+
+bool get_lexer_results(t_list **tokens, bool in_quote);
+
+char	*extract_word(char const *str, size_t len);
+
+size_t	count_words(char const *str);
 #endif

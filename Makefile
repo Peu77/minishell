@@ -38,13 +38,15 @@ SRC =  srcs/main.c \
 	   srcs/parser/expansion/expander_utils.c \
 	   srcs/parser/expansion/wildcard.c \
 	   srcs/parser/expansion/wildcard_utils.c \
-	   srcs/parser/expansion/env_utils.c \
 	   srcs/parser/expansion/dollar_sign.c \
 	   srcs/parser/expansion/spliter.c \
 	   srcs/parser/expansion/redirects_filter.c \
 	   srcs/parser/expansion/str_builder.c \
 	   srcs/parser/expansion/str_escape.c \
 	   srcs/parser/expansion/quote_utils.c \
+	   srcs/parser/expansion/split_extractor.c \
+	   srcs/parser/expansion/split_counter.c \
+	   srcs/parser/lexer_errors.c \
 	   srcs/monitor/tree_monitor.c \
 	   srcs/monitor/pipe_monitor.c \
 	   srcs/monitor/logical_monitor.c \
