@@ -6,40 +6,80 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:36:35 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 13:27:50 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:17:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*ft_strncpy(char *dest, const char *src, size_t n)
+static void	print_invalid_identifier_error(const char *key)
 {
-	size_t	i;
+	write(STDERR_FILENO, RED, ft_strlen(RED));
+	write(STDERR_FILENO, "minishell: export: `", 20);
+	write(STDERR_FILENO, key, ft_strlen(key));
+	write(STDERR_FILENO, "': not a valid identifier", 26);
+	write(STDERR_FILENO, RESET, ft_strlen(RESET));
+	write(STDERR_FILENO, "\n", 1);
+}
 
-	i = 0;
-	while (i < n && src[i])
+static int	handle_plus_equals(char *arg, char *plus_equal_sign)
+{
+	char	key[MAX_VAR_LEN];
+	char	value[MAX_VAR_LEN];
+	char	*existing_value;
+	char	*new_value;
+
+	ft_strncpy(key, arg, plus_equal_sign - arg);
+	key[plus_equal_sign - arg] = '\0';
+	if (key[0] == '\0')
+		return (pec("minishell: export: `+=': not a valid identifier"));
+	if (!is_valid_identifier(key))
+		return (print_invalid_identifier_error(key), 1);
+	ft_strncpy(value, plus_equal_sign + 2, MAX_VAR_LEN);
+	existing_value = get_env_value(key);
+	if (existing_value)
 	{
-		dest[i] = src[i];
-		i++;
+		new_value = gc_add(ft_strjoin(existing_value, value));
+		return (set_env_value(key, new_value), gc_free_ptr(new_value), 1);
 	}
-	while (i < n)
+	set_env_value(key, value);
+	return (0);
+}
+
+static void	handle_equal(char *arg, char *equal_sign, int *result)
+{
+	char	key[MAX_VAR_LEN];
+	char	value[MAX_VAR_LEN];
+
+	ft_strncpy(key, arg, equal_sign - arg);
+	key[equal_sign - arg] = '\0';
+	if (key[0] == '\0')
 	{
-		dest[i] = '\0';
-		i++;
+		*result = pec("minishell: export: `=': not a valid identifier");
+		return ;
 	}
-	return (dest);
+	if (!is_valid_identifier(key))
+	{
+		print_invalid_identifier_error(key);
+		*result = 1;
+		return ;
+	}
+	ft_strncpy(value, equal_sign + 1, MAX_VAR_LEN);
+	set_env_value(key, value);
+}
+
+static void	find_signs(char **equal_sign, char **plus_equal_sign, char *arg)
+{
+	*equal_sign = ft_strchr(arg, '=');
+	*plus_equal_sign = ft_strnstr(arg, "+=", ft_strlen(arg));
 }
 
 int	ft_export(t_command *command)
 {
 	char	*equal_sign;
 	char	*plus_equal_sign;
-	char	key[MAX_VAR_LEN];
-	char	value[MAX_VAR_LEN];
 	int		i;
 	int		result;
-	char	*existing_value;
-	char	*new_value;
 
 	result = 0;
 	if (!command->argv[1])
@@ -47,83 +87,16 @@ int	ft_export(t_command *command)
 	i = 1;
 	while (command->argv[i])
 	{
-		equal_sign = ft_strchr(command->argv[i], '=');
-		plus_equal_sign = ft_strnstr(command->argv[i], "+=",
-				ft_strlen(command->argv[i]));
+		find_signs(&equal_sign, &plus_equal_sign, command->argv[i]);
 		if (plus_equal_sign && plus_equal_sign != command->argv[i])
-		{
-			ft_strncpy(key, command->argv[i], plus_equal_sign
-				- command->argv[i]);
-			key[plus_equal_sign - command->argv[i]] = '\0';
-			if (key[0] == '\0')
-			{
-				pe("minishell: export: `+=': not a valid identifier");
-				result = 1;
-				i++;
-				continue ;
-			}
-			if (!is_valid_identifier(key))
-			{
-				write(STDERR_FILENO, RED, ft_strlen(RED));
-				write(STDERR_FILENO, "minishell: export: `", 20);
-				write(STDERR_FILENO, key, ft_strlen(key));
-				write(STDERR_FILENO, "': not a valid identifier", 26);
-				write(STDERR_FILENO, RESET, ft_strlen(RESET));
-				write(STDERR_FILENO, "\n", 1);
-				result = 1;
-				i++;
-				continue ;
-			}
-			ft_strncpy(value, plus_equal_sign + 2, MAX_VAR_LEN);
-			existing_value = get_env_value(key);
-			if (existing_value)
-			{
-				new_value = gc_add(ft_strjoin(existing_value, value));
-				if (!new_value)
-					return (1);
-				if (!set_env_value(key, new_value))
-					return (1);
-				gc_free_ptr(new_value);
-			}
-			else
-			{
-				if (!set_env_value(key, value))
-					return (1);
-			}
-		}
+			result = handle_plus_equals(command->argv[i], plus_equal_sign);
 		else if (equal_sign)
-		{
-			ft_strncpy(key, command->argv[i], equal_sign - command->argv[i]);
-			key[equal_sign - command->argv[i]] = '\0';
-			if (key[0] == '\0')
-			{
-				pe("minishell: export: `=': not a valid identifier");
-				result = 1;
-				i++;
-				continue ;
-			}
-			if (!is_valid_identifier(key))
-			{
-				write(STDERR_FILENO, RED, ft_strlen(RED));
-				write(STDERR_FILENO, "minishell: export: `", 20);
-				write(STDERR_FILENO, key, ft_strlen(key));
-				write(STDERR_FILENO, "': not a valid identifier", 26);
-				write(STDERR_FILENO, RESET, ft_strlen(RESET));
-				write(STDERR_FILENO, "\n", 1);
-				result = 1;
-				i++;
-				continue ;
-			}
-			ft_strncpy(value, equal_sign + 1, MAX_VAR_LEN);
-			if (!set_env_value(key, value))
-				return (1);
-		}
+			handle_equal(command->argv[i], equal_sign, &result);
 		else
 		{
 			if (!is_valid_identifier(command->argv[i]))
 				return (print_error(ERROR_EXPORT));
-			if (!set_env_value(command->argv[i], ""))
-				return (1);
+			set_env_value(command->argv[i], "");
 		}
 		i++;
 	}
