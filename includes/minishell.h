@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 17:29:32 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:12:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,7 @@ void		print_ast_node(t_ast_node *node, int depth);
 void		print_command_test(t_command *command);
 
 char		*get_env_value(const char *key);
+
+char	*ft_strncpy(char *dest, const char *src, size_t n);
 
 #endif
