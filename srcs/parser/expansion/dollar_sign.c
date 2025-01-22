@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:26:36 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 00:41:13 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/22 15:36:48 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,33 @@ static bool	handle_question_mark(int *i, t_list **result_chars)
 	return (true);
 }
 
-static char *escape_env_value(const char *value) {
-	size_t i;
+static char	*escape_env_value(const char *value)
+{
+	size_t	i;
+	size_t	len;
+	size_t	new_len;
+	char	*escaped_value;
+	size_t	j;
 
-	size_t len = strlen(value);
-	size_t new_len = len;
-	i = 0;
-	while(i < len) {
-		if (value[i] == '<' || value[i] == '>') {
+	len = strlen(value);
+	new_len = len;
+	i = -1;
+	while (++i < len)
+	{
+		if (value[i] == '<' || value[i] == '>')
 			new_len++;
-		}
-		i++;
 	}
-
-	char *escaped_value = gc_malloc(new_len + 1);
-
-	size_t j = 0;
-	i = 0;
-	while(i < len) {
-		if (value[i] == '<' || value[i] == '>') {
+	escaped_value = gc_add(ft_calloc(new_len + 1, sizeof(char)));
+	j = 0;
+	i = -1;
+	while (++i < len)
+	{
+		if (value[i] == '<' || value[i] == '>')
 			escaped_value[j++] = '\\';
-		}
 		escaped_value[j++] = value[i];
-		i++;
 	}
 	escaped_value[j] = '\0';
-	return escaped_value;
+	return (escaped_value);
 }
 
 static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
@@ -70,8 +71,6 @@ static bool	add_value_as_node(t_list **result_chars, char *value, int *i,
 	*i = end;
 	return (true);
 }
-
-
 
 bool	handle_dollar_sign(const char *str, int *i, t_list **result_chars)
 {
