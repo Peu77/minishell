@@ -18,8 +18,8 @@ t_token_type	is_redirect(const char *str, size_t i)
 {
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
-	if(str[i] == '\\')
-		return TOKEN_NONE;
+	if (str[i] == '\\')
+		return (TOKEN_NONE);
 	if (ft_strncmp(str + i, "<<", 2) == 0)
 		return (TOKEN_REDIRECT_INPUT_APPEND);
 	if (ft_strncmp(str + i, ">>", 2) == 0)
@@ -35,7 +35,7 @@ t_token_type	get_token_type(const char *str, size_t i, bool in_quote)
 {
 	if (in_quote)
 		return (TOKEN_STRING);
-	if(is_escaped(str, i))
+	if (is_escaped(str, i))
 		return (TOKEN_STRING);
 	if (ft_strncmp(str + i, "&&", 2) == 0)
 		return (TOKEN_AND);
@@ -43,7 +43,7 @@ t_token_type	get_token_type(const char *str, size_t i, bool in_quote)
 		return (TOKEN_OR);
 	if (str[i] == '|')
 		return (TOKEN_PIPE);
-	if (str[i]== ';')
+	if (str[i] == ';')
 		return (TOKEN_SEMICOLON);
 	if (str[i] == '(')
 		return (TOKEN_PARENTHESES_OPEN);
