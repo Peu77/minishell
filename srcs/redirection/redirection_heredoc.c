@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 16:23:06 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:39:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 {
 	char	*buffer;
+	char* tmp;
 
 	while (1)
 	{
@@ -36,6 +37,9 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 			write(temp_fd, "\n", 1);
 			break ;
 		}
+		tmp = expand_string(buffer);
+		gc_free_ptr(buffer);
+		buffer = tmp;
 		if (ft_strncmp(buffer, delimiter, ft_strlen(delimiter) + 1) == 0)
 		{
 			gc_free_ptr(buffer);
