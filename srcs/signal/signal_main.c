@@ -6,7 +6,7 @@
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:10 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/23 16:17:46 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:33:26 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,17 @@ void	sighandler(int sig)
 	printf("\n>>>> Minishell>$ ");
 }
 
+static void sigtstp_command(int sig)
+{
+	(void)sig;
+	destroy_minishell(131);
+}
+
 void	main_signals(void)
 {
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
-	//signal(SIGTSTP, SIG_DFL); 
+	signal(SIGTSTP, sigtstp_command); 
 }
 
 void	reset_signals(void)

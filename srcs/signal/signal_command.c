@@ -24,6 +24,6 @@ void	command_signals(void)
 {
 	signal(SIGINT, sigint_command);
 	signal(SIGQUIT, sigquit_command);
-	//signal(SIGTSTP, sigtstp_command);
+//signal(SIGTSTP, sigtstp_command);
 }
 

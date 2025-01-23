@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:37:15 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 17:27:44 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:33:54 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*find_command_in_path(const char *command)
 	i = -1;
 	env_path = get_env_value("PATH");
 	if (!env_path)
-		return (pev(ERROR_FIND_ENV), NULL);
+		return (NULL);
 	paths = ft_split(env_path, ':');
 	if (!paths)
 		return (pev(ERROR_SPLIT), NULL);
