@@ -6,19 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 17:42:50 by ftapponn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:10:03 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/14 18:46:15 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:56:34 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +60,7 @@ static void	increase_shlvl(void)
 bool	initialise_env(char **env)
 {
 	int	i;
+	char cwd[PATH_MAX];
 
 	i = 0;
 	while (env[i])
@@ -82,6 +71,8 @@ bool	initialise_env(char **env)
 	}
 	increase_shlvl();
 	set_env_value("OLDPWD", "");
+	if (getcwd(cwd, PATH_MAX))
+		set_env_value("PWD", cwd);
 	return (true);
 }
 
