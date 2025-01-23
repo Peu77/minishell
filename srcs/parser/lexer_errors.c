@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:57:44 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 14:14:45 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/23 18:08:46 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ bool	get_lexer_results(t_list **tokens, bool in_quote)
 
 	if (in_quote)
 	{
+		get_shell()->exit_status = 2;
 		return (pe("parse error near '\\n'"), gc_list_clear(tokens, free_token),
 			false);
 	}
