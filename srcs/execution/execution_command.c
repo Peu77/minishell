@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/21 16:58:26 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:11:32 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	handle_child_process(t_command *command, char **env_cpy)
 {
-	signal(SIGINT, sigint_command);
+	command_signals();
 	if (execve(command->path, command->argv, env_cpy) == -1)
 		command_not_found(command->path);
 	destroy_minishell(EXIT_FAILURE);

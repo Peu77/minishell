@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:49:13 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/23 16:20:27 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,12 @@ bool		redirection_heredoc(const char *delimiter);
 void		sighandler(int sig);
 void		main_signals(void);
 void		reset_signals(void);
-void		heredoc_sighandler(int sig);
-void		sigint_command(int sig);
+
+//signal command
+void	command_signals(void);
+
+//signal heredoc
+void signal_heredoc(void);
 
 // utils
 int			check_t_shell(void);

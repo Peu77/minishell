@@ -59,7 +59,9 @@ SRC =  srcs/main.c \
 	   srcs/gcollector/gc_list.c \
 	   srcs/gcollector/gc_files.c \
 	   srcs/utils/str_utils.c \
-	   srcs/signal/signal.c \
+	   srcs/signal/signal_command.c \
+	   srcs/signal/signal_main.c \
+	   srcs/signal/signal_heredoc.c \
 	   srcs/minishell.c \
 	   srcs/minishell_destroy.c \
 

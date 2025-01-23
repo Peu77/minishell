@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 12:39:38 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/23 16:19:04 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	create_heredoc_file(const char *delimiter)
 {
 	int	temp_fd;
 
-	signal(SIGINT, heredoc_sighandler);
+	signal_heredoc();
 	temp_fd = gc_add_fd(open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC,
 				0600));
 	if (temp_fd == -1)
