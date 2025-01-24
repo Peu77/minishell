@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:54:42 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:09:38 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:00:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <libft.h>
 #include <parse.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static bool	is_quote(char c)
@@ -77,6 +78,13 @@ char	**split_quotes(char const *str)
 	if (!str)
 		return (NULL);
 	word_count = count_words(str);
+
+	if(word_count == 0) {
+		result = gc_malloc(sizeof(char *) * 2);
+		result[0] = NULL;
+		result[1] = NULL;
+		return (result);
+	}
 	result = gc_malloc(sizeof(char *) * (word_count + 1));
 	if (!result)
 		return (NULL);
