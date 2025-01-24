@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:25:23 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 15:50:08 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:34:57 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ bool traverse_heredocs(t_ast_node *node) {
 	tmp = redirects;
 	while (tmp) {
 		if (((t_redirect*) tmp->content)->type == TOKEN_REDIRECT_INPUT_APPEND) {
-			 redirection_heredoc(((t_redirect*) tmp->content)->file, node);
+			 if(!redirection_heredoc(((t_redirect*) tmp->content)->file, node))
+			 					return (gc_list_clear(&redirects, free_redirect), false);
 		}
 		tmp = tmp->next;
 	}
