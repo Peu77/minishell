@@ -6,17 +6,17 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:04:19 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:02:09 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
 # include "gcollector.h"
 # include "libft.h"
 # include "parse.h"
+# include <stdio.h>
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -70,7 +70,7 @@ typedef struct s_command_test
 	char	*path;
 	char	*argument;
 	char	*command_name;
-	char*	heredoc_filename;
+	char	*heredoc_filename;
 	t_list	*redirect;
 	int		saved_stdout;
 	int		saved_stdin;
@@ -161,7 +161,7 @@ int			ft_clear(void);
 int			execution_monitor(t_command *command);
 int			prepare_execution_command(t_command *command);
 int			execution_command(t_command *command);
-void	redirect_input_from_heredoc(const char* filename);
+void		redirect_input_from_heredoc(const char *filename);
 
 // redirection
 bool		redirection_monitor(t_command *command);
@@ -176,10 +176,10 @@ void		main_signals(void);
 void		reset_signals(void);
 
 //signal command
-void	command_signals(void);
+void		command_signals(void);
 
 //signal heredoc
-void signal_heredoc(void);
+void		signal_heredoc(void);
 
 // utils
 int			check_t_shell(void);

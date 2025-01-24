@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:39:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:01:14 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	free_command(t_command **command)
 {
 	if (!command || !*command)
 		return ;
-	if((*command)->argv)
+	if ((*command)->argv)
 		free_string_array((*command)->argv);
 	free_command_strings(*command);
 	if ((*command)->redirect)
