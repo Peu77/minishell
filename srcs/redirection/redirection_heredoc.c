@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/23 16:19:04 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:01:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 	}
 }
 
-static void	create_heredoc_file(const char *delimiter)
+static void	create_heredoc_file(const char *delimiter, const char* filename)
 {
 	int	temp_fd;
 
 	signal_heredoc();
-	temp_fd = gc_add_fd(open("heredoc_temp.txt", O_WRONLY | O_CREAT | O_TRUNC,
+	temp_fd = gc_add_fd(open(filename, O_WRONLY | O_CREAT | O_TRUNC,
 				0600));
 	if (temp_fd == -1)
 	{
@@ -68,20 +68,20 @@ static void	create_heredoc_file(const char *delimiter)
 	destroy_minishell(0);
 }
 
-static void	redirect_input_from_heredoc(void)
+void	redirect_input_from_heredoc(const char* filename)
 {
 	int	temp_fd;
 
-	temp_fd = gc_add_fd(open("heredoc_temp.txt", O_RDONLY));
+	temp_fd = gc_add_fd(open(filename, O_RDONLY));
 	if (temp_fd == -1)
 	{
-		unlink("heredoc_temp.txt");
+		unlink(filename);
 		perror("Error opening heredoc file for reading");
-		destroy_minishell(1);
+		destroy_minishell(EXIT_FAILURE);
 	}
 	dup2(temp_fd, STDIN_FILENO);
 	gc_close_fd(temp_fd);
-	unlink("heredoc_temp.txt");
+	unlink(filename);
 }
 
 static int	handle_child_status(int status)
@@ -100,21 +100,40 @@ static int	handle_child_status(int status)
 	return (0);
 }
 
-bool	redirection_heredoc(const char *delimiter)
+static void convert_pointer_to_string(char *str, void* ptr) {
+	unsigned long int nb = 0;
+	int i;
+
+	i = 0;
+	nb = (unsigned long int)ptr;
+	while (nb > 0) {
+		str[i] = nb % 10 + '0';
+		nb /= 10;
+		i++;
+	}
+	str[i] = '\0';
+}
+
+bool	redirection_heredoc(const char *delimiter, t_ast_node *node)
 {
 	pid_t	pid;
 	int		status;
+	char	*file_name;
 
+	file_name = gc_malloc(50);
+	convert_pointer_to_string(file_name, node);
 	pid = fork();
 	reset_signals();
-	if (pid == -1)
+	if (pid == -1) {
+		printf("Fork failed\n");
 		destroy_minishell(pec("Fork failed"));
+	}
 	if (pid == 0)
-		create_heredoc_file(delimiter);
+		create_heredoc_file(delimiter, file_name);
 	waitpid(pid, &status, 0);
+	node->heredoc_filename = file_name;
 	reset_signals();
 	if (handle_child_status(status))
-		return (true);
-	redirect_input_from_heredoc();
+		return (false);
 	return (true);
 }
