@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 17:02:09 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/24 17:06:40 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,11 @@ bool		redirection_input(t_redirect *redirect);
 bool		redirection_append(t_redirect *redirect);
 bool		redirection_heredoc(const char *delimiter, t_ast_node *node);
 
-// signal
-void		sighandler(int sig);
+//heredoc utils
+void	convert_pointer_to_string(char *str, void *ptr);
+
+	// signal
+	void sighandler(int sig);
 void		main_signals(void);
 void		reset_signals(void);
 

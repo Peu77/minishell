@@ -14,6 +14,7 @@ SRC =  srcs/main.c \
 	   srcs/redirection/redirection_monitor.c \
 	   srcs/redirection/redirection.c \
 	   srcs/redirection/redirection_heredoc.c \
+	   srcs/redirection/heredoc_utils.c \
 	   srcs/builtin/pwd.c \
 	   srcs/builtin/echo.c \
 	   srcs/builtin/exit.c \
