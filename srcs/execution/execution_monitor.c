@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:56:26 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:18:21 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:55:36 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static int	handle_redirection(t_command *cmd)
 	}
 	if (cmd->heredoc_filename)
 		redirect_input_from_heredoc(cmd->heredoc_filename);
-
 	return (1);
 }
 
