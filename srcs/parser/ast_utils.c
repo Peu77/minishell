@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 21:14:42 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:54:03 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	free_ast_node(void *content)
 		free_ast_node(node->right);
 	gc_free_ptr(node->value);
 	node->value = NULL;
+	if(node->heredoc_filename) {
+		gc_free_ptr(node->heredoc_filename);
+		node->heredoc_filename = NULL;
+	}
 	if (node->type == AST_COMMAND)
 	{
 		gc_list_clear(&node->redirects, free_redirect);
@@ -42,6 +46,7 @@ t_ast_node	*create_ast_node(t_ast_type type, char *value, t_list *redirects)
 	node->type = type;
 	node->value = value;
 	node->redirects = redirects;
+	node->heredoc_filename = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
