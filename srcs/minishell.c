@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 15:33:12 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:36:53 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,13 @@ void	minishell_non_interactive(void)
 		node = parse(line);
 		if (handle_parse_errors(line, node))
 			continue ;
+		if (!traverse_heredocs(node)) {
+			free_ast_node(node);
+			gc_free_ptr(line);
+			if (get_shell()->exit_status == 0)
+				get_shell()->exit_status = 1;
+			continue;
+		}
 		tree_monitor(node, command);
 		free_ast_node(node);
 		gc_free_ptr(line);
@@ -131,6 +138,13 @@ int	minishell_non_interactive_argument(char **args, int argc)
 	command = NULL;
 	if (node == NULL)
 		return (gc_free_ptr(line), EXIT_FAILURE);
+	if (!traverse_heredocs(node)) {
+		free_ast_node(node);
+		gc_free_ptr(line);
+		if (get_shell()->exit_status == 0)
+			get_shell()->exit_status = 1;
+		return 0;
+	}
 	return (tree_monitor(node, command), free_ast_node(node), gc_free_ptr(line),
 		EXIT_SUCCESS);
 }
