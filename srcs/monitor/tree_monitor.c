@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:25:23 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:34:57 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:58:35 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,50 @@ int	tree_monitor(t_ast_node *node, t_command *command)
 	return (0);
 }
 
-bool traverse_heredocs(t_ast_node *node) {
-	t_list * redirects;
-	t_list* tmp;
-	int exit_code;
+static bool	handle_non_command_nodes(t_ast_node *node)
+{
+	if (!traverse_heredocs(node->left))
+		return (false);
+	if (!traverse_heredocs(node->right))
+		return (false);
+	return (true);
+}
 
-	redirects = NULL;
+static bool	process_heredoc(t_list *redirects, t_ast_node *node)
+{
+	t_list		*current;
+	t_redirect	*redirect;
+
+	current = redirects;
+	while (current)
+	{
+		redirect = (t_redirect *)current->content;
+		if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
+		{
+			if (!redirection_heredoc(redirect->file, node))
+				return (false);
+		}
+		current = current->next;
+	}
+	return (true);
+}
+
+bool	traverse_heredocs(t_ast_node *node)
+{
+	t_list	*redirects;
+	int		exit_code;
+
 	if (!node)
 		return (true);
-	if (node->type != AST_COMMAND) {
-		if (!traverse_heredocs(node->left))
-			return (false);
-		if (!traverse_heredocs(node->right))
-			return (false);
-		return true;
-	}
-
+	if (node->type != AST_COMMAND)
+		return (handle_non_command_nodes(node));
+	redirects = NULL;
 	gc_free_ptr(filter_and_get_redirects(node->value, &redirects, &exit_code));
-	tmp = redirects;
-	while (tmp) {
-		if (((t_redirect*) tmp->content)->type == TOKEN_REDIRECT_INPUT_APPEND) {
-			 if(!redirection_heredoc(((t_redirect*) tmp->content)->file, node))
-			 					return (gc_list_clear(&redirects, free_redirect), false);
-		}
-		tmp = tmp->next;
+	if (!process_heredoc(redirects, node))
+	{
+		gc_list_clear(&redirects, free_redirect);
+		return (false);
 	}
-
 	gc_list_clear(&redirects, free_redirect);
-	return true;
+	return (true);
 }

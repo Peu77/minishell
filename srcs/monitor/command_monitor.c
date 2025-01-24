@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 11:30:09 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:14:45 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:56:21 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static char	**process_arguments(t_ast_node *node)
 static int	execute_transformed_command(t_ast_node *node, t_command *cmd,
 		char **argv)
 {
-	if (!transform_node_to_command(argv, &cmd, node->redirects, node->heredoc_filename))
+	if (!transform_node_to_command(argv, &cmd, node->redirects,
+			node->heredoc_filename))
 		return (1);
 	node->redirects = NULL;
 	return (execution_monitor(cmd));
