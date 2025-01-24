@@ -51,7 +51,7 @@ static bool	handle_redirect(t_redirect *redirect)
 	else if (redirect->type == TOKEN_REDIRECT_INPUT)
 		return (redirection_input(redirect));
 	else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-		return (redirection_heredoc(redirect->file));
+		return (true);
 	else
 	{
 		pev("Unknown redirection type encountered");
