@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 19:44:20 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:01:13 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:00:25 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ static void	handle_heredoc_input(int temp_fd, const char *delimiter)
 	}
 }
 
-static void	create_heredoc_file(const char *delimiter, const char* filename)
+static void	create_heredoc_file(const char *delimiter, const char *filename)
 {
 	int	temp_fd;
 
 	signal_heredoc();
-	temp_fd = gc_add_fd(open(filename, O_WRONLY | O_CREAT | O_TRUNC,
-				0600));
+	temp_fd = gc_add_fd(open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600));
 	if (temp_fd == -1)
 	{
 		perror("Error creating heredoc file");
@@ -68,7 +67,7 @@ static void	create_heredoc_file(const char *delimiter, const char* filename)
 	destroy_minishell(0);
 }
 
-void	redirect_input_from_heredoc(const char* filename)
+void	redirect_input_from_heredoc(const char *filename)
 {
 	int	temp_fd;
 
@@ -100,13 +99,16 @@ static int	handle_child_status(int status)
 	return (0);
 }
 
-static void convert_pointer_to_string(char *str, void* ptr) {
-	unsigned long int nb = 0;
-	int i;
+static void	convert_pointer_to_string(char *str, void *ptr)
+{
+	unsigned long int	nb;
+	int					i;
 
+	nb = 0;
 	i = 0;
 	nb = (unsigned long int)ptr;
-	while (nb > 0) {
+	while (nb > 0)
+	{
 		str[i] = nb % 10 + '0';
 		nb /= 10;
 		i++;
@@ -124,7 +126,8 @@ bool	redirection_heredoc(const char *delimiter, t_ast_node *node)
 	convert_pointer_to_string(file_name, node);
 	pid = fork();
 	reset_signals();
-	if (pid == -1) {
+	if (pid == -1)
+	{
 		printf("Fork failed\n");
 		destroy_minishell(pec("Fork failed"));
 	}

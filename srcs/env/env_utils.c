@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/23 19:56:34 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:55:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	increase_shlvl(void)
 
 bool	initialise_env(char **env)
 {
-	int	i;
-	char cwd[PATH_MAX];
+	int		i;
+	char	cwd[PATH_MAX];
 
 	i = 0;
 	while (env[i])
