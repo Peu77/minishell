@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 15:54:03 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:50:42 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_ast_node(void *content)
 	gc_free_ptr(node->value);
 	node->value = NULL;
 	if(node->heredoc_filename) {
+		unlink(node->heredoc_filename);
 		gc_free_ptr(node->heredoc_filename);
 		node->heredoc_filename = NULL;
 	}
