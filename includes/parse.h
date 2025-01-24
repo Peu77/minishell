@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:11:36 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:57:52 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_ast_node
 	char				*value;
 	t_ast_type			type;
 	t_list				*redirects;
+	char				*heredoc_filename;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }						t_ast_node;

@@ -59,7 +59,7 @@ static void	put_redirection(t_list *redirection, t_command **command)
 }
 
 int	transform_node_to_command(char **argv, t_command **command,
-		t_list *redirection)
+		t_list *redirection, char *heredoc_filename)
 {
 	*command = gc_malloc(sizeof(t_command));
 	ft_memset(*command, 0, sizeof(t_command));
@@ -68,6 +68,7 @@ int	transform_node_to_command(char **argv, t_command **command,
 	if (!argv[0])
 		return (free_string_array(argv), false);
 	(*command)->command_name = gc_add(ft_strdup(argv[0]));
+	(*command)->heredoc_filename = heredoc_filename;
 	if (!(*command)->command_name)
 		return (pe(ERROR_MALLOC));
 	(*command)->argv = argv;

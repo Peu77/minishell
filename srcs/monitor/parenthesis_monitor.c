@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis_monitor.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 20:33:08 by ftapponn          #+#    #+#             */
-/*   Updated: 2025/01/21 17:24:54 by ftapponn         ###   ########.fr       */
+/*   Created: 2025/01/21 18:42:13 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/24 15:34:02 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	redirect_parentheses_monitor(t_list *redirects)
 			redirection_append(redirect);
 		else if (redirect->type == TOKEN_REDIRECT_INPUT)
 			redirection_input(redirect);
-		else if (redirect->type == TOKEN_REDIRECT_INPUT_APPEND)
-			redirection_heredoc(redirect->file);
 		redirects = redirects->next;
 	}
 }

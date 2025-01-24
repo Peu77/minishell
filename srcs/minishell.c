@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:58:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:33:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	minishell_interactive(void)
 {
 	char		*user_prompt;
 	t_command	*command;
-	t_ast_node	*node;
+	(void) command;
+	t_ast_node	*ast_node;
 
 	user_prompt = NULL;
 	command = NULL;
@@ -75,11 +76,18 @@ void	minishell_interactive(void)
 		if (!get_user_prompt(&user_prompt))
 			break ;
 		gc_add(user_prompt);
-		node = parse(user_prompt);
-		if (handle_parse_errors(user_prompt, node))
+		ast_node = parse(user_prompt);
+		if (handle_parse_errors(user_prompt, ast_node))
 			continue ;
-		tree_monitor(node, command);
-		free_ast_node(node);
+		if (!traverse_heredocs(ast_node)) {
+			free_ast_node(ast_node);
+			gc_free_ptr(user_prompt);
+				if (get_shell()->exit_status == 0)
+			get_shell()->exit_status = 1;
+			continue;
+		}
+		tree_monitor(ast_node, command);
+		free_ast_node(ast_node);
 		gc_free_ptr(user_prompt);
 	}
 }
@@ -92,7 +100,7 @@ void	minishell_non_interactive(void)
 
 	while (1)
 	{
-		line = readline(NULL);
+		line = get_next_line(fileno(stdin));
 		if (line == NULL)
 			break ;
 		if (*line == '\0')

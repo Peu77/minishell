@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/23 16:20:27 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:04:19 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_command_test
 	char	*path;
 	char	*argument;
 	char	*command_name;
+	char*	heredoc_filename;
 	t_list	*redirect;
 	int		saved_stdout;
 	int		saved_stdin;
@@ -111,6 +112,7 @@ int			pipe_monitor(t_ast_node *node);
 int			and_monitor(t_ast_node *node, t_command *command);
 int			or_monitor(t_ast_node *node, t_command *command);
 int			command_monitor(t_ast_node *node, t_command *command);
+bool		traverse_heredocs(t_ast_node *node);
 int			parentheses_monitor(t_ast_node *node, t_command *command);
 int			semicolon_monitor(t_ast_node *node, t_command *command);
 
@@ -119,7 +121,7 @@ void		get_command_from_node(t_command **command);
 void		print_command(t_command *command);
 int			concatenate_arguments(char **arg, char **result);
 int			transform_node_to_command(char **argv, t_command **command,
-				t_list *redirection);
+				t_list *redirection, char *heredoc_filename);
 int			get_path(t_command **command);
 int			get_redirection(t_command **command, t_list *redirection);
 
@@ -159,13 +161,14 @@ int			ft_clear(void);
 int			execution_monitor(t_command *command);
 int			prepare_execution_command(t_command *command);
 int			execution_command(t_command *command);
+void	redirect_input_from_heredoc(const char* filename);
 
 // redirection
 bool		redirection_monitor(t_command *command);
 bool		redirection_output(t_redirect *redirect);
 bool		redirection_input(t_redirect *redirect);
 bool		redirection_append(t_redirect *redirect);
-bool		redirection_heredoc(const char *delimiter);
+bool		redirection_heredoc(const char *delimiter, t_ast_node *node);
 
 // signal
 void		sighandler(int sig);
