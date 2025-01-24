@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:13:56 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:55:11 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:27:55 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	print_env_list(const bool filter_empty)
 	while (current)
 	{
 		entry = current->content;
-		if ((!entry->value || *entry->value == 0) && filter_empty)
+		if (!entry->value && filter_empty)
 		{
 			current = current->next;
 			continue ;
 		}
 		ft_printf("%s", entry->key);
-		if (entry->value && *entry->value)
+		if (entry->value)
 			ft_printf("=%s", entry->value);
 		ft_printf("\n");
 		current = current->next;
@@ -70,7 +70,7 @@ bool	initialise_env(char **env)
 		i++;
 	}
 	increase_shlvl();
-	set_env_value("OLDPWD", "");
+	set_env_value("OLDPWD", NULL);
 	if (getcwd(cwd, PATH_MAX))
 		set_env_value("PWD", cwd);
 	return (true);

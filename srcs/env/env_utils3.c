@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:15:06 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:46:38 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 00:45:47 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ char	**copy_env_to_string_array(void)
 	i = 0;
 	while (current)
 	{
+		if(!((t_env_entry*) current->content)->value) {
+			current = current->next;
+			continue;
+		}
 		tmp = gc_add(ft_strjoin(((t_env_entry *)current->content)->key, "="));
 		if (!tmp)
 			return (free_string_array_at_index(env, i), NULL);
@@ -49,7 +53,10 @@ bool	add_env_entry(const char *key, const char *value)
 	entry = gc_malloc(sizeof(t_env_entry));
 	new_node = gc_add(ft_lstnew(entry));
 	entry->key = gc_add(ft_strdup(key));
-	entry->value = gc_add(ft_strdup(value));
+	if(value)
+		entry->value = gc_add(ft_strdup(value));
+	else
+		entry->value = NULL;
 	return (ft_lstadd_back(&get_shell()->env, new_node), true);
 }
 
@@ -57,9 +64,14 @@ bool	set_env_value(const char *key, const char *value)
 {
 	t_env_entry	*entry;
 
-	if (!key || !value)
+	if (!key)
 		return (false);
 	entry = get_env_entry(key);
+	if(!value) {
+		if(entry && entry->value)
+			return true;
+		return add_env_entry(key, NULL);
+	}
 	if (entry)
 	{
 		gc_free_ptr(entry->value);

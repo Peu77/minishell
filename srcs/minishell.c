@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 16:36:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 00:38:34 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	minishell_interactive(void)
 			get_shell()->exit_status = 1;
 			continue;
 		}
+
 		tree_monitor(ast_node, command);
 		free_ast_node(ast_node);
 		gc_free_ptr(user_prompt);

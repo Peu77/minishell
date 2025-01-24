@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/23 16:11:32 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/25 00:43:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	execution_command(t_command *command)
 		pec(ERROR_MALLOC);
 		return (1);
 	}
+
 	pid = fork();
 	reset_signals();
 	if (pid == -1)
