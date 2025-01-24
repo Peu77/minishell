@@ -83,12 +83,8 @@ int	build_command_string(t_command *command, char **output_str)
 
 int	prepare_execution_command(t_command *command)
 {
-	char	*str;
 	int		result;
 
-	if (build_command_string(command, &str) != 0)
-		return (pec(ERROR_MALLOC));
-	gc_free_ptr(str);
 	if (!command->argv)
 		return (pec(ERROR_SPLIT));
 	result = execution_command(command);
