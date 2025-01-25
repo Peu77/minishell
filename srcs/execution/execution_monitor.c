@@ -32,7 +32,7 @@ void	restore_standard_fds(t_command *command)
 		{
 			pev("dup2 failed for restoring STDOUT");
 		}
-		close(command->saved_stdout);
+		gc_close_fd(command->saved_stdout);
 	}
 	if (command->saved_stdin != -1)
 	{
@@ -40,7 +40,7 @@ void	restore_standard_fds(t_command *command)
 		{
 			pev("dup2 failed for restoring STDIN");
 		}
-		close(command->saved_stdin);
+		gc_close_fd(command->saved_stdin);
 	}
 }
 
