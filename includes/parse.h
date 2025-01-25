@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 17:02:53 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 17:37:12 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,4 +188,8 @@ bool					get_lexer_results(t_list **tokens, bool in_quote);
 char					*extract_word(char const *str, size_t len);
 
 size_t					count_words(char const *str);
+
+void	expand_ast_node(t_ast_node *node);
+
+bool	parse_redirects_from_node(t_ast_node *node, int *redirect_exit_code);
 #endif
