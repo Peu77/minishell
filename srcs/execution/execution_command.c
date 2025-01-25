@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 00:43:33 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 14:18:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	execution_command(t_command *command)
 		pec(ERROR_MALLOC);
 		return (1);
 	}
-
 	pid = fork();
 	reset_signals();
 	if (pid == -1)
@@ -84,7 +83,7 @@ int	build_command_string(t_command *command, char **output_str)
 
 int	prepare_execution_command(t_command *command)
 {
-	int		result;
+	int	result;
 
 	if (!command->argv)
 		return (pec(ERROR_SPLIT));
