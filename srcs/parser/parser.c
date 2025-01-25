@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/20 22:00:57 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 17:24:09 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,24 @@ t_ast_node	*parse_parentheses(t_list **tokens)
 {
 	t_ast_node	*parentheses_node;
 
-	while (*tokens && is_empty_string_token((*tokens)->content))
+	while (*tokens && is_empty_str_token((*tokens)->content))
 		*tokens = (*tokens)->next;
 	if (!*tokens
 		|| ((t_token *)(*tokens)->content)->type != TOKEN_PARENTHESES_OPEN)
 		return (NULL);
 	*tokens = (*tokens)->next;
 	parentheses_node = create_ast_node(AST_PARENTHESES, NULL, NULL);
-	if (!parentheses_node)
-		return (NULL);
 	parentheses_node->left = parse_logical(tokens);
 	if (!*tokens
 		|| ((t_token *)(*tokens)->content)->type != TOKEN_PARENTHESES_CLOSE)
+		return (free_ast_node(parentheses_node), NULL);
+	if ((*tokens)->next
+		&& ((t_token *)(*tokens)->next->content)->type == TOKEN_STRING)
 	{
-		free_ast_node(parentheses_node);
-		return (NULL);
+		parentheses_node->value = gc_add(ft_strdup(((t_token *)
+					(*tokens)->next->content)->value));
+		(*tokens) = (*tokens)->next;
 	}
-	*tokens = (*tokens)->next;
-	if (!parse_redirects_for_parenteses(tokens, parentheses_node))
-		return (NULL);
 	return (parentheses_node);
 }
 

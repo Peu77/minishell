@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 21:26:27 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 16:08:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_parenthesis_fd
 // main
 
 // minishell
-int			minishell_non_interactive_argument(char **args, int argc);
+void			minishell_non_interactive_argument(char **args, int argc);
 void		minishell_non_interactive(void);
 void		minishell_interactive(void);
 void		destroy_minishell(int status);

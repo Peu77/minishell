@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 18:42:13 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 15:34:02 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 17:13:33 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	parentheses_monitor(t_ast_node *node, t_command *command)
 		return (0);
 	if (node->redirects)
 		redirect_parentheses_monitor(node->redirects);
+	if (node->heredoc_filename)
+		redirect_input_from_heredoc(node->heredoc_filename);
 	if (node->left)
 	{
 		if (tree_monitor(node->left, command) != 0)
