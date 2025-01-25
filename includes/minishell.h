@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 16:08:13 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 23:07:08 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,24 @@ typedef struct s_env_entry
 	char	*value;
 }			t_env_entry;
 
-typedef struct s_shell
-{
-	char	*path;
-	t_list	*env;
-	int		exit_status;
-	bool	should_exit;
-	int		heredoc_failed;
-}			t_shell;
-
 typedef struct s_parenthesis_fd
 {
 	int		fd_backup_stdout;
 	int		fd_backup_stdin;
 }			t_parenthesis_fd;
+
+typedef struct s_shell
+{
+	char	*path;
+	t_list	*env;
+	int		has_parenthesis;
+	t_parenthesis_fd parenthese_fd;
+	int		exit_status;
+	bool	should_exit;
+	int		heredoc_failed;
+
+}			t_shell;
+
 
 // main
 
@@ -206,5 +210,7 @@ void		print_command_test(t_command *command);
 char		*get_env_value(const char *key);
 
 char		*ft_strncpy(char *dest, const char *src, size_t n);
+
+void	restore_parentheses_fd(t_parenthesis_fd *parenthesis_fd);
 
 #endif

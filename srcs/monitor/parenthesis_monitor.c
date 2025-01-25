@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 18:42:13 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 17:46:47 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 23:05:11 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	parentheses_monitor(t_ast_node *node, t_command *command)
 
 	parenthesis_fd.fd_backup_stdout = dup(STDOUT_FILENO);
 	parenthesis_fd.fd_backup_stdin = dup(STDIN_FILENO);
+    get_shell()->has_parenthesis = 1;
+	get_shell()->parenthese_fd = parenthesis_fd; 
 	gc_add_fd(parenthesis_fd.fd_backup_stdout);
 	gc_add_fd(parenthesis_fd.fd_backup_stdin);
 	if (!node || node->type != AST_PARENTHESES)
@@ -59,6 +61,7 @@ int	parentheses_monitor(t_ast_node *node, t_command *command)
 		redirect_input_from_heredoc(node->heredoc_filename);
 	if (node->left && tree_monitor(node->left, command) != EXIT_SUCCESS)
 		return EXIT_FAILURE;
+    get_shell()->has_parenthesis = 0;
 	restore_parentheses_fd(&parenthesis_fd);
 	return (EXIT_SUCCESS);
 }
