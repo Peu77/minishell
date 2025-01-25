@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:34:11 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 19:13:29 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ bool	expand_wildcard(const char *old_pattern, size_t pattern_len,
 	file_count = 0;
 	if (!get_files_in_dir(".", &files, &file_count))
 		return (gc_list_clear(&files, gc_free_ptr), false);
-	sub_str = ft_substr(old_pattern, 0, pattern_len);
+	sub_str = gc_add(ft_substr(old_pattern, 0, pattern_len));
 	matches = 0;
 	if (!match_files(sub_str, (t_list_data){&files, file_count}, list,
 		&matches))
 		return (gc_list_clear(&files, gc_free_ptr), false);
 	if (matches == 0)
 	{
-		ft_lstadd_back(list, ft_lstnew(sub_str));
+		ft_lstadd_back(list, gc_add(ft_lstnew(sub_str)));
 		*get_char_count() += ft_strlen(sub_str);
 	}
 	else
