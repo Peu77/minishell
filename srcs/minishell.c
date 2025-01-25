@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 00:38:34 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 16:11:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,55 +51,52 @@ t_shell	*get_shell(void)
 	return (&shell);
 }
 
-static int	handle_parse_errors(char *user_prompt, t_ast_node *node)
+static void	handle_shell_input(char *line)
 {
+	t_command	*command;
+	t_ast_node	*node;
+
+	command = NULL;
+	node = parse(line);
 	if (node == NULL)
 	{
-		gc_free_ptr(user_prompt);
-		return (1);
+		if (get_shell()->exit_status == EXIT_SUCCESS)
+			get_shell()->exit_status = EXIT_FAILURE;
+		return (gc_free_ptr(line));
 	}
-	return (0);
+	if (!traverse_heredocs(node))
+	{
+		free_ast_node(node);
+		gc_free_ptr(line);
+		if (get_shell()->exit_status == EXIT_SUCCESS)
+			get_shell()->exit_status = EXIT_FAILURE;
+		return ;
+	}
+	tree_monitor(node, command);
+	free_ast_node(node);
+	gc_free_ptr(line);
 }
 
 void	minishell_interactive(void)
 {
-	char		*user_prompt;
-	t_command	*command;
-	(void) command;
-	t_ast_node	*ast_node;
+	char	*user_prompt;
 
 	user_prompt = NULL;
-	command = NULL;
 	main_signals();
 	while (!get_shell()->should_exit)
 	{
 		if (!get_user_prompt(&user_prompt))
 			break ;
 		gc_add(user_prompt);
-		ast_node = parse(user_prompt);
-		if (handle_parse_errors(user_prompt, ast_node))
-			continue ;
-		if (!traverse_heredocs(ast_node)) {
-			free_ast_node(ast_node);
-			gc_free_ptr(user_prompt);
-				if (get_shell()->exit_status == 0)
-			get_shell()->exit_status = 1;
-			continue;
-		}
-
-		tree_monitor(ast_node, command);
-		free_ast_node(ast_node);
-		gc_free_ptr(user_prompt);
+		handle_shell_input(user_prompt);
 	}
 }
 
 void	minishell_non_interactive(void)
 {
-	char		*line;
-	t_command	*command;
-	t_ast_node	*node;
+	char	*line;
 
-	while (1)
+	while (!get_shell()->should_exit)
 	{
 		line = get_next_line(fileno(stdin));
 		if (line == NULL)
@@ -109,43 +106,14 @@ void	minishell_non_interactive(void)
 			gc_free_ptr(line);
 			continue ;
 		}
-		command = NULL;
-		node = parse(line);
-		if (handle_parse_errors(line, node))
-			continue ;
-		if (!traverse_heredocs(node)) {
-			free_ast_node(node);
-			gc_free_ptr(line);
-			if (get_shell()->exit_status == 0)
-				get_shell()->exit_status = 1;
-			continue;
-		}
-		tree_monitor(node, command);
-		free_ast_node(node);
-		gc_free_ptr(line);
+		handle_shell_input(line);
 	}
 }
 
-int	minishell_non_interactive_argument(char **args, int argc)
+void	minishell_non_interactive_argument(char **args, int argc)
 {
-	t_command	*command;
-	t_ast_node	*node;
-	char		*line;
+	char	*line;
 
 	line = join_str_array(args, argc);
-	if (line == NULL)
-		return (EXIT_FAILURE);
-	node = parse(line);
-	command = NULL;
-	if (node == NULL)
-		return (gc_free_ptr(line), EXIT_FAILURE);
-	if (!traverse_heredocs(node)) {
-		free_ast_node(node);
-		gc_free_ptr(line);
-		if (get_shell()->exit_status == 0)
-			get_shell()->exit_status = 1;
-		return 0;
-	}
-	return (tree_monitor(node, command), free_ast_node(node), gc_free_ptr(line),
-		EXIT_SUCCESS);
+	handle_shell_input(line);
 }
