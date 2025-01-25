@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 22:56:08 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/22 15:27:09 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 19:27:06 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,21 @@ bool	is_escaped(const char *str, size_t i)
 	return (backslashes % 2);
 }
 
-static void	handle_backslash(char *str, int *i, int *j, int len)
+static void handle_backslash(char *str, int *i, int *j, int len)
 {
 	if (str[*i] == '\\' && *i + 1 < len)
 	{
-		if (str[*i + 1] == '\\')
+		if (str[*i + 1] == 'n' && !is_escaped(str, *i))
 		{
-			str[(*j)++] = '\\';
+			str[(*j)++] = '\n';
+			*i += 2;
+		}
+		else if (str[*i + 1] == '\\')
+		{
 			str[(*j)++] = '\\';
 			*i += 2;
 		}
-		else if (str[*i + 1] != '\\')
+		else
 		{
 			str[(*j)++] = str[*i + 1];
 			*i += 2;
