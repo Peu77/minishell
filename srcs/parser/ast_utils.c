@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 17:00:04 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:32:23 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ t_ast_node	*create_ast_node(t_ast_type type, char *value, t_list *redirects)
 	t_ast_node	*node;
 
 	node = gc_malloc(sizeof(t_ast_node));
-	if (!node)
-		return (NULL);
 	node->type = type;
 	node->value = value;
 	node->redirects = redirects;
