@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:36:00 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 15:57:52 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 17:02:53 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,6 @@ t_token_type			get_token_type(const char *str, size_t i,
 bool					add_token(t_list **tokens, t_token_type type,
 							char *value);
 
-bool					parse_redirects_for_parenteses(t_list **tokens,
-							t_ast_node *parentheses_node);
-
 t_ast_node				*parse_command(t_list **tokens);
 
 bool					handle_tilde_expansion(int *i, t_list **result_chars);
@@ -162,7 +159,8 @@ bool					handle_tilde_expansion(int *i, t_list **result_chars);
 bool					add_str_to_result(const char *str, size_t *i,
 							t_list **result_chars, size_t len);
 
-bool					is_empty_string_token(t_token *token);
+bool	is_empty_str(const char *str);
+bool is_empty_str_token(t_token *token);
 
 bool					parse_redirect(t_list **redirects, const char *str,
 							t_token_type redirect_type, size_t *i);

@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:54:42 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/24 17:08:04 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:36:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	get_word_length_helper(const char *str, bool *in_quotes,
 		*quote_type = str[*len];
 	}
 	else if (matches_quote(str[*len], *quote_type) && *in_quotes
-			&& !is_escaped(str, *len))
+		&& !is_escaped(str, *len))
 	{
 		(*len)++;
 		(*in_quotes) = false;
@@ -79,15 +79,8 @@ char	**split_quotes(char const *str)
 		return (NULL);
 	word_count = count_words(str);
 	if (word_count == 0)
-	{
-		result = gc_malloc(sizeof(char *) * 2);
-		result[0] = NULL;
-		result[1] = NULL;
-		return (result);
-	}
+		return (ft_calloc(2, sizeof(char *)));
 	result = gc_malloc(sizeof(char *) * (word_count + 1));
-	if (!result)
-		return (NULL);
 	i = 0;
 	while (i < word_count)
 	{
