@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:22:12 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/19 17:59:28 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 16:12:01 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_env(t_command *command)
 {
-	if (command->argument)
-		return (print_error("env: No such file or directory \n"));
+	if (command->argv[1])
+		return (print_error("env: No such file or directory"));
 	print_env_list(true);
 	return (0);
 }
