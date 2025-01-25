@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:33 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 17:36:52 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 18:32:38 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ t_ast_node	*create_ast_node(t_ast_type type, char *value, t_list *redirects)
 bool	parse_redirects_from_node(t_ast_node *node, int *redirect_exit_code)
 {
 	char	*tmp;
+	if(!node->value)
+		return (true);
 
 	tmp = filter_and_get_redirects(node->value, &node->redirects,
 			redirect_exit_code);
