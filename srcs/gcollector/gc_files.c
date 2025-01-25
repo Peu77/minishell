@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:25:26 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 12:33:01 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/25 14:17:40 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static t_list	**get_gc_head_files(void)
 {
-	static t_list	*gc_head = NULL;
+	static t_list	*gc_head;
 
+	gc_head = NULL;
 	return (&gc_head);
 }
 
@@ -40,9 +41,8 @@ int	gc_add_fd(int fd)
 	t_list	*new_node;
 	int		*fd_ptr;
 
-	if(fd < 0)
+	if (fd < 0)
 		return (-1);
-
 	fd_ptr = malloc(sizeof(int));
 	if (!fd_ptr)
 		destroy_minishell(EXIT_FAILURE);
@@ -59,9 +59,8 @@ void	gc_close_fd(int fd)
 	t_list	*current;
 	t_list	*previous;
 
-	if(fd < 0)
+	if (fd < 0)
 		return ;
-
 	current = *get_gc_head_files();
 	previous = NULL;
 	while (current)
