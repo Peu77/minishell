@@ -6,27 +6,72 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:43:05 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 14:13:59 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/26 15:51:50 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static int ft_nb_len(int nb)
+{
+	int len;
+
+	len = 0;
+	if (nb == 0)
+		return (1);
+	if (nb < 0)
+	{
+		len++;
+		nb = -nb;
+	}
+	while (nb > 0)
+	{
+		nb = nb / 10;
+		len++;
+	}
+	return (len);
+}
+
+static size_t get_prompt_length(const char* user, int exit_code) {
+	size_t len = 0;
+	len += ft_strlen(GREEN);
+	len += ft_strlen(user);
+	len += ft_strlen("\033[0m \033[1;34m→\033[0m \033[1;33mMinishell\033[0m");
+	len +=  ft_strlen(GREEN) + 1;
+	len += ft_nb_len(exit_code) + 1;
+	len += ft_strlen(RESET);
+	len += 3;
+	return len;
+}
+
 char* create_prompt(void) {
-	char *user = get_env_value("USER");
+	const int exit_code = get_shell()->exit_status;
+	size_t len;
+	char *user;
+	char* nb_str;
+
+	user = get_env_value("USER");
 	if (!user)
 		user = "User";
-	int exit_code = get_shell()->exit_status;
-	char *prompt = gc_malloc(256);
+	len = get_prompt_length(user, exit_code);
+	char *prompt = gc_add(ft_calloc(len + 1, sizeof(char)));
 	const char *exit_color = (exit_code == 0) ? "\033[1;32m" : "\033[1;31m";
-	strcpy(prompt, "\033[1;32m");
-	strcat(prompt, user);
-	strcat(prompt, "\033[0m \033[1;34m→\033[0m ");
-	strcat(prompt, exit_color);
-	char exit_code_str[12];
-	sprintf(exit_code_str, "%d", exit_code);
-	strcat(prompt, exit_code_str);
-	strcat(prompt, "\033[0m \033[1;34m→\033[0m \033[1;33mMinishell\033[0m$ ");
+
+
+	ft_strlcat(prompt, GREEN, len);
+	ft_strlcat(prompt, user, len);
+	ft_strlcat(prompt, "\033[0m \033[1;34m→\033[0m \033[1;33mMinishell\033[0m", len);
+	if(exit_code != 0) {
+		ft_strlcat(prompt, " ", len);
+		ft_strlcat(prompt, exit_color, len);
+		nb_str = gc_add(ft_itoa(exit_code));
+		ft_strlcat(prompt, nb_str, len);
+		ft_strlcat(prompt, " ", len);
+		gc_free_ptr(nb_str);
+	}
+	ft_strlcat(prompt, RESET, len);
+
+	ft_strlcat(prompt, "$ ", len);
 	return prompt;
 }
 

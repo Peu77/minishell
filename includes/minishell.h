@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 14:11:29 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/26 15:38:35 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@
 
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
+# define YELLOW "\033[1;33m"
+# define BLUE "\033[1;34m"
 # define RESET "\033[0m"
+
 # define MAX_PATH 1024
 # define NUM_BUILTINS 8
 
