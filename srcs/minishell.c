@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 16:11:23 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/26 13:33:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ void	minishell_interactive(void)
 
 	user_prompt = NULL;
 	main_signals();
+	send_greeting();
 	while (!get_shell()->should_exit)
 	{
-		if (!get_user_prompt(&user_prompt))
+		if (!get_user_prompt_value(&user_prompt))
 			break ;
 		gc_add(user_prompt);
 		handle_shell_input(user_prompt);

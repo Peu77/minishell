@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 12:52:20 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/26 13:47:14 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define MAX_VAR_LEN 131072
 
 # define RED "\033[1;31m"
+# define GREEN "\033[1;32m"
 # define RESET "\033[0m"
 # define MAX_PATH 1024
 # define NUM_BUILTINS 8
@@ -140,6 +141,7 @@ void		pev(const char *message);
 int			print_error(const char *message);
 
 t_shell		*get_shell(void);
+void send_greeting(void);
 
 // env utils
 void		print_env_list(const bool filter_empty);
@@ -153,7 +155,7 @@ t_env_entry	*get_env_entry(const char *key);
 bool		add_env_pairstr(const char *pair_str);
 
 // prompt
-int			get_user_prompt(char **result);
+int			get_user_prompt_value(char **result);
 
 // builtin
 int			ft_pwd(t_command *command);
