@@ -94,5 +94,9 @@ fclean: clean
 
 re: fclean all
 
+debug: CFLAGS += -g -DDEBUG=1
+debug: re
+
+
 .PHONY: all clean fclean re
 

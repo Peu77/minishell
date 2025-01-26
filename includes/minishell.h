@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 23:07:08 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/26 12:52:20 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+
+#ifndef DEBUG
+# define DEBUG 0
+#endif
 
 # define MAX_VAR_LEN 131072
 
