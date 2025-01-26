@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signal_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 23:10:37 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/26 14:12:06 by eebert           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal_main.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: ftapponn <ftapponn@student.42heilbronn.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:08:10 by ftapponn          #+#    #+#             */
@@ -15,10 +27,12 @@
 void	sighandler(int sig)
 {
 	(void)sig;
+	char* prompt = create_prompt();
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	printf("\n>>>> Minishell>$ ");
+	printf("%s", prompt);
+	gc_free_ptr(prompt);
 }
 
 static void	sigtstp_command(int sig)

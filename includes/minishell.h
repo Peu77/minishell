@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 13:47:14 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/26 14:11:29 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ bool		add_env_pairstr(const char *pair_str);
 
 // prompt
 int			get_user_prompt_value(char **result);
+char* create_prompt(void);
 
 // builtin
 int			ft_pwd(t_command *command);
