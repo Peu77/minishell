@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:43:05 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 14:07:59 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/26 14:13:59 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char* create_prompt(void) {
 	sprintf(exit_code_str, "%d", exit_code);
 	strcat(prompt, exit_code_str);
 	strcat(prompt, "\033[0m \033[1;34m→\033[0m \033[1;33mMinishell\033[0m$ ");
-	gc_add(prompt);
 	return prompt;
 }
 
