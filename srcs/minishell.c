@@ -99,7 +99,7 @@ void	minishell_non_interactive(void)
 
 	while (!get_shell()->should_exit)
 	{
-		line = get_next_line(fileno(stdin));
+		line = gc_add(readline(NULL));
 		if (line == NULL)
 			break ;
 		if (*line == '\0')

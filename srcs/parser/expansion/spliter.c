@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:54:42 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 16:36:13 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 17:39:31 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**split_quotes(char const *str)
 		return (NULL);
 	word_count = count_words(str);
 	if (word_count == 0)
-		return (ft_calloc(2, sizeof(char *)));
+		return (gc_add(ft_calloc(2, sizeof(char *))));
 	result = gc_malloc(sizeof(char *) * (word_count + 1));
 	i = 0;
 	while (i < word_count)
