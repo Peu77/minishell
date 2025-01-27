@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 23:10:37 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 14:12:06 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 17:59:31 by ftapponn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ void	sighandler(int sig)
 	(void)sig;
 	prompt = create_prompt();
 	rl_on_new_line();
-	rl_replace_line("", 0);
 	rl_redisplay();
-	printf("%s", prompt);
+	printf("\n%s", prompt);
 	gc_free_ptr(prompt);
 }
 
