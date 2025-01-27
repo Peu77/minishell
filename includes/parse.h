@@ -159,8 +159,8 @@ bool					handle_tilde_expansion(int *i, t_list **result_chars);
 bool					add_str_to_result(const char *str, size_t *i,
 							t_list **result_chars, size_t len);
 
-bool	is_empty_str(const char *str);
-bool is_empty_str_token(t_token *token);
+bool					is_empty_str(const char *str);
+bool					is_empty_str_token(t_token *token);
 
 bool					parse_redirect(t_list **redirects, const char *str,
 							t_token_type redirect_type, size_t *i);
@@ -189,7 +189,8 @@ char					*extract_word(char const *str, size_t len);
 
 size_t					count_words(char const *str);
 
-void	expand_ast_node(t_ast_node *node);
+void					expand_ast_node(t_ast_node *node);
 
-bool	parse_redirects_from_node(t_ast_node *node, int *redirect_exit_code);
+bool					parse_redirects_from_node(t_ast_node *node,
+							int *redirect_exit_code);
 #endif
