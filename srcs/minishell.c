@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 20:35:30 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 13:33:11 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 23:32:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	handle_shell_input(char *line)
 	t_ast_node	*node;
 
 	command = NULL;
+	if(line && is_empty_str(line))
+		return (gc_free_ptr(line));
 	node = parse(line);
 	if (node == NULL)
 	{
