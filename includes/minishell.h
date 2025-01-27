@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 15:38:35 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 14:26:59 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 
 #ifndef DEBUG
 # define DEBUG 0
+#endif
+
+#ifndef BANNER
+# define BANNER ""
 #endif
 
 # define MAX_VAR_LEN 131072
