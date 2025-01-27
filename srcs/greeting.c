@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 13:32:03 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/27 14:28:00 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:05:11 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,9 @@ static double	get_random_number(void)
 	return ((double)random_value / ((double)UINT_MAX));
 }
 
-void	send_greeting(void)
+static char	**get_greetings(void)
 {
-	const double	random_number = get_random_number();
-	const char		*user;
-	int				index;
-
-	const char *greetings[] = {
+	static char	*greetings[] = {
 		"Hello, welcome to the minishell",
 		"Hola, ¡bienvenido al minishell",
 		"Bonjour, bienvenue dans le minishell",
@@ -55,14 +51,24 @@ void	send_greeting(void)
 		"שלום, ברוך הבא למינישל",
 		"سلام، خوش آمدید به مینی‌شل",
 	};
+
+	return (greetings);
+}
+
+void	send_greeting(void)
+{
+	const double	random_number = get_random_number();
+	const char		*user;
+	int				index;
+
 	if (random_number < 0)
 		return ;
 	user = get_env_value("USER");
 	if (!user)
 		user = "User";
-	index = (int)(random_number * (sizeof(greetings) / sizeof(greetings[0])));
-	if (index >= (int)(sizeof(greetings) / sizeof(greetings[0])))
+	index = (int)(random_number * 17);
+	if (index >= (17))
 		index = 0;
 	printf("%s\n", BANNER);
-	printf("👹 %s%s, %s%s 👹\n\n", GREEN, greetings[index], user, RESET);
+	printf("👹 %s%s, %s%s 👹\n\n", GREEN, get_greetings()[index], user, RESET);
 }
