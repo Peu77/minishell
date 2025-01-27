@@ -1,3 +1,4 @@
+#vg --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=supp.supp ./minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LIBFT_DIR = libft
@@ -113,5 +114,5 @@ debug: CFLAGS += -g -DDEBUG=1
 debug: re
 
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug
 
