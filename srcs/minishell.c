@@ -85,6 +85,7 @@ void	minishell_interactive(void)
 
 	user_prompt = NULL;
 	main_signals();
+	disable_ctrl_c_echo();
 	send_greeting();
 	while (!get_shell()->should_exit)
 	{

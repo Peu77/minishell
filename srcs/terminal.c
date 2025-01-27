@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_destroy.c                                :+:      :+:    :+:   */
+/*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 19:08:16 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/27 23:37:22 by eebert           ###   ########.fr       */
+/*   Created: 2025/01/27 23:35:04 by eebert            #+#    #+#             */
+/*   Updated: 2025/01/27 23:36:05 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <minishell.h>
-#include <readline/readline.h>
-#include <stdlib.h>
+#include <termios.h>
+#include <unistd.h>
 
-void	destroy_minishell(int status)
-{
-	reset_terminal_settings();
-	gc_list_clear(&get_shell()->env, free_env_entry);
-	rl_clear_history();
-	gc_close_fds();
-	gc_free();
-	exit(status);
+void disable_ctrl_c_echo() {
+    struct termios t;
+
+    tcgetattr(STDIN_FILENO, &t);
+    t.c_lflag &= ~ECHOCTL;
+    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+}
+
+void reset_terminal_settings() {
+    struct termios t;
+
+    tcgetattr(STDIN_FILENO, &t);
+    t.c_lflag |= ECHOCTL;
+    tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }

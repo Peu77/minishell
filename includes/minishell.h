@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/27 16:12:20 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 23:36:43 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,5 +232,8 @@ char					*ft_strncpy(char *dest, const char *src, size_t n);
 
 void					restore_parentheses_fd(
 							t_parenthesis_fd *parenthesis_fd);
+
+void					reset_terminal_settings();
+void					disable_ctrl_c_echo();
 
 #endif
