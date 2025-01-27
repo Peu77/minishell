@@ -13,18 +13,20 @@
 #include <termios.h>
 #include <unistd.h>
 
-void disable_ctrl_c_echo() {
-    struct termios t;
+void	disable_ctrl_c_echo(void)
+{
+	struct termios	t;
 
-    tcgetattr(STDIN_FILENO, &t);
-    t.c_lflag &= ~ECHOCTL;
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+	tcgetattr(STDIN_FILENO, &t);
+	t.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }
 
-void reset_terminal_settings() {
-    struct termios t;
+void	reset_terminal_settings(void)
+{
+	struct termios	t;
 
-    tcgetattr(STDIN_FILENO, &t);
-    t.c_lflag |= ECHOCTL;
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+	tcgetattr(STDIN_FILENO, &t);
+	t.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }

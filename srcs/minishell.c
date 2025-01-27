@@ -57,7 +57,7 @@ static void	handle_shell_input(char *line)
 	t_ast_node	*node;
 
 	command = NULL;
-	if(line && is_empty_str(line))
+	if (line && is_empty_str(line))
 		return (gc_free_ptr(line));
 	node = parse(line);
 	if (node == NULL)

@@ -233,7 +233,7 @@ char					*ft_strncpy(char *dest, const char *src, size_t n);
 void					restore_parentheses_fd(
 							t_parenthesis_fd *parenthesis_fd);
 
-void					reset_terminal_settings();
-void					disable_ctrl_c_echo();
+void					reset_terminal_settings(void);
+void					disable_ctrl_c_echo(void);
 
 #endif
