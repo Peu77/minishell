@@ -12,10 +12,11 @@
 
 #include <minishell.h>
 
-bool is_empty_str_token(t_token *token) {
-	if(token->type != TOKEN_STRING)
-		return false;
-	return is_empty_str(token->value);
+bool	is_empty_str_token(t_token *token)
+{
+	if (token->type != TOKEN_STRING)
+		return (false);
+	return (is_empty_str(token->value));
 }
 
 bool	is_empty_str(const char *str)

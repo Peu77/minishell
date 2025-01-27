@@ -79,8 +79,8 @@ bool	traverse_heredocs(t_ast_node *node)
 			return (false);
 		if (!traverse_heredocs(node->right))
 			return (false);
-		if(!(node->type == AST_PARENTHESES && node->value))
-		return (true);
+		if (!(node->type == AST_PARENTHESES && node->value))
+			return (true);
 	}
 	redirects = NULL;
 	tmp = filter_and_get_redirects(node->value, &redirects, &exit_code);

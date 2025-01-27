@@ -40,17 +40,16 @@ void	redirect_parentheses_monitor(t_list *redirects)
 int	parentheses_monitor(t_ast_node *node, t_command *command)
 {
 	t_parenthesis_fd	parenthesis_fd;
-	int		redirect_exit_code;
+	int					redirect_exit_code;
 
 	redirect_exit_code = EXIT_SUCCESS;
 	expand_ast_node(node);
 	if (parse_redirects_from_node(node, &redirect_exit_code))
 		return (redirect_exit_code);
-
 	parenthesis_fd.fd_backup_stdout = dup(STDOUT_FILENO);
 	parenthesis_fd.fd_backup_stdin = dup(STDIN_FILENO);
-    get_shell()->has_parenthesis = 1;
-	get_shell()->parenthese_fd = parenthesis_fd; 
+	get_shell()->has_parenthesis = 1;
+	get_shell()->parenthese_fd = parenthesis_fd;
 	gc_add_fd(parenthesis_fd.fd_backup_stdout);
 	gc_add_fd(parenthesis_fd.fd_backup_stdin);
 	if (!node || node->type != AST_PARENTHESES)
@@ -60,8 +59,8 @@ int	parentheses_monitor(t_ast_node *node, t_command *command)
 	if (node->heredoc_filename)
 		redirect_input_from_heredoc(node->heredoc_filename);
 	if (node->left && tree_monitor(node->left, command) != EXIT_SUCCESS)
-		return EXIT_FAILURE;
-    get_shell()->has_parenthesis = 0;
+		return (EXIT_FAILURE);
+	get_shell()->has_parenthesis = 0;
 	restore_parentheses_fd(&parenthesis_fd);
 	return (EXIT_SUCCESS);
 }

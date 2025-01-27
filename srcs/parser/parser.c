@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:09:02 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/26 12:46:00 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/27 14:13:27 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,11 @@ t_ast_node	*parse_parentheses(t_list **tokens)
 	if (!*tokens
 		|| ((t_token *)(*tokens)->content)->type != TOKEN_PARENTHESES_CLOSE)
 		return (free_ast_node(parentheses_node), NULL);
-
 	*tokens = (*tokens)->next;
-	if ((*tokens)
-		&& ((t_token *)(*tokens)->content)->type == TOKEN_STRING)
+	if ((*tokens) && ((t_token *)(*tokens)->content)->type == TOKEN_STRING)
 	{
 		parentheses_node->value = gc_add(ft_strdup(((t_token *)
-					(*tokens)->content)->value));
+						(*tokens)->content)->value));
 		(*tokens) = (*tokens)->next;
 	}
 	return (parentheses_node);
@@ -117,7 +115,7 @@ t_ast_node	*parse(char *input)
 	tokens_cpy = tokens;
 	result = parse_logical(&tokens);
 	gc_list_clear(&tokens_cpy, free_token);
-	if(DEBUG)
+	if (DEBUG)
 		print_ast_node(result, 0);
 	return (result);
 }

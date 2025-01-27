@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 17:33:51 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 23:07:10 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/26 14:29:13 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ static int	wait_for_process(pid_t pid, char **env_cpy)
 	main_signals();
 	if (WIFSIGNALED(status))
 	{
-	if (get_shell()->has_parenthesis)
-    {
-        // If exit signal received, clean up
-        restore_parentheses_fd(&get_shell()->parenthese_fd);
-        get_shell()->has_parenthesis = 0;  // Reset the parentheses flag
-    }
+		if (get_shell()->has_parenthesis)
+		{
+			restore_parentheses_fd(&get_shell()->parenthese_fd);
+			get_shell()->has_parenthesis = 0;
+		}
 		sig_num = WTERMSIG(status);
 		return (128 + sig_num);
 	}

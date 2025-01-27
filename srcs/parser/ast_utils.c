@@ -55,9 +55,9 @@ t_ast_node	*create_ast_node(t_ast_type type, char *value, t_list *redirects)
 bool	parse_redirects_from_node(t_ast_node *node, int *redirect_exit_code)
 {
 	char	*tmp;
-	if(!node->value)
-		return (true);
 
+	if (!node->value)
+		return (true);
 	tmp = filter_and_get_redirects(node->value, &node->redirects,
 			redirect_exit_code);
 	gc_free_ptr(node->value);
@@ -76,7 +76,7 @@ void	expand_ast_node(t_ast_node *node)
 {
 	char	*tmp;
 
-	if(node->value == NULL)
+	if (node->value == NULL)
 		return ;
 	tmp = expand_string(node->value);
 	gc_free_ptr(node->value);

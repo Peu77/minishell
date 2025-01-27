@@ -26,8 +26,10 @@
 
 void	sighandler(int sig)
 {
+	char	*prompt;
+
 	(void)sig;
-	char* prompt = create_prompt();
+	prompt = create_prompt();
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

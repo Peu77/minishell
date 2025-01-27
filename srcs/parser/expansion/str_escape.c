@@ -25,7 +25,7 @@ bool	is_escaped(const char *str, size_t i)
 	return (backslashes % 2);
 }
 
-static void handle_backslash(char *str, int *i, int *j, int len)
+static void	handle_backslash(char *str, int *i, int *j, int len)
 {
 	if (str[*i] == '\\' && *i + 1 < len)
 	{

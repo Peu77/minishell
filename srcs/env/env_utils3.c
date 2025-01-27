@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 20:15:06 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 14:18:53 by ftapponn         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:11:26 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ char	**copy_env_to_string_array(void)
 	char	*tmp;
 
 	env = gc_malloc(sizeof(char *) * (ft_lstsize(get_shell()->env) + 1));
-	if (!env)
-		return (NULL);
 	current = get_shell()->env;
 	i = 0;
 	while (current)
@@ -32,13 +30,9 @@ char	**copy_env_to_string_array(void)
 			continue ;
 		}
 		tmp = gc_add(ft_strjoin(((t_env_entry *)current->content)->key, "="));
-		if (!tmp)
-			return (free_string_array_at_index(env, i), NULL);
 		env[i] = gc_add(ft_strjoin(tmp,
 					((t_env_entry *)current->content)->value));
 		gc_free_ptr(tmp);
-		if (!env[i])
-			return (free_string_array_at_index(env, i), NULL);
 		current = current->next;
 		i++;
 	}
