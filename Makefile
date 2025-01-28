@@ -66,6 +66,7 @@ SRC =  srcs/main.c \
 	   srcs/signal/signal_heredoc.c \
 	   srcs/greeting.c \
 	   srcs/minishell.c \
+	   srcs/terminal.c \
 	   srcs/minishell_destroy.c \
 
 
