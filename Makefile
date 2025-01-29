@@ -92,14 +92,19 @@ CFLAGS += -DBANNER='$(BANNER)'
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE)
+	@$(CC) $(OBJ) -o $(NAME) $(LIBFT) $(LIBREADLINE)
+	@echo "$(GREEN)$(NAME) compiled successfully!                             $(RESET)"
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
-	cp $(LIBFT_DIR)/libft.h includes/
+	$(call loading_animation,make -C $(LIBFT_DIR))
+	@cp $(LIBFT_DIR)/libft.h includes/
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(eval TOTAL := $(words $(SRC)))
+	@$(eval PROGRESS := $(shell echo $$(($(PROGRESS)+1))))
+	@$(eval PERCENT := $(shell echo $$(($(PROGRESS)*100/$(TOTAL)))))
+	@$(call progress_bar,$(PERCENT))
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
@@ -117,3 +122,51 @@ debug: re
 
 .PHONY: all clean fclean re debug
 
+RED     := $(shell tput setaf 1)
+GREEN   := $(shell tput setaf 2)
+YELLOW  := $(shell tput setaf 3)
+BLUE    := $(shell tput setaf 4)
+MAGENTA := $(shell tput setaf 5)
+CYAN    := $(shell tput setaf 6)
+WHITE   := $(shell tput setaf 7)
+RESET   := $(shell tput sgr0)
+
+define progress_bar
+	@printf "$(CYAN)["; \
+	for i in $(shell seq 1 50); do \
+		if [ $$i -le $$(($(1)*50/100)) ]; then \
+			printf "$(GREEN)█$(RESET)"; \
+		else \
+			printf "$(WHITE)░$(RESET)"; \
+		fi; \
+	done; \
+	printf "$(CYAN)] %3d%%$(RESET)\r" $(1);
+endef
+
+define loading_animation
+	@mkdir -p .build_temp
+	@echo '#!/bin/bash\n$(1) > .build_temp/output.log 2>&1' > .build_temp/build.sh
+	@chmod +x .build_temp/build.sh
+	@printf "$(YELLOW)Building libft$(RESET)"
+	@./.build_temp/build.sh & \
+	PID=$$!; \
+	while kill -0 $$PID 2>/dev/null; do \
+		for s in ⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷; do \
+			printf "$(CYAN)%s$(RESET)\r$(YELLOW)Building libft %s$(RESET)" "$$s" "$$s"; \
+			sleep 0.1; \
+			if ! kill -0 $$PID 2>/dev/null; then \
+				break; \
+			fi; \
+		done; \
+	done; \
+	wait $$PID; \
+	EXIT_CODE=$$?; \
+	if [ $$EXIT_CODE -eq 0 ]; then \
+		printf "\r$(GREEN)Libft compiled successfully!$(RESET)\n"; \
+	else \
+		printf "\r$(RED)Build failed! See error below:$(RESET)\n"; \
+		cat .build_temp/output.log; \
+	fi; \
+	rm -rf .build_temp; \
+	exit $$EXIT_CODE
+endef
