@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:04:04 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/25 19:13:29 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/29 21:33:30 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	is_match(const char *pattern, size_t pattern_len, const char *str,
 	{
 		return (*str == '\0');
 	}
-	if (*pattern == '*' && !is_escaped(pattern, pattern_i))
+	if (*pattern == '*' && !(pattern_i <= pattern_len && is_escaped(pattern, pattern_i)))
 	{
 		if (is_match(pattern + 1, pattern_len - 1, str, pattern_i + 1))
 			return (true);
