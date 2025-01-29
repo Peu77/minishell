@@ -6,7 +6,7 @@
 /*   By: eebert <eebert@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 18:23:59 by eebert            #+#    #+#             */
-/*   Updated: 2025/01/27 23:36:43 by eebert           ###   ########.fr       */
+/*   Updated: 2025/01/29 21:35:54 by eebert           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@
 # define ERROR_OPEN_FILE "ERROR OPEN FILE"
 
 // real command
-# define ERROR_FOUND_COMMAND "zsh: command not found."
 # define ERROR_PWD "pwd : too many arguments"
 # define ERROR_EXPORT "inconsistant type for assignement"
 
